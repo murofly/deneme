@@ -1,0 +1,91 @@
+/* Global Styles */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+
+header {
+    background-color: #333;
+    color: white;
+    padding: 10px 20px;
+    position: sticky;
+    top: 0;
+}
+
+header nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+header nav ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+#menuBtn {
+    display: none;
+    font-size: 24px;
+    background: none;
+    border: none;
+    color: white;
+}
+
+/* Sections */
+section {
+    padding: 50px 20px;
+}
+
+.project-card {
+    border: 1px solid #ddd;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+/* Modal */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.6);
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    #navLinks {
+        display: none;
+        flex-direction: column;
+        background-color: #444;
+        position: absolute;
+        top: 50px;
+        right: 0;
+        width: 200px;
+    }
+
+    #menuBtn {
+        display: block;
+    }
+
+    #navLinks li {
+        padding: 10px;
+    }
+}
