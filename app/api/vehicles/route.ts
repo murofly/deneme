@@ -1,10 +1,46 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { query } from '@/app/services/db';
 
 export async function GET(request: NextRequest) {
   try {
-    const results = await query('SELECT * FROM vehicles LIMIT 20');
-    return NextResponse.json(results);
+    const mockVehicles = [
+      {
+        id: 1,
+        brand: 'Toyota',
+        model: 'Corolla',
+        year: 2022,
+        price: 450000,
+        description: 'Çok temiz, düşük km araç',
+        created_at: new Date().toISOString()
+      },
+      {
+        id: 2,
+        brand: 'Honda',
+        model: 'Civic',
+        year: 2021,
+        price: 520000,
+        description: 'Full donanımlı, garaj araçı',
+        created_at: new Date().toISOString()
+      },
+      {
+        id: 3,
+        brand: 'BMW',
+        model: '320i',
+        year: 2020,
+        price: 650000,
+        description: 'Konforlu, ekonomik araç',
+        created_at: new Date().toISOString()
+      },
+      {
+        id: 4,
+        brand: 'Mercedes',
+        model: 'A180',
+        year: 2019,
+        price: 550000,
+        description: 'Lüks ve güvenli',
+        created_at: new Date().toISOString()
+      }
+    ];
+    return NextResponse.json(mockVehicles);
   } catch (error) {
     console.error('Error fetching vehicles:', error);
     return NextResponse.json(
