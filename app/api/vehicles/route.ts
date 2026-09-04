@@ -55,12 +55,17 @@ export async function POST(request: NextRequest) {
     const body = await request.json();
     const { brand, model, year, price, description } = body;
 
-    const result = await query(
-      'INSERT INTO vehicles (brand, model, year, price, description, created_at) VALUES (?, ?, ?, ?, ?, NOW())',
-      [brand, model, year, price, description]
-    );
+    const newVehicle = {
+      id: Math.floor(Math.random() * 1000),
+      brand,
+      model,
+      year,
+      price,
+      description,
+      created_at: new Date().toISOString()
+    };
 
-    return NextResponse.json(result, { status: 201 });
+    return NextResponse.json(newVehicle, { status: 201 });
   } catch (error) {
     console.error('Error creating vehicle:', error);
     return NextResponse.json(

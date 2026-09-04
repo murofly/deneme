@@ -7,7 +7,7 @@ export default function Home() {
     <>
       <section className="hero">
         <div className="container">
-          <h2>Muro Otomotiv'e Hoşgeldiniz</h2>
+          <h2>Muro Otomotiv&apos;e Hoşgeldiniz</h2>
           <p>Güvenilir, Kaliteli ve Profesyonel Araç Satışı</p>
           <Link href="/vehicles">
             <button className="btn btn-primary">Araçları Görüntüle</button>

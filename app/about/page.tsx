@@ -6,7 +6,7 @@ export default function About() {
       <section style={{ marginBottom: '2rem' }}>
         <h3 style={{ color: '#d9534f', marginBottom: '1rem' }}>Muro Otomotiv Kimdir?</h3>
         <p style={{ lineHeight: '1.8', marginBottom: '1rem' }}>
-          Muro Otomotiv, 2015 yılından beri İstanbul'da faaliyet gösteren ve müşteri memnuniyetini ön planda tutan
+          Muro Otomotiv, 2015 yılından beri İstanbul&apos;da faaliyet gösteren ve müşteri memnuniyetini ön planda tutan
           profesyonel bir araç satış şirketidir. Yılların deneyimiyle, geniş araç envanteri ve adil fiyatlandırma
           politikamız ile binlerce müşterimize hizmet sunmaktayız.
         </p>
@@ -15,7 +15,7 @@ export default function About() {
       <section style={{ marginBottom: '2rem' }}>
         <h3 style={{ color: '#d9534f', marginBottom: '1rem' }}>Vizyonumuz</h3>
         <p style={{ lineHeight: '1.8', marginBottom: '1rem' }}>
-          Türkiye'nin en güvenilir ve müşteri odaklı araç satış merkezi olmak. Her müşterinin ihtiyaçına uygun,
+          Türkiye&apos;nin en güvenilir ve müşteri odaklı araç satış merkezi olmak. Her müşterinin ihtiyaçına uygun,
           kaliteli ve uygun fiyatlı araçlar sunmak.
         </p>
       </section>
