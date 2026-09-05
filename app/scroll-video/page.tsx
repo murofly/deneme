@@ -1,132 +1,137 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export default function ScrollVideo() {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const [videoDuration, setVideoDuration] = useState(0);
 
   useEffect(() => {
     const video = videoRef.current;
     if (!video) return;
 
-    const handleScroll = () => {
-      // Sayfanın toplam kaydırılabilir yüksekliğini al
-      const scrollHeight = document.documentElement.scrollHeight - window.innerHeight;
-
-      // Şu anki kaydırma yüzdesini hesapla (0 ile 1 arasında)
-      const scrollProgress = window.scrollY / scrollHeight;
-
-      // Video süresini al ve ilerletme konumunu hesapla
-      if (video.duration) {
-        video.currentTime = scrollProgress * video.duration;
-      }
+    // Video metadata yüklendiğinde
+    const handleLoadedMetadata = () => {
+      setVideoDuration(video.duration);
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    video.addEventListener('loadedmetadata', handleLoadedMetadata);
+
+    // Scroll event listener
+    const handleScroll = () => {
+      if (!video || videoDuration === 0) return;
+
+      // Document yüksekliği - viewport yüksekliği = kaydırılabilir alan
+      const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
+
+      // Şu anki scroll pozisyonu
+      const scrolled = window.scrollY;
+
+      // Yüzde hesapla (0 ile 1 arasında)
+      const scrollPercent = scrolled / scrollableHeight;
+
+      // Video pozisyonunu ayarla
+      video.currentTime = Math.max(0, Math.min(scrollPercent * videoDuration, videoDuration));
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
+    return () => {
+      video.removeEventListener('loadedmetadata', handleLoadedMetadata);
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [videoDuration]);
 
   return (
-    <div ref={containerRef} className="scroll-video-container">
-      {/* Video Arka Plan */}
+    <div className="scroll-video-wrapper">
       <video
         ref={videoRef}
-        className="background-video"
+        className="scroll-video-bg"
         muted
         playsInline
-        preload="auto"
+        preload="metadata"
+        crossOrigin="anonymous"
       >
         <source src="/background-video.mp4" type="video/mp4" />
-        Tarayıcınız video oynatmayı desteklemiyor.
       </video>
 
-      {/* İçerik */}
-      <div className="content-overlay">
-        <div className="container">
-          <section className="scroll-content">
-            <h1>Scroll ile Video Kontrol</h1>
-            <p>Aşağıya kaydırarak videoyu oynatın</p>
-          </section>
-
-          {/* Boşluk - Kaydırma için */}
-          <div className="spacer">
-            <div className="milestone">
-              <h2>25%</h2>
-              <p>Videoyu 1/4 oranında ilerlettiniz</p>
-            </div>
-          </div>
-
-          <div className="spacer">
-            <div className="milestone">
-              <h2>50%</h2>
-              <p>Videoyu yarısına getirdiniz</p>
-            </div>
-          </div>
-
-          <div className="spacer">
-            <div className="milestone">
-              <h2>75%</h2>
-              <p>Neredeyse sonuna yaklaştınız</p>
-            </div>
-          </div>
-
-          <div className="spacer">
-            <div className="milestone">
-              <h2>100%</h2>
-              <p>Video tamamen oynatıldı!</p>
-            </div>
-          </div>
+      <div className="scroll-video-content">
+        <div className="hero-section">
+          <h1>Scroll Tabanlı Video</h1>
+          <p>Aşağı kaydır → Video ilerlesin</p>
+          <p>Yukarı kaydır → Video geri sarılsın</p>
         </div>
+
+        <section className="section milestone">
+          <h2>25%</h2>
+          <p>Videoyu 1/4 ilerlettiniz</p>
+        </section>
+
+        <section className="section milestone">
+          <h2>50%</h2>
+          <p>Videoyu yarısına getirdiniz</p>
+        </section>
+
+        <section className="section milestone">
+          <h2>75%</h2>
+          <p>Neredeyse sonuna yaklaştınız</p>
+        </section>
+
+        <section className="section milestone">
+          <h2>100%</h2>
+          <p>Video tamamen oynatıldı! 🎉</p>
+        </section>
       </div>
 
       <style jsx>{`
-        .scroll-video-container {
+        .scroll-video-wrapper {
           position: relative;
           width: 100%;
-          overflow-x: hidden;
+          height: 100%;
         }
 
-        .background-video {
+        .scroll-video-bg {
           position: fixed;
           top: 0;
           left: 0;
           width: 100%;
           height: 100vh;
           object-fit: cover;
-          z-index: -1;
+          z-index: 0;
         }
 
-        .content-overlay {
+        .scroll-video-content {
           position: relative;
           z-index: 1;
-          background: rgba(0, 0, 0, 0.7);
-          color: white;
           min-height: 400vh;
         }
 
-        .scroll-content {
+        .hero-section {
           height: 100vh;
           display: flex;
           flex-direction: column;
           justify-content: center;
           align-items: center;
           text-align: center;
+          color: white;
+          background: rgba(0, 0, 0, 0.6);
           padding: 2rem;
         }
 
-        .scroll-content h1 {
-          font-size: 3.5rem;
+        .hero-section h1 {
+          font-size: 4rem;
           margin-bottom: 1rem;
-          text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
+          text-shadow: 3px 3px 10px rgba(0, 0, 0, 0.9);
+          font-weight: bold;
         }
 
-        .scroll-content p {
+        .hero-section p {
           font-size: 1.5rem;
-          text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
+          margin: 0.5rem 0;
+          text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.9);
         }
 
-        .spacer {
+        .section {
           height: 100vh;
           display: flex;
           justify-content: center;
@@ -135,35 +140,39 @@ export default function ScrollVideo() {
         }
 
         .milestone {
+          background: rgba(0, 0, 0, 0.7);
           text-align: center;
-          background: rgba(0, 0, 0, 0.5);
-          padding: 3rem 2rem;
-          border-radius: 10px;
-          backdrop-filter: blur(10px);
-          border: 1px solid rgba(255, 255, 255, 0.2);
+          color: white;
         }
 
         .milestone h2 {
-          font-size: 3rem;
-          margin-bottom: 1rem;
-          color: #d9534f;
+          font-size: 5rem;
+          margin: 0;
+          color: #ff6b6b;
+          text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8);
         }
 
         .milestone p {
-          font-size: 1.2rem;
+          font-size: 1.3rem;
+          margin-top: 1rem;
+          text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
         }
 
         @media (max-width: 768px) {
-          .scroll-content h1 {
+          .hero-section h1 {
             font-size: 2rem;
           }
 
-          .scroll-content p {
+          .hero-section p {
             font-size: 1rem;
           }
 
           .milestone h2 {
-            font-size: 2rem;
+            font-size: 2.5rem;
+          }
+
+          .milestone p {
+            font-size: 1rem;
           }
         }
       `}</style>
