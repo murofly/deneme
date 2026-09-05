@@ -32,5 +32,8 @@
     "three": "^0.185.1",
     "typescript": "^7.0.2",
     "vite": "^8.2.2"
+  },
+  "dependencies": {
+    "@tailwindcss/postcss": "^4.3.3"
   }
 }
