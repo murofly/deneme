@@ -1,0 +1,36 @@
+{
+  "name": "deneme",
+  "version": "1.0.0",
+  "description": "denemedir",
+  "main": "script.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/murofly/deneme.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/murofly/deneme/issues"
+  },
+  "homepage": "https://github.com/murofly/deneme#readme",
+  "devDependencies": {
+    "@types/node": "^26.4.1",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.7",
+    "@vitejs/plugin-react": "^6.1.1",
+    "autoprefixer": "^10.5.5",
+    "postcss": "^8.5.28",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "tailwindcss": "^4.3.3",
+    "three": "^0.185.1",
+    "typescript": "^7.0.2",
+    "vite": "^8.2.2"
+  }
+}
