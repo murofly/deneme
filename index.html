@@ -1,72 +1,582 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Portfolio</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Motor Tamiri - Söküm ve Restore</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', sans-serif;
+            background: #0a0a0a;
+            color: #e0e0e0;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Loading Screen */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #0a0a0a;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            gap: 20px;
+        }
+
+        .loading-overlay.hidden {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .loader-text {
+            font-size: 18px;
+            color: #d4af37;
+            letter-spacing: 2px;
+            font-weight: 300;
+        }
+
+        .progress-bar {
+            width: 200px;
+            height: 3px;
+            background: #1a1a1a;
+            border-radius: 2px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #d4af37, #c9a961);
+            width: 0%;
+            transition: width 0.1s linear;
+        }
+
+        .progress-text {
+            font-size: 14px;
+            color: #999;
+            letter-spacing: 1px;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 300vh;
+            position: relative;
+        }
+
+        .hero-content {
+            position: sticky;
+            top: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: radial-gradient(ellipse at center, #1a1a1a 0%, #0a0a0a 100%);
+            overflow: hidden;
+        }
+
+        .canvas-container {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        canvas {
+            display: block;
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 200px;
+            background: linear-gradient(to top, #0a0a0a, transparent);
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        .scroll-hint {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            animation: float 2s ease-in-out infinite;
+            z-index: 5;
+        }
+
+        .scroll-arrow {
+            font-size: 24px;
+            margin-bottom: 8px;
+            opacity: 0.6;
+        }
+
+        .scroll-text {
+            font-size: 12px;
+            letter-spacing: 1px;
+            color: #999;
+            text-transform: uppercase;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(8px); }
+        }
+
+        /* Content Sections */
+        .content-section {
+            padding: 100px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: 42px;
+            font-weight: 300;
+            letter-spacing: 3px;
+            margin-bottom: 30px;
+            color: #d4af37;
+            text-transform: uppercase;
+        }
+
+        .section-subtitle {
+            font-size: 18px;
+            color: #999;
+            font-weight: 300;
+            letter-spacing: 1px;
+            margin-bottom: 40px;
+        }
+
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            margin-top: 50px;
+        }
+
+        .service-card {
+            padding: 30px;
+            border: 1px solid #333;
+            background: linear-gradient(135deg, #1a1a1a 0%, #0f0f0f 100%);
+            transition: all 0.3s ease;
+            border-radius: 4px;
+        }
+
+        .service-card:hover {
+            border-color: #d4af37;
+            background: linear-gradient(135deg, #252525 0%, #1a1a1a 100%);
+            transform: translateY(-5px);
+        }
+
+        .service-number {
+            font-size: 48px;
+            font-weight: 300;
+            color: #d4af37;
+            margin-bottom: 15px;
+            opacity: 0.3;
+        }
+
+        .service-title {
+            font-size: 18px;
+            font-weight: 500;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+        }
+
+        .service-description {
+            font-size: 14px;
+            color: #aaa;
+            line-height: 1.8;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 100px 40px;
+            text-align: center;
+            background: linear-gradient(135deg, #1a1a1a 0%, #0a0a0a 100%);
+        }
+
+        .cta-title {
+            font-size: 48px;
+            font-weight: 300;
+            letter-spacing: 3px;
+            margin-bottom: 20px;
+            color: #e0e0e0;
+            text-transform: uppercase;
+        }
+
+        .cta-subtitle {
+            font-size: 16px;
+            color: #999;
+            letter-spacing: 2px;
+            margin-bottom: 40px;
+            text-transform: uppercase;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 16px 48px;
+            background: #d4af37;
+            color: #0a0a0a;
+            text-decoration: none;
+            letter-spacing: 2px;
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
+            border: 2px solid #d4af37;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 2px;
+        }
+
+        .cta-button:hover {
+            background: transparent;
+            color: #d4af37;
+        }
+
+        .footer {
+            padding: 40px;
+            text-align: center;
+            border-top: 1px solid #333;
+            color: #666;
+            font-size: 12px;
+            letter-spacing: 1px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .section-title {
+                font-size: 28px;
+                letter-spacing: 2px;
+            }
+
+            .section-subtitle {
+                font-size: 14px;
+            }
+
+            .content-section {
+                padding: 60px 20px;
+            }
+
+            .service-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .cta-title {
+                font-size: 32px;
+                letter-spacing: 2px;
+            }
+
+            .scroll-hint {
+                display: none;
+            }
+        }
+
+        /* Reduced Motion */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+
+            html {
+                scroll-behavior: auto;
+            }
+        }
+
+        /* Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            .hero-content {
+                height: auto;
+                position: relative;
+            }
+
+            .hero {
+                height: auto;
+            }
+        }
+    </style>
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <nav>
-            <h1>My Portfolio</h1>
-            <button id="menuBtn" aria-label="Toggle Menu">☰</button>
-            <ul id="navLinks">
-                <li><a href="#about">About</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <!-- About Section -->
-    <section id="about">
-        <h2>About Me</h2>
-        <p>Hello! I'm a web developer passionate about building interactive and responsive websites.</p>
-        <img src="profile.jpg" alt="Profile Picture">
-    </section>
-
-    <!-- Projects Section -->
-    <section id="projects">
-        <h2>My Projects</h2>
-        <div class="project-card">
-            <h3>Project 1</h3>
-            <p>A simple web app built with HTML, CSS, and JavaScript.</p>
-            <button class="projectBtn" data-project="Project 1">More Info</button>
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loader-text">KARE YÜKLENIYOR</div>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
         </div>
-        <div class="project-card">
-            <h3>Project 2</h3>
-            <p>A responsive portfolio website.</p>
-            <button class="projectBtn" data-project="Project 2">More Info</button>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact">
-        <h2>Contact Me</h2>
-        <form id="contactForm">
-            <label for="name">Name:</label>
-            <input type="text" id="name" required>
-            
-            <label for="email">Email:</label>
-            <input type="email" id="email" required>
-            
-            <label for="message">Message:</label>
-            <textarea id="message" required></textarea>
-            
-            <button type="submit">Send</button>
-        </form>
-    </section>
-
-    <!-- Modal -->
-    <div id="modal" class="modal">
-        <div class="modal-content">
-            <span id="closeModal">&times;</span>
-            <p id="modalText"></p>
-        </div>
+        <div class="progress-text"><span id="progressPercent">0</span>%</div>
     </div>
 
-    <script src="script.js"></script>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="canvas-container">
+                <canvas id="animationCanvas"></canvas>
+            </div>
+            <div class="hero-overlay"></div>
+            <div class="scroll-hint">
+                <div class="scroll-arrow">↓</div>
+                <div class="scroll-text">Kaydır</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="content-section">
+        <div class="section-title">Hizmetlerimiz</div>
+        <div class="section-subtitle">Profesyonel Motor Tamiri ve Restore</div>
+
+        <div class="service-grid">
+            <div class="service-card">
+                <div class="service-number">01</div>
+                <div class="service-title">SÖKÜM & İNCELEME</div>
+                <div class="service-description">
+                    Motor parça parça disassemble edilerek her bileşen detaylı şekilde incelenir. İçinde saklı olan sorunlar ortaya çıkartılır.
+                </div>
+            </div>
+
+            <div class="service-card">
+                <div class="service-number">02</div>
+                <div class="service-title">ONARIM & TEMIZLIK</div>
+                <div class="service-description">
+                    Hasar gören parçalar profesyonel olarak onarılır ve makine washed yapılarak her parça temiz hale getirilir.
+                </div>
+            </div>
+
+            <div class="service-card">
+                <div class="service-number">03</div>
+                <div class="service-title">RESTORE & MONTAJ</div>
+                <div class="service-description">
+                    Onarılan parçalar kusursuz bir şekilde tekrar montaj edilir. Motor orijinal performansını geri kazanır.
+                </div>
+            </div>
+
+            <div class="service-card">
+                <div class="service-number">04</div>
+                <div class="service-title">TEST & KALIBRE</div>
+                <div class="service-description">
+                    Tamamlanan motor test edilir. Tüm sistemler kontrol edilip kalibre edilerek yola çıkabilir duruma getirilir.
+                </div>
+            </div>
+
+            <div class="service-card">
+                <div class="service-number">05</div>
+                <div class="service-title">BAKIMI & DESTEK</div>
+                <div class="service-description">
+                    Motor restore edildikten sonra düzenli bakım hizmetleri sunuyoruz. Teknik destek her zaman hazır.
+                </div>
+            </div>
+
+            <div class="service-card">
+                <div class="service-number">06</div>
+                <div class="service-title">GARANTILI HIZMET</div>
+                <div class="service-description">
+                    Tüm işlemler garantili yapılır. Müşteri memnuniyeti bizim için en önemli önceliktir.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Us Section -->
+    <section class="content-section">
+        <div class="section-title">Neden Biz?</div>
+        <div class="section-subtitle">15 Yıllık Motor Tamiri ve Restore Deneyimi</div>
+
+        <div style="margin-top: 40px; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px;">
+            <div>
+                <h3 style="color: #d4af37; font-size: 18px; letter-spacing: 1px; margin-bottom: 15px; text-transform: uppercase;">Profesyonel Ekip</h3>
+                <p style="color: #aaa; line-height: 1.8;">Sertifikalı mühendisler ve teknisyenlar, en zor motor sorunlarını çözer.</p>
+            </div>
+            <div>
+                <h3 style="color: #d4af37; font-size: 18px; letter-spacing: 1px; margin-bottom: 15px; text-transform: uppercase;">Modern Ekipman</h3>
+                <p style="color: #aaa; line-height: 1.8;">En son teknoloji ile donatılmış atölyemizde tüm işler yapılır.</p>
+            </div>
+            <div>
+                <h3 style="color: #d4af37; font-size: 18px; letter-spacing: 1px; margin-bottom: 15px; text-transform: uppercase;">Orijinal Parçalar</h3>
+                <p style="color: #aaa; line-height: 1.8;">Sadece orijinal ve kaliteli parçalar kullanılır, hiçbir kompromiz yoktur.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="cta-title">Motorunuz Tamire Hazır Mı?</div>
+        <div class="cta-subtitle">Bugün İletişim Kurun</div>
+        <a href="tel:+905001234567" class="cta-button">Hemen Ara</a>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>© 2024 Motor Tamiri Servisi. Tüm Hakları Saklıdır. | Tel: +90 500 123 45 67 | Email: info@motortamiri.com</p>
+    </footer>
+
+    <script>
+        gsap.registerPlugin(ScrollTrigger);
+
+        const canvas = document.getElementById('animationCanvas');
+        const ctx = canvas.getContext('2d', { willReadFrequently: true });
+        const loadingOverlay = document.getElementById('loadingOverlay');
+        const progressFill = document.getElementById('progressFill');
+        const progressPercent = document.getElementById('progressPercent');
+
+        let frames = [];
+        let currentFrame = 0;
+        const totalFrames = 121;
+
+        // Set canvas size
+        function resizeCanvas() {
+            const maxWidth = window.innerWidth * 0.95;
+            const maxHeight = window.innerHeight * 0.95;
+
+            if (frames.length > 0) {
+                const imgRatio = frames[0].naturalWidth / frames[0].naturalHeight;
+
+                let width = maxWidth;
+                let height = width / imgRatio;
+
+                if (height > maxHeight) {
+                    height = maxHeight;
+                    width = height * imgRatio;
+                }
+
+                canvas.width = width;
+                canvas.height = height;
+            }
+        }
+
+        // Preload all frames
+        async function preloadFrames() {
+            const loadPromises = [];
+
+            for (let i = 1; i <= totalFrames; i++) {
+                const frameNum = String(i).padStart(4, '0');
+                const promise = new Promise((resolve, reject) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        frames.push(img);
+                        updateProgress();
+                        resolve();
+                    };
+                    img.onerror = reject;
+                    img.src = `frame_${frameNum}.jpg`;
+                });
+                loadPromises.push(promise);
+            }
+
+            try {
+                await Promise.all(loadPromises);
+                onLoadComplete();
+            } catch (error) {
+                console.error('Error loading frames:', error);
+                document.querySelector('.loader-text').textContent = 'HATA: KARELER YÜKLENEMEDI';
+            }
+        }
+
+        function updateProgress() {
+            const percent = Math.round((frames.length / totalFrames) * 100);
+            progressPercent.textContent = percent;
+            progressFill.style.width = percent + '%';
+        }
+
+        function onLoadComplete() {
+            resizeCanvas();
+            renderFrame(0);
+
+            // Hide loading overlay
+            loadingOverlay.classList.add('hidden');
+
+            // Check for reduced motion preference
+            const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+            if (prefersReducedMotion) {
+                // Show static frame for accessibility
+                renderFrame(Math.floor(totalFrames / 2));
+            } else {
+                // Setup scroll animation
+                gsap.to({}, {
+                    scrollTrigger: {
+                        trigger: '.hero',
+                        start: 'top top',
+                        end: 'bottom center',
+                        scrub: 1,
+                        onUpdate: (self) => {
+                            const progress = self.progress;
+                            const frameIndex = Math.floor(progress * (totalFrames - 1));
+                            if (frameIndex !== currentFrame) {
+                                currentFrame = frameIndex;
+                                renderFrame(frameIndex);
+                            }
+                        }
+                    }
+                });
+            }
+
+            // Handle window resize
+            window.addEventListener('resize', () => {
+                resizeCanvas();
+                renderFrame(currentFrame);
+            });
+        }
+
+        function renderFrame(index) {
+            if (frames.length > 0 && index < frames.length) {
+                const img = frames[index];
+
+                // Clear canvas
+                ctx.fillStyle = '#0a0a0a';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                // Draw image centered
+                const imgRatio = img.naturalWidth / img.naturalHeight;
+                const canvasRatio = canvas.width / canvas.height;
+
+                let drawWidth, drawHeight, drawX, drawY;
+
+                if (imgRatio > canvasRatio) {
+                    drawWidth = canvas.width;
+                    drawHeight = canvas.width / imgRatio;
+                } else {
+                    drawHeight = canvas.height;
+                    drawWidth = canvas.height * imgRatio;
+                }
+
+                drawX = (canvas.width - drawWidth) / 2;
+                drawY = (canvas.height - drawHeight) / 2;
+
+                ctx.drawImage(img, drawX, drawY, drawWidth, drawHeight);
+            }
+        }
+
+        // Start preloading
+        preloadFrames();
+    </script>
 </body>
 </html>
