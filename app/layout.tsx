@@ -26,6 +26,7 @@ export default function RootLayout({
                 <li><Link href="/vehicles">Araçlar</Link></li>
                 <li><Link href="/about">Hakkımızda</Link></li>
                 <li><Link href="/contact">İletişim</Link></li>
+                <li><Link href="/scroll-video">Scroll Video</Link></li>
               </ul>
             </div>
           </nav>
