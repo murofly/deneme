@@ -7,18 +7,22 @@ import { Color } from "three"
 
 export default function Globe() {
   const mountRef = useRef<HTMLDivElement>(null)
-  const [isHighResLoaded, setIsHighResLoaded] = useState(false)
-  const [showHint, setShowHint] = useState(true)
+  const sceneRef = useRef<THREE.Scene | null>(null)
+  const rendererRef = useRef<THREE.WebGLRenderer | null>(null)
+  const animationIdRef = useRef<number | null>(null)
 
   useEffect(() => {
     if (!mountRef.current) return
 
     // Create scene, camera, and renderer
     const scene = new THREE.Scene()
+    sceneRef.current = scene
     const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
     const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true })
+    rendererRef.current = renderer
     renderer.setSize(window.innerWidth, window.innerHeight)
     renderer.setPixelRatio(window.devicePixelRatio)
+    renderer.setClearColor(0x000000, 1)
     mountRef.current.appendChild(renderer.domElement)
 
     // Create a starfield
@@ -127,10 +131,8 @@ export default function Globe() {
       return color
     }
 
-    let animationId: number
-
     const animate = () => {
-      animationId = requestAnimationFrame(animate)
+      animationIdRef.current = requestAnimationFrame(animate)
 
       // Color transition logic
       colorT += colorTransitionSpeed
@@ -161,6 +163,7 @@ export default function Globe() {
       controls.update()
       renderer.render(scene, camera)
     }
+
     animate()
 
     // Load high-resolution textures
@@ -220,9 +223,14 @@ export default function Globe() {
 
     return () => {
       window.removeEventListener("resize", handleResize)
-      cancelAnimationFrame(animationId)
-      mountRef.current?.removeChild(renderer.domElement)
+      if (animationIdRef.current) {
+        cancelAnimationFrame(animationIdRef.current)
+      }
+      if (mountRef.current && renderer.domElement.parentNode === mountRef.current) {
+        mountRef.current.removeChild(renderer.domElement)
+      }
       controls.dispose()
+      renderer.dispose()
       clearTimeout(hintTimer)
     }
   }, [])
