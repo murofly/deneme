@@ -20,6 +20,7 @@
                 <ul id="navLinks" class="nav-links">
                     <li><a href="#anasayfa">Anasayfa</a></li>
                     <li><a href="#ilanlar">İlanlar</a></li>
+                    <li><a href="#favoriler">Favorilerim</a></li>
                     <li><a href="#hakkinda">Hakkında</a></li>
                     <li><a href="#iletisim">İletişim</a></li>
                     <li><a href="#admin" class="admin-link">Yönetici Paneli</a></li>
@@ -98,11 +99,75 @@
         </div>
     </section>
 
+    <!-- Trending Section -->
+    <section class="trending-section">
+        <div class="container">
+            <h2>🔥 Trend'de Olanlar</h2>
+            <div id="trendingCars" class="cars-grid">
+                <!-- Trending cars will be loaded here -->
+            </div>
+        </div>
+    </section>
+
     <!-- Cars Grid -->
     <section class="cars-section">
         <div class="container">
+            <h2>Tüm Araçlar</h2>
             <div id="carsList" class="cars-grid">
                 <!-- Cars will be loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Favorites Section -->
+    <section id="favoriler" class="favorites-section">
+        <div class="container">
+            <h2>❤️ Favorilerim</h2>
+            <div id="favoritesList" class="cars-grid">
+                <p class="empty-message">Henüz favori eklemediniz</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials-section">
+        <div class="container">
+            <h2>Müşteri Yorumları</h2>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p class="testimonial-text">"MuroCar.net'te harika bir araba buldum. Hızlı, güvenilir ve profesyonel bir platform!"</p>
+                    <p class="testimonial-author">- Mehmet Y.</p>
+                </div>
+                <div class="testimonial-card">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p class="testimonial-text">"Çok iyi filtreleme sistemi var. Tam istediğim arabayı 15 dakikada buldum."</p>
+                    <p class="testimonial-author">- Ayşe K.</p>
+                </div>
+                <div class="testimonial-card">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p class="testimonial-text">"Satıcılarla iletişim çok kolay. Müşteri hizmeti de harika, teşekkürler!"</p>
+                    <p class="testimonial-author">- Fatih D.</p>
+                </div>
+                <div class="testimonial-card">
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                    <p class="testimonial-text">"Güvenli ödeme sistemi ve doğrulanmış satıcılar. Çok rahat satın aldım."</p>
+                    <p class="testimonial-author">- Zeynep S.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="newsletter-section">
+        <div class="container">
+            <div class="newsletter-content">
+                <h2>Yeni İlanlardan Haberdar Olun</h2>
+                <p>Her gün yüzlerce yeni araç ekleniyor. Haberiniz olsun!</p>
+                <form id="newsletterForm" class="newsletter-form">
+                    <input type="email" placeholder="E-mail adresiniz" required>
+                    <button type="submit">Abone Ol</button>
+                </form>
             </div>
         </div>
     </section>

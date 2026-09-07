@@ -1,4 +1,7 @@
-// Sample car data
+// Favorites array from localStorage
+let favorites = JSON.parse(localStorage.getItem('murocarFavorites')) || [];
+
+// Sample car data with more details
 let cars = [
     {
         id: 1,
@@ -13,7 +16,12 @@ let cars = [
         image: 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400&h=300&fit=crop',
         description: 'Mükemmel durumda Toyota Corolla. Tam bakımlı, hasarsız araba. Orijinal km, airbag sistemleri tamam.',
         seller: 'Ahmet Kardeş Oto',
-        sellerPhone: '+90 (212) 123 45 67'
+        sellerPhone: '+90 (212) 123 45 67',
+        engine: '1.6L',
+        power: '120 hp',
+        fuelConsumption: '6.5 L/100km',
+        trending: true,
+        views: 2450
     },
     {
         id: 2,
@@ -28,7 +36,12 @@ let cars = [
         image: 'https://images.unsplash.com/photo-1605559424843-9e4c3dec6765?w=400&h=300&fit=crop',
         description: 'Honda Civic 2022. Çok düşün kmli. Garantisi devam ediyor. Servis bakımları yapılmış.',
         seller: 'Oto Satış Plus',
-        sellerPhone: '+90 (212) 234 56 78'
+        sellerPhone: '+90 (212) 234 56 78',
+        engine: '1.5L',
+        power: '130 hp',
+        fuelConsumption: '6.2 L/100km',
+        trending: true,
+        views: 3120
     },
     {
         id: 3,
@@ -43,7 +56,12 @@ let cars = [
         image: 'https://images.unsplash.com/photo-1581346846014-fa7f826b8f63?w=400&h=300&fit=crop',
         description: 'Volkswagen Golf 7 Dizel. Orjinal yapı. Bakımlı ve temiz araba.',
         seller: 'Güvenir Oto',
-        sellerPhone: '+90 (212) 345 67 89'
+        sellerPhone: '+90 (212) 345 67 89',
+        engine: '2.0L TDI',
+        power: '150 hp',
+        fuelConsumption: '4.8 L/100km',
+        trending: false,
+        views: 1820
     },
     {
         id: 4,
@@ -58,7 +76,12 @@ let cars = [
         image: 'https://images.unsplash.com/photo-1552820728-8ac41f1ce891?w=400&h=300&fit=crop',
         description: 'BMW 320i. Sunroof ve deri iç. Tüm bakımlar güncel. Orjinal dış kaporta.',
         seller: 'Lüks Oto Satış',
-        sellerPhone: '+90 (212) 456 78 90'
+        sellerPhone: '+90 (212) 456 78 90',
+        engine: '2.0L',
+        power: '184 hp',
+        fuelConsumption: '7.1 L/100km',
+        trending: true,
+        views: 2890
     },
     {
         id: 5,
@@ -73,7 +96,12 @@ let cars = [
         image: 'https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=400&h=300&fit=crop',
         description: 'Mercedes Benz C200. Deri iç, çatı açılır. Servis geçmişi tam.',
         seller: 'Premium Oto Merkezi',
-        sellerPhone: '+90 (212) 567 89 01'
+        sellerPhone: '+90 (212) 567 89 01',
+        engine: '1.8L',
+        power: '155 hp',
+        fuelConsumption: '7.5 L/100km',
+        trending: false,
+        views: 1650
     },
     {
         id: 6,
@@ -88,7 +116,12 @@ let cars = [
         image: 'https://images.unsplash.com/photo-1609628982106-b3b3d7b4e18b?w=400&h=300&fit=crop',
         description: 'Sıfır km gibi Hyundai i20. Oto elektrik, klima, temiz araba.',
         seller: 'Yeni Araçlar Oto',
-        sellerPhone: '+90 (212) 678 90 12'
+        sellerPhone: '+90 (212) 678 90 12',
+        engine: '1.2L',
+        power: '84 hp',
+        fuelConsumption: '5.5 L/100km',
+        trending: true,
+        views: 3560
     },
     {
         id: 7,
@@ -103,7 +136,12 @@ let cars = [
         image: 'https://images.unsplash.com/photo-1606611013016-969c19d4336d?w=400&h=300&fit=crop',
         description: 'Audi A4 2021. Dijital gösterge paneli. Led lambalar. Harika durumda.',
         seller: 'Prestij Otomotiv',
-        sellerPhone: '+90 (212) 789 01 23'
+        sellerPhone: '+90 (212) 789 01 23',
+        engine: '2.0L TDI',
+        power: '163 hp',
+        fuelConsumption: '4.9 L/100km',
+        trending: false,
+        views: 2140
     },
     {
         id: 8,
@@ -118,7 +156,12 @@ let cars = [
         image: 'https://images.unsplash.com/photo-1609632733057-6c6a341bed3a?w=400&h=300&fit=crop',
         description: 'Dacia Logan. Ekonomik ve güvenilir araba. Bakımlı, temiz.',
         seller: 'Ekonomik Oto Satış',
-        sellerPhone: '+90 (212) 890 12 34'
+        sellerPhone: '+90 (212) 890 12 34',
+        engine: '1.0L',
+        power: '65 hp',
+        fuelConsumption: '5.2 L/100km',
+        trending: false,
+        views: 980
     }
 ];
 
@@ -139,7 +182,9 @@ document.querySelectorAll('.nav-links a').forEach(link => {
 
 // Display all cars on page load
 window.addEventListener('DOMContentLoaded', () => {
+    displayTrendingCars();
     displayCars(cars);
+    displayFavorites();
 });
 
 // Display cars
@@ -155,8 +200,14 @@ function displayCars(carArray) {
     carArray.forEach(car => {
         const carCard = document.createElement('div');
         carCard.className = 'car-card';
+        const isFavorite = favorites.includes(car.id);
         carCard.innerHTML = `
-            <img src="${car.image}" alt="${car.brand} ${car.model}" class="car-image">
+            <div class="car-image" style="position: relative;">
+                <img src="${car.image}" alt="${car.brand} ${car.model}" style="width: 100%; height: 220px; object-fit: cover; border-radius: 16px 16px 0 0;">
+                <button class="favorite-btn ${isFavorite ? 'active' : ''}" onclick="toggleFavorite(${car.id})">
+                    ${isFavorite ? '❤️' : '🤍'}
+                </button>
+            </div>
             <div class="car-info">
                 <div class="car-title">${car.brand} ${car.model}</div>
                 <div class="car-details">
@@ -203,6 +254,18 @@ function viewCarDetail(carId) {
                         <span>${car.km.toLocaleString()} km</span>
                     </div>
                     <div class="spec-row">
+                        <strong>Motor:</strong>
+                        <span>${car.engine}</span>
+                    </div>
+                    <div class="spec-row">
+                        <strong>Güç:</strong>
+                        <span>${car.power}</span>
+                    </div>
+                    <div class="spec-row">
+                        <strong>Yakıt Tüketimi:</strong>
+                        <span>${car.fuelConsumption}</span>
+                    </div>
+                    <div class="spec-row">
                         <strong>Yakıt Türü:</strong>
                         <span>${car.fuel}</span>
                     </div>
@@ -224,7 +287,7 @@ function viewCarDetail(carId) {
                 <div class="detail-seller">
                     <h3>Satıcı Bilgileri</h3>
                     <p><strong>Satıcı:</strong> ${car.seller}</p>
-                    <p><strong>Telefon:</strong> <a href="tel:${car.sellerPhone}" style="color: var(--primary-color); text-decoration: none;">${car.sellerPhone}</a></p>
+                    <p><strong>Telefon:</strong> <a href="tel:${car.sellerPhone}" style="color: var(--accent-color); text-decoration: none;">${car.sellerPhone}</a></p>
                     <button class="contact-seller-btn" onclick="alert('Satıcı ile iletişime geçmek için telefon numarasına tıklayınız veya mesaj gönderin.')">Satıcıya Mesaj Gönder</button>
                 </div>
             </div>
@@ -428,6 +491,109 @@ document.getElementById('contactForm')?.addEventListener('submit', (e) => {
     e.preventDefault();
     alert('Mesajınız gönderildi. En kısa sürede size dönüş yapacağız!');
     document.getElementById('contactForm').reset();
+});
+
+// Trending Cars Display
+function displayTrendingCars() {
+    const trendingList = document.getElementById('trendingCars');
+    const trendingCars = cars.filter(car => car.trending);
+
+    if (trendingList) {
+        trendingList.innerHTML = '';
+        trendingCars.slice(0, 4).forEach(car => {
+            const carCard = document.createElement('div');
+            carCard.className = 'car-card';
+            const isFavorite = favorites.includes(car.id);
+            carCard.innerHTML = `
+                <div class="car-image" style="position: relative;">
+                    <img src="${car.image}" alt="${car.brand} ${car.model}" style="width: 100%; height: 220px; object-fit: cover; border-radius: 16px 16px 0 0;">
+                    <button class="favorite-btn ${isFavorite ? 'active' : ''}" onclick="toggleFavorite(${car.id})">
+                        ${isFavorite ? '❤️' : '🤍'}
+                    </button>
+                </div>
+                <div class="car-info">
+                    <div class="car-title">${car.brand} ${car.model}</div>
+                    <div class="car-details">
+                        <span>📅 ${car.year} | 🚗 ${car.km.toLocaleString()} km</span>
+                        <span>⛽ ${car.fuel} | 🔧 ${car.transmission}</span>
+                        <span>👁️ ${car.views} görüntülenme</span>
+                    </div>
+                    <div class="car-price">₺${car.price.toLocaleString('tr-TR')}</div>
+                    <div class="car-seller">${car.seller}</div>
+                    <div class="car-buttons">
+                        <button class="btn-primary" onclick="viewCarDetail(${car.id})">Detaylar</button>
+                        <button class="btn-secondary" onclick="contactSeller('${car.seller}', '${car.sellerPhone}')">İletişim</button>
+                    </div>
+                </div>
+            `;
+            trendingList.appendChild(carCard);
+        });
+    }
+}
+
+// Favorites Management
+function toggleFavorite(carId) {
+    const index = favorites.indexOf(carId);
+    if (index > -1) {
+        favorites.splice(index, 1);
+    } else {
+        favorites.push(carId);
+    }
+    localStorage.setItem('murocarFavorites', JSON.stringify(favorites));
+    displayCars(cars);
+    displayTrendingCars();
+    displayFavorites();
+}
+
+// Display Favorites
+function displayFavorites() {
+    const favoritesList = document.getElementById('favoritesList');
+    if (!favoritesList) return;
+
+    const favoriteCars = cars.filter(car => favorites.includes(car.id));
+
+    favoritesList.innerHTML = '';
+
+    if (favoriteCars.length === 0) {
+        favoritesList.innerHTML = '<p class="empty-message" style="grid-column: 1/-1;">Henüz favori eklemediniz. Araçları favorilerinize eklemek için ❤️ butonuna tıklayın.</p>';
+        return;
+    }
+
+    favoriteCars.forEach(car => {
+        const carCard = document.createElement('div');
+        carCard.className = 'car-card';
+        carCard.innerHTML = `
+            <div class="car-image" style="position: relative;">
+                <img src="${car.image}" alt="${car.brand} ${car.model}" style="width: 100%; height: 220px; object-fit: cover; border-radius: 16px 16px 0 0;">
+                <button class="favorite-btn active" onclick="toggleFavorite(${car.id})">
+                    ❤️
+                </button>
+            </div>
+            <div class="car-info">
+                <div class="car-title">${car.brand} ${car.model}</div>
+                <div class="car-details">
+                    <span>📅 ${car.year} | 🚗 ${car.km.toLocaleString()} km</span>
+                    <span>⛽ ${car.fuel} | 🔧 ${car.transmission}</span>
+                    <span>🎨 ${car.color}</span>
+                </div>
+                <div class="car-price">₺${car.price.toLocaleString('tr-TR')}</div>
+                <div class="car-seller">${car.seller}</div>
+                <div class="car-buttons">
+                    <button class="btn-primary" onclick="viewCarDetail(${car.id})">Detaylar</button>
+                    <button class="btn-secondary" onclick="contactSeller('${car.seller}', '${car.sellerPhone}')">İletişim</button>
+                </div>
+            </div>
+        `;
+        favoritesList.appendChild(carCard);
+    });
+}
+
+// Newsletter subscription
+document.getElementById('newsletterForm')?.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const email = e.target.querySelector('input[type="email"]').value;
+    alert(`${email} adresiniz başarıyla abone listesine eklendi! 🎉`);
+    e.target.reset();
 });
 
 // Close modal when clicking outside
