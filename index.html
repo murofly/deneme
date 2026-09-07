@@ -3,70 +3,606 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Portfolio</title>
-    <link rel="stylesheet" href="style.css">
+    <title>murokahveci - Premium Artisan Coffee</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            background-color: #FDFBF7;
+            color: #424242;
+            font-family: 'Inter', sans-serif;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Merriweather', serif;
+            color: #3E2723;
+            font-weight: 700;
+        }
+
+        p {
+            line-height: 1.8;
+            color: #616161;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #FDFBF7 0%, #F5F1EB 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #canvas {
+            display: block;
+            width: 100%;
+            height: 100vh;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            pointer-events: none;
+            animation: fadeInUp 1s ease-out 0.5s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 5rem);
+            margin-bottom: 1rem;
+            font-weight: 700;
+            letter-spacing: -1px;
+        }
+
+        .hero-tagline {
+            font-size: 1.25rem;
+            color: #8D6E63;
+            font-weight: 400;
+            max-width: 400px;
+            margin: 0 auto;
+            letter-spacing: 0.5px;
+        }
+
+        /* Section Styles */
+        section {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        section h2 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            margin-bottom: 3rem;
+            text-align: center;
+            position: relative;
+            padding-bottom: 1.5rem;
+        }
+
+        section h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #C7765C, transparent);
+        }
+
+        /* Coffee Grid */
+        .coffee-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 3rem;
+            margin-top: 4rem;
+        }
+
+        .coffee-card {
+            background: white;
+            border-radius: 8px;
+            padding: 2.5rem;
+            text-align: center;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.320, 1);
+            box-shadow: 0 2px 8px rgba(62, 39, 35, 0.04);
+            border: 1px solid rgba(199, 118, 92, 0.1);
+            cursor: pointer;
+        }
+
+        .coffee-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(62, 39, 35, 0.12);
+            border-color: rgba(199, 118, 92, 0.3);
+        }
+
+        .coffee-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            display: inline-block;
+        }
+
+        .coffee-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.75rem;
+            color: #3E2723;
+        }
+
+        .coffee-origin {
+            color: #8D6E63;
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .coffee-description {
+            font-size: 0.95rem;
+            color: #757575;
+            line-height: 1.6;
+        }
+
+        /* Ritual Section */
+        .ritual {
+            background: linear-gradient(135deg, rgba(62, 39, 35, 0.02) 0%, rgba(199, 118, 92, 0.02) 100%);
+        }
+
+        .ritual-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            margin-top: 3rem;
+        }
+
+        .ritual-text h3 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: #3E2723;
+        }
+
+        .ritual-text p {
+            margin-bottom: 1.5rem;
+            font-size: 1rem;
+            color: #616161;
+        }
+
+        .ritual-visual {
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, #E8D4C0 0%, #D4B5A0 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            box-shadow: 0 20px 40px rgba(62, 39, 35, 0.1);
+        }
+
+        /* Footer */
+        footer {
+            background: #3E2723;
+            color: #FDFBF7;
+            padding: 4rem 2rem 2rem;
+            margin-top: 6rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-section h4 {
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #FDFBF7;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            font-size: 0.95rem;
+            color: rgba(253, 251, 247, 0.8);
+            text-decoration: none;
+            transition: color 0.3s ease;
+            display: block;
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-section a:hover {
+            color: #C7765C;
+        }
+
+        .footer-divider {
+            border-top: 1px solid rgba(253, 251, 247, 0.1);
+            padding-top: 2rem;
+            text-align: center;
+            font-size: 0.85rem;
+            color: rgba(253, 251, 247, 0.6);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            section {
+                padding: 4rem 1.5rem;
+            }
+
+            .ritual-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .hero-tagline {
+                font-size: 1rem;
+            }
+        }
+
+        /* Smooth scroll container */
+        body {
+            scroll-behavior: smooth;
+        }
+    </style>
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <nav>
-            <h1>My Portfolio</h1>
-            <button id="menuBtn" aria-label="Toggle Menu">☰</button>
-            <ul id="navLinks">
-                <li><a href="#about">About</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <!-- About Section -->
-    <section id="about">
-        <h2>About Me</h2>
-        <p>Hello! I'm a web developer passionate about building interactive and responsive websites.</p>
-        <img src="profile.jpg" alt="Profile Picture">
-    </section>
-
-    <!-- Projects Section -->
-    <section id="projects">
-        <h2>My Projects</h2>
-        <div class="project-card">
-            <h3>Project 1</h3>
-            <p>A simple web app built with HTML, CSS, and JavaScript.</p>
-            <button class="projectBtn" data-project="Project 1">More Info</button>
-        </div>
-        <div class="project-card">
-            <h3>Project 2</h3>
-            <p>A responsive portfolio website.</p>
-            <button class="projectBtn" data-project="Project 2">More Info</button>
+    <!-- Hero Section with 3D Canvas -->
+    <section class="hero" id="hero">
+        <canvas id="canvas"></canvas>
+        <div class="hero-content">
+            <h1>murokahveci</h1>
+            <p class="hero-tagline">Artisan roasted, thoughtfully crafted, mindfully sipped</p>
         </div>
     </section>
 
-    <!-- Contact Section -->
-    <section id="contact">
-        <h2>Contact Me</h2>
-        <form id="contactForm">
-            <label for="name">Name:</label>
-            <input type="text" id="name" required>
-            
-            <label for="email">Email:</label>
-            <input type="email" id="email" required>
-            
-            <label for="message">Message:</label>
-            <textarea id="message" required></textarea>
-            
-            <button type="submit">Send</button>
-        </form>
+    <!-- Coffee Blends Section -->
+    <section id="coffee-section">
+        <h2>Our Coffee Blends</h2>
+        <div class="coffee-grid">
+            <div class="coffee-card">
+                <div class="coffee-icon">☕</div>
+                <h3>Ethiopian Yirgacheffe</h3>
+                <p class="coffee-origin">Single Origin</p>
+                <p class="coffee-description">Bright acidity with notes of blueberry and jasmine. A delicate yet complex pour.</p>
+            </div>
+            <div class="coffee-card">
+                <div class="coffee-icon">🌰</div>
+                <h3>Colombian Geisha</h3>
+                <p class="coffee-origin">Limited Edition</p>
+                <p class="coffee-description">Smooth, buttery body with hints of chocolate and hazelnut. A luxurious experience.</p>
+            </div>
+            <div class="coffee-card">
+                <div class="coffee-icon">🍫</div>
+                <h3>Costa Rican Hueca</h3>
+                <p class="coffee-origin">Single Origin</p>
+                <p class="coffee-description">Rich, full-bodied with undertones of cocoa and caramel. Perfect for espresso.</p>
+            </div>
+            <div class="coffee-card">
+                <div class="coffee-icon">✨</div>
+                <h3>Signature Blend</h3>
+                <p class="coffee-origin">House Blend</p>
+                <p class="coffee-description">Perfectly balanced blend of premium origins. Our daily obsession since day one.</p>
+            </div>
+            <div class="coffee-card">
+                <div class="coffee-icon">🌍</div>
+                <h3>Kenyan AA</h3>
+                <p class="coffee-origin">Single Origin</p>
+                <p class="coffee-description">Bright and fruity with wine-like qualities. A vibrant awakening in every cup.</p>
+            </div>
+            <div class="coffee-card">
+                <div class="coffee-icon">🎯</div>
+                <h3>Brazilian Santos</h3>
+                <p class="coffee-origin">Single Origin</p>
+                <p class="coffee-description">Low acidity, sweet, with notes of nuts and spice. A comforting embrace.</p>
+            </div>
+        </div>
     </section>
 
-    <!-- Modal -->
-    <div id="modal" class="modal">
-        <div class="modal-content">
-            <span id="closeModal">&times;</span>
-            <p id="modalText"></p>
+    <!-- The Ritual Section -->
+    <section class="ritual" id="ritual-section">
+        <h2>The Ritual</h2>
+        <div class="ritual-content">
+            <div class="ritual-text">
+                <h3>A Moment of Intention</h3>
+                <p>At murokahveci, we believe that coffee is more than a beverage—it's a ritual. From the careful selection of beans to the precise roasting process, every step is an act of mindfulness.</p>
+                <p>Our artisans spend years perfecting their craft, understanding the subtle differences in altitude, terroir, and processing methods. When you brew a cup of murokahveci, you're not just enjoying coffee. You're participating in a tradition of excellence and care.</p>
+                <p>We roast in small batches to ensure peak freshness. We source directly from farmers who share our values. We deliver not just exceptional taste, but peace of mind—knowing that your morning ritual supports sustainable practices and fair compensation for those who grew your beans.</p>
+            </div>
+            <div class="ritual-visual">
+                ☕
+            </div>
         </div>
-    </div>
+    </section>
 
-    <script src="script.js"></script>
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Contact</h4>
+                <a href="mailto:hello@murokahveci.com">hello@murokahveci.com</a>
+                <p>+1 (555) 123-4567</p>
+                <p>Located in Brooklyn, NY</p>
+            </div>
+            <div class="footer-section">
+                <h4>Hours</h4>
+                <p>Monday – Friday: 6am – 7pm</p>
+                <p>Saturday: 7am – 8pm</p>
+                <p>Sunday: 8am – 6pm</p>
+            </div>
+            <div class="footer-section">
+                <h4>Follow</h4>
+                <a href="#">Instagram</a>
+                <a href="#">Twitter</a>
+                <a href="#">Newsletter</a>
+            </div>
+        </div>
+        <div class="footer-divider">
+            <p>&copy; 2025 murokahveci. All rights reserved. Artisan roasted with intention.</p>
+        </div>
+    </footer>
+
+    <script>
+        // ==========================================
+        // THREE.JS SETUP & 3D ROBOT MOUSE
+        // ==========================================
+
+        const canvas = document.getElementById('canvas');
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setClearColor(0xFDFBF7, 1);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        camera.position.z = 8;
+
+        // Lighting
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+        scene.add(ambientLight);
+
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.6);
+        directionalLight.position.set(5, 5, 5);
+        scene.add(directionalLight);
+
+        // ==========================================
+        // CREATE 3D ROBOT MOUSE
+        // ==========================================
+
+        const robotGroup = new THREE.Group();
+        scene.add(robotGroup);
+
+        // Materials
+        const bodyMaterial = new THREE.MeshStandardMaterial({
+            color: 0xD4B5A0,
+            roughness: 0.4,
+            metalness: 0.1
+        });
+
+        const metalMaterial = new THREE.MeshStandardMaterial({
+            color: 0x8D6E63,
+            roughness: 0.3,
+            metalness: 0.5
+        });
+
+        const eyeMaterial = new THREE.MeshStandardMaterial({
+            color: 0xC7765C,
+            roughness: 0.2,
+            metalness: 0.3
+        });
+
+        // Body (rounded box effect with multiple geometries)
+        const bodyGeometry = new THREE.BoxGeometry(1.5, 2, 1.2);
+        const body = new THREE.Mesh(bodyGeometry, bodyMaterial);
+        body.castShadow = true;
+        robotGroup.add(body);
+
+        // Head
+        const headGeometry = new THREE.BoxGeometry(1.2, 1.2, 1);
+        const head = new THREE.Mesh(headGeometry, bodyMaterial);
+        head.position.y = 1.3;
+        head.castShadow = true;
+        robotGroup.add(head);
+
+        // Ears (small cylinders)
+        const earGeometry = new THREE.CylinderGeometry(0.2, 0.2, 0.6, 8);
+
+        const leftEar = new THREE.Mesh(earGeometry, metalMaterial);
+        leftEar.position.set(-0.5, 2, 0);
+        leftEar.castShadow = true;
+        robotGroup.add(leftEar);
+
+        const rightEar = new THREE.Mesh(earGeometry, metalMaterial);
+        rightEar.position.set(0.5, 2, 0);
+        rightEar.castShadow = true;
+        robotGroup.add(rightEar);
+
+        // Eyes (tracking objects)
+        const eyeGeometry = new THREE.SphereGeometry(0.25, 16, 16);
+
+        const leftEyeWhite = new THREE.Mesh(eyeGeometry, new THREE.MeshStandardMaterial({ color: 0xFFFFFF, roughness: 0.3 }));
+        leftEyeWhite.position.set(-0.35, 1.5, 0.55);
+        leftEyeWhite.castShadow = true;
+        robotGroup.add(leftEyeWhite);
+
+        const rightEyeWhite = new THREE.Mesh(eyeGeometry, new THREE.MeshStandardMaterial({ color: 0xFFFFFF, roughness: 0.3 }));
+        rightEyeWhite.position.set(0.35, 1.5, 0.55);
+        rightEyeWhite.castShadow = true;
+        robotGroup.add(rightEyeWhite);
+
+        // Iris/pupil (smaller spheres inside eyes)
+        const irisGeometry = new THREE.SphereGeometry(0.12, 16, 16);
+
+        const leftIris = new THREE.Mesh(irisGeometry, eyeMaterial);
+        leftIris.position.set(-0.35, 1.5, 0.68);
+        leftIris.userData.homePosition = new THREE.Vector3(-0.35, 1.5, 0.68);
+        robotGroup.add(leftIris);
+
+        const rightIris = new THREE.Mesh(irisGeometry, eyeMaterial);
+        rightIris.position.set(0.35, 1.5, 0.68);
+        rightIris.userData.homePosition = new THREE.Vector3(0.35, 1.5, 0.68);
+        robotGroup.add(rightIris);
+
+        // Tail
+        const tailGeometry = new THREE.BoxGeometry(0.3, 0.8, 0.2);
+        const tail = new THREE.Mesh(tailGeometry, metalMaterial);
+        tail.position.set(0, -0.8, -0.8);
+        tail.rotation.z = 0.3;
+        tail.castShadow = true;
+        robotGroup.add(tail);
+
+        // Whiskers (thin lines)
+        const whiskerMaterial = new THREE.LineBasicMaterial({ color: 0x8D6E63, linewidth: 1 });
+
+        const whiskerPoints = [
+            new THREE.Vector3(-0.7, 1.3, 0.5),
+            new THREE.Vector3(-1.2, 1.3, 0.3)
+        ];
+        const whiskerGeom = new THREE.BufferGeometry().setFromPoints(whiskerPoints);
+        const whisker1 = new THREE.Line(whiskerGeom, whiskerMaterial);
+        robotGroup.add(whisker1);
+
+        const whiskerPoints2 = [
+            new THREE.Vector3(0.7, 1.3, 0.5),
+            new THREE.Vector3(1.2, 1.3, 0.3)
+        ];
+        const whiskerGeom2 = new THREE.BufferGeometry().setFromPoints(whiskerPoints2);
+        const whisker2 = new THREE.Line(whiskerGeom2, whiskerMaterial);
+        robotGroup.add(whisker2);
+
+        // ==========================================
+        // MOUSE TRACKING LOGIC
+        // ==========================================
+
+        let mouseX = 0;
+        let mouseY = 0;
+        let targetMouseX = 0;
+        let targetMouseY = 0;
+
+        document.addEventListener('mousemove', (event) => {
+            targetMouseX = (event.clientX / window.innerWidth) * 2 - 1;
+            targetMouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+        });
+
+        function updateEyeTracking() {
+            // Lerp mouse position for smooth motion
+            mouseX += (targetMouseX - mouseX) * 0.08;
+            mouseY += (targetMouseY - mouseY) * 0.08;
+
+            // Convert normalized mouse coords to world position
+            const raycaster = new THREE.Raycaster();
+            const mouse = new THREE.Vector2(mouseX, mouseY);
+            raycaster.setFromCamera(mouse, camera);
+
+            // Create a plane in front of the robot for eye tracking
+            const plane = new THREE.Plane(new THREE.Vector3(0, 0, 1), -2);
+            const targetPoint = new THREE.Vector3();
+            raycaster.ray.intersectPlane(plane, targetPoint);
+
+            // Eye tracking distance
+            const trackingDistance = 0.3;
+            const maxDistance = 0.5;
+
+            // Update left iris
+            const leftEyePos = new THREE.Vector3(-0.35, 1.5, 0.55);
+            const leftDirection = targetPoint.clone().sub(leftEyePos).normalize();
+            const leftLookPos = leftEyePos.clone().add(leftDirection.multiplyScalar(trackingDistance));
+
+            // Clamp iris movement
+            const leftTargetPos = leftLookPos.clone().sub(leftEyePos);
+            if (leftTargetPos.length() > maxDistance) {
+                leftTargetPos.normalize().multiplyScalar(maxDistance);
+            }
+            leftTargetPos.add(leftEyePos);
+
+            leftIris.position.lerp(leftTargetPos, 0.1);
+
+            // Update right iris
+            const rightEyePos = new THREE.Vector3(0.35, 1.5, 0.55);
+            const rightDirection = targetPoint.clone().sub(rightEyePos).normalize();
+            const rightLookPos = rightEyePos.clone().add(rightDirection.multiplyScalar(trackingDistance));
+
+            const rightTargetPos = rightLookPos.clone().sub(rightEyePos);
+            if (rightTargetPos.length() > maxDistance) {
+                rightTargetPos.normalize().multiplyScalar(maxDistance);
+            }
+            rightTargetPos.add(rightEyePos);
+
+            rightIris.position.lerp(rightTargetPos, 0.1);
+        }
+
+        // ==========================================
+        // ANIMATION LOOP
+        // ==========================================
+
+        function animate() {
+            requestAnimationFrame(animate);
+
+            // Gentle bobbing motion
+            robotGroup.position.y = Math.sin(Date.now() * 0.001) * 0.15;
+
+            // Subtle rotation
+            robotGroup.rotation.x = Math.sin(Date.now() * 0.0005) * 0.05;
+
+            // Update eye tracking
+            updateEyeTracking();
+
+            renderer.render(scene, camera);
+        }
+
+        animate();
+
+        // ==========================================
+        // RESPONSIVE HANDLING
+        // ==========================================
+
+        window.addEventListener('resize', () => {
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+            camera.aspect = width / height;
+            camera.updateProjectionMatrix();
+            renderer.setSize(width, height);
+        });
+
+        // ==========================================
+        // SCROLL FADE EFFECT
+        // ==========================================
+
+        const heroSection = document.getElementById('hero');
+
+        window.addEventListener('scroll', () => {
+            const scrollPos = window.scrollY;
+            const heroHeight = window.innerHeight;
+            const opacity = Math.max(0, 1 - (scrollPos / (heroHeight * 0.6)));
+
+            renderer.setClearColor(0xFDFBF7, opacity);
+        });
+    </script>
 </body>
 </html>
