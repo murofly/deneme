@@ -14,40 +14,140 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --bg-light: #FDFBF7;
+            --bg-dark: #1a1410;
+            --text-light: #3E2723;
+            --text-dark: #F5F1EB;
+            --accent: #C7765C;
+            --accent-dark: #A85C47;
+        }
+
         html, body {
-            background-color: #FDFBF7;
-            color: #424242;
+            background-color: var(--bg-light);
+            color: var(--text-light);
             font-family: 'Inter', sans-serif;
             scroll-behavior: smooth;
             overflow-x: hidden;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        html.dark-mode {
+            --bg-light: #1a1410;
+            --text-light: #F5F1EB;
+            --bg-dark: #0f0a07;
+        }
+
+        html.dark-mode body {
+            background-color: #1a1410;
+            color: #F5F1EB;
         }
 
         h1, h2, h3, h4, h5, h6 {
             font-family: 'Merriweather', serif;
-            color: #3E2723;
+            color: var(--text-light);
             font-weight: 700;
             letter-spacing: -0.5px;
         }
 
         p {
             line-height: 1.8;
-            color: #616161;
+            color: currentColor;
         }
 
-        /* Cursor dot effect */
-        .cursor-dot {
+        /* Sticky Navigation */
+        .navbar {
             position: fixed;
-            width: 8px;
-            height: 8px;
-            background: #C7765C;
-            border-radius: 50%;
-            pointer-events: none;
-            z-index: 9999;
-            mix-blend-mode: multiply;
-            display: none;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(253, 251, 247, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(199, 118, 92, 0.1);
+            padding: 1rem 2rem;
+            transition: all 0.3s ease;
         }
 
-        /* Fade in on scroll */
+        html.dark-mode .navbar {
+            background: rgba(26, 20, 16, 0.95);
+            border-bottom-color: rgba(199, 118, 92, 0.2);
+        }
+
+        .navbar-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar-logo {
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--text-light);
+            text-decoration: none;
+            background: linear-gradient(135deg, #3E2723, #C7765C);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .navbar-menu {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .navbar-menu a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .navbar-menu a:hover {
+            color: var(--accent);
+        }
+
+        .theme-toggle, .cart-btn {
+            background: linear-gradient(135deg, #C7765C, #A85C47);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover, .cart-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 16px rgba(199, 118, 92, 0.3);
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #FF6B6B;
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        /* Fade in animations */
         .fade-in {
             opacity: 0;
             transform: translateY(20px);
@@ -94,6 +194,7 @@
 
         /* Hero Section */
         .hero {
+            margin-top: 70px;
             min-height: 100vh;
             background: linear-gradient(135deg, #FDFBF7 0%, #F5F1EB 50%, #EDE7E0 100%);
             display: flex;
@@ -101,6 +202,10 @@
             justify-content: center;
             position: relative;
             overflow: hidden;
+        }
+
+        html.dark-mode .hero {
+            background: linear-gradient(135deg, #2a2218 0%, #1a1410 50%, #0f0a07 100%);
         }
 
         .hero::before {
@@ -118,7 +223,7 @@
         #canvas {
             display: block;
             width: 100%;
-            height: 100vh;
+            height: 100%;
             position: absolute;
             top: 0;
             left: 0;
@@ -155,6 +260,13 @@
             background-clip: text;
         }
 
+        html.dark-mode .hero h1 {
+            background: linear-gradient(135deg, #F5F1EB 0%, #D9B8A8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
         .hero-tagline {
             font-size: 1.35rem;
             color: #8D6E63;
@@ -164,11 +276,19 @@
             opacity: 0.95;
         }
 
+        html.dark-mode .hero-tagline {
+            color: #D9B8A8;
+        }
+
         .hero-subtitle {
             font-size: 1rem;
             color: #757575;
             margin-bottom: 2rem;
             line-height: 1.8;
+        }
+
+        html.dark-mode .hero-subtitle {
+            color: #B8A89D;
         }
 
         .hero-cta {
@@ -216,7 +336,16 @@
             color: white;
         }
 
-        /* Scroll indicator */
+        html.dark-mode .btn-secondary {
+            color: #D9B8A8;
+            border-color: #D9B8A8;
+        }
+
+        html.dark-mode .btn-secondary:hover {
+            background: #D9B8A8;
+            color: #1a1410;
+        }
+
         .scroll-indicator {
             position: absolute;
             bottom: 2rem;
@@ -267,9 +396,63 @@
             border-radius: 2px;
         }
 
+        /* Product Carousel */
+        .carousel-container {
+            position: relative;
+            margin-top: 4rem;
+            overflow: hidden;
+        }
+
+        .carousel-wrapper {
+            display: flex;
+            transition: transform 0.5s cubic-bezier(0.23, 1, 0.320, 1);
+            gap: 2rem;
+        }
+
+        .carousel-item {
+            min-width: 300px;
+            flex: 0 0 300px;
+        }
+
+        .carousel-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+            background: linear-gradient(135deg, #C7765C, #A85C47);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(199, 118, 92, 0.3);
+        }
+
+        .carousel-btn:hover {
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .carousel-btn.prev {
+            left: 0;
+        }
+
+        .carousel-btn.next {
+            right: 0;
+        }
+
         /* Stats Section */
         .stats {
             background: linear-gradient(135deg, rgba(62, 39, 35, 0.03) 0%, rgba(199, 118, 92, 0.03) 100%);
+        }
+
+        html.dark-mode .stats {
+            background: linear-gradient(135deg, rgba(199, 118, 92, 0.05) 0%, rgba(141, 110, 99, 0.05) 100%);
         }
 
         .stats-grid {
@@ -292,6 +475,12 @@
             -webkit-text-fill-color: transparent;
             background-clip: text;
             margin-bottom: 0.5rem;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+
+        .stat-card:hover .stat-number {
+            transform: scale(1.1);
         }
 
         .stat-label {
@@ -302,10 +491,8 @@
             letter-spacing: 1px;
         }
 
-        .stat-description {
-            font-size: 0.9rem;
-            color: #757575;
-            margin-top: 0.5rem;
+        html.dark-mode .stat-label {
+            color: #D9B8A8;
         }
 
         /* Coffee Grid */
@@ -319,13 +506,21 @@
         .coffee-card {
             background: linear-gradient(135deg, #FFFFFF 0%, #F9F6F2 100%);
             border-radius: 12px;
-            padding: 3rem 2rem;
+            padding: 2rem;
             text-align: center;
             transition: all 0.5s cubic-bezier(0.23, 1, 0.320, 1);
             box-shadow: 0 4px 15px rgba(62, 39, 35, 0.06);
             border: 1px solid rgba(199, 118, 92, 0.15);
             position: relative;
             overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        html.dark-mode .coffee-card {
+            background: linear-gradient(135deg, #2a2218 0%, #1f1813 100%);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            border-color: rgba(199, 118, 92, 0.2);
         }
 
         .coffee-card::before {
@@ -346,7 +541,10 @@
         .coffee-card:hover {
             transform: translateY(-12px);
             box-shadow: 0 20px 40px rgba(62, 39, 35, 0.12);
-            border-color: rgba(199, 118, 92, 0.3);
+        }
+
+        html.dark-mode .coffee-card:hover {
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
         }
 
         .coffee-icon {
@@ -354,12 +552,17 @@
             margin-bottom: 1.5rem;
             display: inline-block;
             filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.08));
+            transition: transform 0.3s ease;
+        }
+
+        .coffee-card:hover .coffee-icon {
+            transform: scale(1.1) rotate(-5deg);
         }
 
         .coffee-card h3 {
             font-size: 1.6rem;
             margin-bottom: 0.5rem;
-            color: #3E2723;
+            color: var(--text-light);
         }
 
         .coffee-origin {
@@ -371,18 +574,27 @@
             letter-spacing: 1.5px;
         }
 
+        .coffee-price {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--text-light);
+            margin: 0.5rem 0 1rem;
+            background: linear-gradient(135deg, #C7765C, #A85C47);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
         .coffee-description {
             font-size: 0.95rem;
             color: #757575;
             line-height: 1.7;
             margin-bottom: 1.5rem;
+            flex-grow: 1;
         }
 
-        .coffee-price {
-            font-size: 1.3rem;
-            font-weight: 700;
-            color: #3E2723;
-            margin-bottom: 1rem;
+        html.dark-mode .coffee-description {
+            color: #B8A89D;
         }
 
         .coffee-details {
@@ -408,15 +620,19 @@
             letter-spacing: 0.5px;
         }
 
+        html.dark-mode .detail-label {
+            color: #D9B8A8;
+        }
+
         .detail-value {
-            color: #3E2723;
+            color: var(--text-light);
             font-weight: 700;
             margin-top: 0.3rem;
         }
 
         .coffee-add-btn {
             width: 100%;
-            padding: 0.75rem;
+            padding: 0.9rem;
             background: linear-gradient(135deg, #C7765C 0%, #A85C47 100%);
             color: white;
             border: none;
@@ -424,16 +640,236 @@
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s ease;
+            font-size: 0.95rem;
+            margin-top: auto;
         }
 
         .coffee-add-btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 16px rgba(199, 118, 92, 0.2);
+            box-shadow: 0 8px 16px rgba(199, 118, 92, 0.3);
+        }
+
+        .coffee-add-btn.added {
+            background: #4CAF50;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 16px;
+            padding: 3rem;
+            max-width: 500px;
+            width: 90%;
+            animation: slideUp 0.3s cubic-bezier(0.23, 1, 0.320, 1);
+            position: relative;
+        }
+
+        html.dark-mode .modal-content {
+            background: #2a2218;
+            color: #F5F1EB;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: #f0f0f0;
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        html.dark-mode .modal-close {
+            background: #3a3228;
+        }
+
+        .modal h2 {
+            margin-bottom: 1.5rem;
+            margin-top: 0;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid rgba(199, 118, 92, 0.1);
+        }
+
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+
+        .cart-item-details {
+            flex-grow: 1;
+        }
+
+        .cart-item-name {
+            font-weight: 600;
+            color: var(--text-light);
+        }
+
+        .cart-item-price {
+            color: #C7765C;
+            font-weight: 700;
+        }
+
+        .cart-total {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 2px solid rgba(199, 118, 92, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+
+        .cart-empty {
+            text-align: center;
+            padding: 2rem;
+            color: #757575;
+        }
+
+        /* Blog Section */
+        .blog {
+            background: linear-gradient(135deg, rgba(62, 39, 35, 0.02) 0%, rgba(199, 118, 92, 0.02) 100%);
+        }
+
+        html.dark-mode .blog {
+            background: linear-gradient(135deg, rgba(199, 118, 92, 0.05) 0%, rgba(141, 110, 99, 0.05) 100%);
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
+            margin-top: 4rem;
+        }
+
+        .blog-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(62, 39, 35, 0.06);
+            transition: all 0.4s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        html.dark-mode .blog-card {
+            background: #2a2218;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .blog-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(62, 39, 35, 0.12);
+        }
+
+        .blog-image {
+            width: 100%;
+            height: 200px;
+            background: linear-gradient(135deg, #E8D4C0, #D4B5A0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            transition: transform 0.3s ease;
+        }
+
+        .blog-card:hover .blog-image {
+            transform: scale(1.05);
+        }
+
+        .blog-content {
+            padding: 2rem;
+            flex-grow: 1;
+        }
+
+        .blog-date {
+            font-size: 0.85rem;
+            color: #C7765C;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+        }
+
+        .blog-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.75rem;
+            color: var(--text-light);
+        }
+
+        .blog-excerpt {
+            color: #757575;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            flex-grow: 1;
+        }
+
+        html.dark-mode .blog-excerpt {
+            color: #B8A89D;
+        }
+
+        .blog-readmore {
+            color: #C7765C;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .blog-readmore:hover {
+            gap: 0.75rem;
         }
 
         /* Pricing Section */
         .pricing {
             background: linear-gradient(135deg, #FDFBF7 0%, #F5F1EB 100%);
+        }
+
+        html.dark-mode .pricing {
+            background: linear-gradient(135deg, #1a1410 0%, #2a2218 100%);
         }
 
         .pricing-grid {
@@ -452,6 +888,12 @@
             border: 2px solid rgba(199, 118, 92, 0.1);
             transition: all 0.4s ease;
             position: relative;
+        }
+
+        html.dark-mode .pricing-card {
+            background: #2a2218;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            border-color: rgba(199, 118, 92, 0.2);
         }
 
         .pricing-card.featured {
@@ -487,7 +929,7 @@
         .pricing-price {
             font-size: 2.5rem;
             font-weight: 900;
-            color: #3E2723;
+            color: var(--text-light);
             margin-bottom: 0.3rem;
         }
 
@@ -495,6 +937,10 @@
             color: #8D6E63;
             font-size: 0.95rem;
             margin-bottom: 1.5rem;
+        }
+
+        html.dark-mode .pricing-period {
+            color: #D9B8A8;
         }
 
         .pricing-features {
@@ -514,6 +960,10 @@
             align-items: center;
         }
 
+        html.dark-mode .pricing-features li {
+            color: #B8A89D;
+        }
+
         .pricing-features li::before {
             content: '✓';
             color: #C7765C;
@@ -522,58 +972,13 @@
             font-size: 1.2rem;
         }
 
-        /* Brewing Guide */
-        .brewing {
-            background: linear-gradient(135deg, rgba(62, 39, 35, 0.03) 0%, rgba(199, 118, 92, 0.02) 100%);
-        }
-
-        .brewing-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            margin-top: 4rem;
-        }
-
-        .brewing-card {
-            background: white;
-            padding: 2.5rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(62, 39, 35, 0.06);
-            border: 1px solid rgba(199, 118, 92, 0.1);
-            transition: all 0.4s ease;
-        }
-
-        .brewing-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 30px rgba(62, 39, 35, 0.1);
-        }
-
-        .brewing-number {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, #C7765C, #A85C47);
-            color: white;
-            border-radius: 50%;
-            font-weight: 700;
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .brewing-card h3 {
-            font-size: 1.3rem;
-            margin-bottom: 0.75rem;
-        }
-
-        .brewing-card p {
-            font-size: 0.95rem;
-        }
-
         /* FAQ Section */
         .faq {
             background: linear-gradient(135deg, rgba(62, 39, 35, 0.02) 0%, rgba(199, 118, 92, 0.02) 100%);
+        }
+
+        html.dark-mode .faq {
+            background: linear-gradient(135deg, rgba(199, 118, 92, 0.05) 0%, rgba(141, 110, 99, 0.05) 100%);
         }
 
         .faq-container {
@@ -592,6 +997,12 @@
             transition: all 0.3s ease;
         }
 
+        html.dark-mode .faq-item {
+            background: #2a2218;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            border-color: rgba(199, 118, 92, 0.2);
+        }
+
         .faq-item:hover {
             box-shadow: 0 8px 20px rgba(62, 39, 35, 0.08);
         }
@@ -603,7 +1014,7 @@
             justify-content: space-between;
             align-items: center;
             font-weight: 600;
-            color: #3E2723;
+            color: var(--text-light);
             font-size: 1rem;
             transition: all 0.3s ease;
         }
@@ -645,62 +1056,17 @@
             color: #616161;
         }
 
-        /* Ritual Section */
-        .ritual {
-            background: linear-gradient(135deg, #FDFBF7 0%, #F5F1EB 100%);
-        }
-
-        .ritual-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 5rem;
-            align-items: center;
-            margin-top: 3rem;
-        }
-
-        .ritual-text h3 {
-            font-size: 2.2rem;
-            margin-bottom: 1.5rem;
-            color: #3E2723;
-        }
-
-        .ritual-text p {
-            margin-bottom: 1.5rem;
-            font-size: 1rem;
-            color: #616161;
-        }
-
-        .ritual-text p:first-of-type::first-letter {
-            font-size: 2rem;
-            font-weight: 700;
-            color: #C7765C;
-            margin-right: 0.2rem;
-        }
-
-        .ritual-visual {
-            aspect-ratio: 1;
-            background: linear-gradient(135deg, #E8D4C0 0%, #D4B5A0 50%, #CABAA0 100%);
-            border-radius: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 5rem;
-            box-shadow: 0 30px 60px rgba(62, 39, 35, 0.15);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .ritual-visual::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.3) 0%, transparent 50%);
-            pointer-events: none;
+        html.dark-mode .faq-answer p {
+            color: #B8A89D;
         }
 
         /* Testimonials */
         .testimonials {
             background: linear-gradient(135deg, rgba(62, 39, 35, 0.02) 0%, rgba(199, 118, 92, 0.02) 100%);
+        }
+
+        html.dark-mode .testimonials {
+            background: linear-gradient(135deg, rgba(199, 118, 92, 0.05) 0%, rgba(141, 110, 99, 0.05) 100%);
         }
 
         .testimonials-grid {
@@ -717,6 +1083,11 @@
             box-shadow: 0 4px 15px rgba(62, 39, 35, 0.06);
             border-left: 4px solid #C7765C;
             transition: all 0.4s ease;
+        }
+
+        html.dark-mode .testimonial-card {
+            background: #2a2218;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
         }
 
         .testimonial-card:hover {
@@ -746,13 +1117,17 @@
 
         .testimonial-author {
             font-weight: 600;
-            color: #3E2723;
+            color: var(--text-light);
             font-size: 0.95rem;
         }
 
         .testimonial-role {
             font-size: 0.85rem;
             color: #8D6E63;
+        }
+
+        html.dark-mode .testimonial-role {
+            color: #D9B8A8;
         }
 
         .stars {
@@ -769,12 +1144,21 @@
             font-style: italic;
         }
 
+        html.dark-mode .testimonial-text {
+            color: #B8A89D;
+        }
+
         /* Footer */
         footer {
             background: linear-gradient(135deg, #3E2723 0%, #2C1810 100%);
             color: #FDFBF7;
             padding: 6rem 2rem 2rem;
             margin-top: 6rem;
+            transition: all 0.3s ease;
+        }
+
+        html.dark-mode footer {
+            background: linear-gradient(135deg, #0f0a07 0%, #1a1410 100%);
         }
 
         .footer-content {
@@ -853,28 +1237,54 @@
             color: rgba(253, 251, 247, 0.6);
         }
 
-        /* Responsive */
+        .back-to-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #C7765C, #A85C47);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 999;
+            box-shadow: 0 8px 20px rgba(199, 118, 92, 0.3);
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 30px rgba(199, 118, 92, 0.4);
+        }
+
         @media (max-width: 768px) {
             section {
                 padding: 4rem 1.5rem;
             }
 
-            .ritual-content {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-
-            .hero-tagline {
-                font-size: 1.1rem;
-            }
-
-            .hero-cta {
-                flex-direction: column;
-                gap: 0.75rem;
+            .navbar-menu {
+                display: none;
             }
 
             .pricing-card.featured {
                 transform: scale(1);
+            }
+
+            .carousel-item {
+                min-width: 280px;
+                flex: 0 0 280px;
             }
         }
 
@@ -884,8 +1294,37 @@
     </style>
 </head>
 <body>
-    <!-- Cursor dot -->
-    <div class="cursor-dot"></div>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="navbar-content">
+            <a href="#hero" class="navbar-logo">murokahveci</a>
+            <div class="navbar-menu">
+                <a href="#coffee-section">Shop</a>
+                <a href="#blog-section">Stories</a>
+                <a href="#pricing-section">Plans</a>
+                <a href="#faq-section">FAQ</a>
+                <button class="theme-toggle" id="themeToggle">🌙</button>
+                <button class="cart-btn" id="cartBtn" style="position: relative;">
+                    🛒
+                    <span class="cart-badge" id="cartBadge">0</span>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Cart Modal -->
+    <div class="modal" id="cartModal">
+        <div class="modal-content">
+            <button class="modal-close" id="cartClose">&times;</button>
+            <h2>Shopping Cart</h2>
+            <div id="cartItems"></div>
+            <div class="cart-total" id="cartTotal" style="display: none;">
+                <span>Total:</span>
+                <span id="cartTotalPrice">$0.00</span>
+            </div>
+            <button class="btn-primary" style="width: 100%; margin-top: 1.5rem;">Checkout</button>
+        </div>
+    </div>
 
     <!-- Hero Section with 3D Canvas -->
     <section class="hero" id="hero">
@@ -893,10 +1332,10 @@
         <div class="hero-content">
             <h1>murokahveci</h1>
             <p class="hero-tagline">Artisan roasted, thoughtfully crafted, mindfully sipped</p>
-            <p class="hero-subtitle">Discover single-origin coffees and signature blends from the world's most prestigious coffee regions. Crafted by master roasters who obsess over every detail.</p>
+            <p class="hero-subtitle">Experience single-origin coffees and signature blends from premium sources worldwide. Join us on a journey of exceptional taste and sustainable practices.</p>
             <div class="hero-cta">
                 <a href="#coffee-section" class="btn-primary">Shop Now</a>
-                <a href="#pricing-section" class="btn-secondary">View Plans</a>
+                <a href="#pricing-section" class="btn-secondary">Subscribe</a>
             </div>
         </div>
         <div class="scroll-indicator">
@@ -908,41 +1347,37 @@
 
     <!-- Stats Section -->
     <section class="stats" id="stats-section">
-        <h2 class="fade-in">Our Story</h2>
+        <h2 class="fade-in">Our Impact</h2>
         <div class="stats-grid">
             <div class="stat-card fade-in">
                 <div class="stat-number">15+</div>
                 <div class="stat-label">Countries Sourced</div>
-                <div class="stat-description">Premium beans from the world's finest estates</div>
             </div>
             <div class="stat-card fade-in">
                 <div class="stat-number">8K+</div>
-                <div class="stat-label">Loyal Customers</div>
-                <div class="stat-description">Coffee enthusiasts who trust our craft</div>
-            </div>
-            <div class="stat-card fade-in">
-                <div class="stat-number">5yr</div>
-                <div class="stat-label">Perfecting the Art</div>
-                <div class="stat-description">Years of expertise and passion</div>
+                <div class="stat-label">Happy Customers</div>
             </div>
             <div class="stat-card fade-in">
                 <div class="stat-number">100%</div>
                 <div class="stat-label">Ethically Sourced</div>
-                <div class="stat-description">Fair trade certified and sustainable</div>
+            </div>
+            <div class="stat-card fade-in">
+                <div class="stat-number">5yr</div>
+                <div class="stat-label">Mastery</div>
             </div>
         </div>
     </section>
 
     <!-- Coffee Blends Section -->
     <section id="coffee-section">
-        <h2 class="fade-in">Our Coffee Blends</h2>
+        <h2 class="fade-in">Premium Coffees</h2>
         <div class="coffee-grid">
             <div class="coffee-card fade-in">
                 <div class="coffee-icon">☕</div>
                 <h3>Ethiopian Yirgacheffe</h3>
                 <p class="coffee-origin">Single Origin</p>
                 <p class="coffee-price">$18.99</p>
-                <p class="coffee-description">Bright acidity with notes of blueberry and jasmine. A delicate yet complex pour that awakens the palate.</p>
+                <p class="coffee-description">Bright acidity with notes of blueberry and jasmine. A delicate yet complex pour.</p>
                 <div class="coffee-details">
                     <div class="detail-item">
                         <div class="detail-label">Acidity</div>
@@ -957,7 +1392,7 @@
                         <div class="detail-value">Light</div>
                     </div>
                 </div>
-                <button class="coffee-add-btn">Add to Cart</button>
+                <button class="coffee-add-btn" onclick="addToCart('Ethiopian Yirgacheffe', 18.99)">Add to Cart</button>
             </div>
 
             <div class="coffee-card fade-in">
@@ -965,7 +1400,7 @@
                 <h3>Colombian Geisha</h3>
                 <p class="coffee-origin">Limited Edition</p>
                 <p class="coffee-price">$24.99</p>
-                <p class="coffee-description">Smooth, buttery body with hints of chocolate and hazelnut. A luxurious experience for the discerning palate.</p>
+                <p class="coffee-description">Smooth, buttery body with hints of chocolate and hazelnut. Luxurious experience.</p>
                 <div class="coffee-details">
                     <div class="detail-item">
                         <div class="detail-label">Acidity</div>
@@ -980,7 +1415,7 @@
                         <div class="detail-value">Medium</div>
                     </div>
                 </div>
-                <button class="coffee-add-btn">Add to Cart</button>
+                <button class="coffee-add-btn" onclick="addToCart('Colombian Geisha', 24.99)">Add to Cart</button>
             </div>
 
             <div class="coffee-card fade-in">
@@ -988,7 +1423,7 @@
                 <h3>Costa Rican Hueca</h3>
                 <p class="coffee-origin">Single Origin</p>
                 <p class="coffee-price">$19.99</p>
-                <p class="coffee-description">Rich, full-bodied with undertones of cocoa and caramel. Perfect for espresso and milk-based beverages.</p>
+                <p class="coffee-description">Rich, full-bodied with cocoa and caramel undertones. Perfect for espresso.</p>
                 <div class="coffee-details">
                     <div class="detail-item">
                         <div class="detail-label">Acidity</div>
@@ -1003,7 +1438,7 @@
                         <div class="detail-value">Dark</div>
                     </div>
                 </div>
-                <button class="coffee-add-btn">Add to Cart</button>
+                <button class="coffee-add-btn" onclick="addToCart('Costa Rican Hueca', 19.99)">Add to Cart</button>
             </div>
 
             <div class="coffee-card fade-in">
@@ -1011,7 +1446,7 @@
                 <h3>Signature Blend</h3>
                 <p class="coffee-origin">House Blend</p>
                 <p class="coffee-price">$16.99</p>
-                <p class="coffee-description">Perfectly balanced blend of premium origins. Our daily obsession since day one, versatile for any brewing method.</p>
+                <p class="coffee-description">Perfectly balanced blend of premium origins. Versatile for any brewing method.</p>
                 <div class="coffee-details">
                     <div class="detail-item">
                         <div class="detail-label">Acidity</div>
@@ -1026,7 +1461,7 @@
                         <div class="detail-value">Medium</div>
                     </div>
                 </div>
-                <button class="coffee-add-btn">Add to Cart</button>
+                <button class="coffee-add-btn" onclick="addToCart('Signature Blend', 16.99)">Add to Cart</button>
             </div>
 
             <div class="coffee-card fade-in">
@@ -1034,7 +1469,7 @@
                 <h3>Kenyan AA</h3>
                 <p class="coffee-origin">Single Origin</p>
                 <p class="coffee-price">$20.99</p>
-                <p class="coffee-description">Bright and fruity with wine-like qualities. A vibrant awakening in every cup for morning rituals.</p>
+                <p class="coffee-description">Bright and fruity with wine-like qualities. Vibrant morning awakening.</p>
                 <div class="coffee-details">
                     <div class="detail-item">
                         <div class="detail-label">Acidity</div>
@@ -1049,7 +1484,7 @@
                         <div class="detail-value">Light</div>
                     </div>
                 </div>
-                <button class="coffee-add-btn">Add to Cart</button>
+                <button class="coffee-add-btn" onclick="addToCart('Kenyan AA', 20.99)">Add to Cart</button>
             </div>
 
             <div class="coffee-card fade-in">
@@ -1057,7 +1492,7 @@
                 <h3>Brazilian Santos</h3>
                 <p class="coffee-origin">Single Origin</p>
                 <p class="coffee-price">$17.99</p>
-                <p class="coffee-description">Low acidity, sweet, with notes of nuts and spice. A comforting embrace in your afternoon cup.</p>
+                <p class="coffee-description">Low acidity, sweet, with nuts and spice. Comforting afternoon companion.</p>
                 <div class="coffee-details">
                     <div class="detail-item">
                         <div class="detail-label">Acidity</div>
@@ -1072,7 +1507,43 @@
                         <div class="detail-value">Medium</div>
                     </div>
                 </div>
-                <button class="coffee-add-btn">Add to Cart</button>
+                <button class="coffee-add-btn" onclick="addToCart('Brazilian Santos', 17.99)">Add to Cart</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section class="blog" id="blog-section">
+        <h2 class="fade-in">Coffee Stories</h2>
+        <div class="blog-grid">
+            <div class="blog-card fade-in">
+                <div class="blog-image">📖</div>
+                <div class="blog-content">
+                    <div class="blog-date">December 15, 2024</div>
+                    <h3>The Art of Ethiopian Coffee</h3>
+                    <p class="blog-excerpt">Discover the ancient traditions of Ethiopian coffee cultivation and how altitude impacts flavor profiles in this rich heritage.</p>
+                    <a href="#" class="blog-readmore">Read More →</a>
+                </div>
+            </div>
+
+            <div class="blog-card fade-in">
+                <div class="blog-image">🌱</div>
+                <div class="blog-content">
+                    <div class="blog-date">December 10, 2024</div>
+                    <h3>Sustainable Sourcing Practices</h3>
+                    <p class="blog-excerpt">Learn how our direct trade partnerships support farming communities and ensure fair compensation for ethical coffee production.</p>
+                    <a href="#" class="blog-readmore">Read More →</a>
+                </div>
+            </div>
+
+            <div class="blog-card fade-in">
+                <div class="blog-image">🔥</div>
+                <div class="blog-content">
+                    <div class="blog-date">December 5, 2024</div>
+                    <h3>Roasting Science Explained</h3>
+                    <p class="blog-excerpt">Dive deep into the roasting process and understand how temperature curves transform raw beans into aromatic perfection.</p>
+                    <a href="#" class="blog-readmore">Read More →</a>
+                </div>
             </div>
         </div>
     </section>
@@ -1088,10 +1559,10 @@
                 <ul class="pricing-features">
                     <li>1 Signature Blend</li>
                     <li>Free Shipping</li>
-                    <li>Email Brewing Tips</li>
+                    <li>Brewing Tips</li>
                     <li>10% Discount</li>
                 </ul>
-                <button class="btn-primary">Get Started</button>
+                <button class="btn-primary" style="width: 100%;">Get Started</button>
             </div>
 
             <div class="pricing-card featured fade-in">
@@ -1104,9 +1575,9 @@
                     <li>Free Shipping</li>
                     <li>Exclusive Blends First</li>
                     <li>15% Discount</li>
-                    <li>Brewing Consultation</li>
+                    <li>Consultation</li>
                 </ul>
-                <button class="btn-primary">Get Started</button>
+                <button class="btn-primary" style="width: 100%;">Get Started</button>
             </div>
 
             <div class="pricing-card fade-in">
@@ -1119,38 +1590,16 @@
                     <li>VIP Member Status</li>
                     <li>20% Discount</li>
                     <li>Private Curations</li>
-                    <li>Birthday Gift Bag</li>
+                    <li>Birthday Gift</li>
                 </ul>
-                <button class="btn-primary">Get Started</button>
-            </div>
-        </div>
-    </section>
-
-    <!-- Brewing Guide -->
-    <section class="brewing" id="brewing-section">
-        <h2 class="fade-in">The Perfect Brew</h2>
-        <div class="brewing-grid">
-            <div class="brewing-card fade-in">
-                <div class="brewing-number">1</div>
-                <h3>Select Your Beans</h3>
-                <p>Choose from our single-origin selections or signature blends based on your preference and brewing method. We recommend tasting multiple origins to find your favorite profile and taste notes.</p>
-            </div>
-            <div class="brewing-card fade-in">
-                <div class="brewing-number">2</div>
-                <h3>Grind Fresh</h3>
-                <p>Grind your beans just before brewing for optimal flavor extraction. The grind size should match your brewing method—coarse for French press, medium for pour over, fine for espresso machines.</p>
-            </div>
-            <div class="brewing-card fade-in">
-                <div class="brewing-number">3</div>
-                <h3>Use Quality Water</h3>
-                <p>Water temperature matters: aim for 195-205°F (90-96°C). Use filtered water to avoid mineral buildup and ensure a clean, pure extraction of all the beautiful flavors in your beans.</p>
+                <button class="btn-primary" style="width: 100%;">Get Started</button>
             </div>
         </div>
     </section>
 
     <!-- FAQ Section -->
     <section class="faq" id="faq-section">
-        <h2 class="fade-in">Frequently Asked Questions</h2>
+        <h2 class="fade-in">Questions?</h2>
         <div class="faq-container">
             <div class="faq-item fade-in">
                 <div class="faq-question">
@@ -1158,71 +1607,55 @@
                     <span class="faq-toggle">+</span>
                 </div>
                 <div class="faq-answer">
-                    <p>We ship all orders within 2 business days. Standard shipping takes 3-5 business days within the continental US. International orders are dispatched within 5-7 business days.</p>
+                    <p>We ship within 2 business days. Standard shipping takes 3-5 days within the continental US. International orders ship within 5-7 days with tracking.</p>
                 </div>
             </div>
 
             <div class="faq-item fade-in">
                 <div class="faq-question">
-                    <span>Can I cancel my subscription anytime?</span>
+                    <span>Can I cancel anytime?</span>
                     <span class="faq-toggle">+</span>
                 </div>
                 <div class="faq-answer">
-                    <p>Yes, absolutely! You can cancel your subscription at any time with no penalty. Simply log into your account or contact our customer service team, and we'll take care of it immediately.</p>
+                    <p>Yes! Cancel your subscription anytime with no penalties. Simply manage it in your account or contact our support team for assistance.</p>
                 </div>
             </div>
 
             <div class="faq-item fade-in">
                 <div class="faq-question">
-                    <span>Are all your coffees ethically sourced?</span>
+                    <span>Are coffees ethically sourced?</span>
                     <span class="faq-toggle">+</span>
                 </div>
                 <div class="faq-answer">
-                    <p>Yes, 100% of our coffees are ethically sourced and fairly traded. We work directly with farmer cooperatives and estate owners to ensure fair compensation and sustainable farming practices.</p>
+                    <p>100% ethically sourced and fairly traded. We work directly with farmer cooperatives ensuring fair compensation and sustainable practices throughout.</p>
                 </div>
             </div>
 
             <div class="faq-item fade-in">
                 <div class="faq-question">
-                    <span>What's the shelf life of your coffee?</span>
+                    <span>What's the shelf life?</span>
                     <span class="faq-toggle">+</span>
                 </div>
                 <div class="faq-answer">
-                    <p>Our beans are best enjoyed within 3-4 weeks of roasting. All packages are stamped with the roast date. Store them in an airtight container away from light and heat for optimal freshness.</p>
+                    <p>Best enjoyed within 3-4 weeks of roasting. All packages show the roast date. Store in an airtight container away from light and heat for optimal freshness.</p>
                 </div>
             </div>
 
             <div class="faq-item fade-in">
                 <div class="faq-question">
-                    <span>Do you offer gift subscriptions?</span>
+                    <span>Gift subscriptions available?</span>
                     <span class="faq-toggle">+</span>
                 </div>
                 <div class="faq-answer">
-                    <p>Absolutely! Gift subscriptions are perfect for coffee lovers. Choose any plan and we'll send a beautifully designed gift card with brewing instructions and tasting notes for each shipment.</p>
+                    <p>Yes! Perfect for coffee lovers. Choose any plan and we'll send a beautiful gift card with brewing instructions and tasting notes for each shipment.</p>
                 </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- The Ritual Section -->
-    <section class="ritual" id="ritual-section">
-        <h2 class="fade-in">The Ritual</h2>
-        <div class="ritual-content">
-            <div class="ritual-text fade-in-left">
-                <h3>A Moment of Intention</h3>
-                <p>At murokahveci, we believe that coffee is more than a beverage—it's a ritual of mindfulness. From the careful selection of beans at high-altitude farms to the precise roasting process in our small-batch roastery, every step is an act of intention and care.</p>
-                <p>Our master roasters spend years perfecting their craft, understanding the subtle differences in altitude, terroir, and processing methods that distinguish exceptional coffee from the ordinary. When you brew a cup of murokahveci, you're not just enjoying coffee—you're participating in a centuries-old tradition of excellence.</p>
-                <p>We roast in small batches to ensure peak freshness. We source directly from farmers who share our values of sustainability and fair compensation. Every purchase supports ethical practices and the livelihoods of coffee farming families worldwide.</p>
-            </div>
-            <div class="ritual-visual fade-in-right">
-                ☕
             </div>
         </div>
     </section>
 
     <!-- Testimonials Section -->
     <section class="testimonials" id="testimonials-section">
-        <h2 class="fade-in">What Our Customers Say</h2>
+        <h2 class="fade-in">Loved by Coffee Enthusiasts</h2>
         <div class="testimonials-grid">
             <div class="testimonial-card fade-in scale-in">
                 <div class="testimonial-header">
@@ -1233,7 +1666,7 @@
                     </div>
                 </div>
                 <div class="stars">★★★★★</div>
-                <p class="testimonial-text">"The quality and consistency of murokahveci coffee is unmatched. I've been a customer for two years and every single bag has exceeded my expectations. The brewing guides are incredibly helpful!"</p>
+                <p class="testimonial-text">"Exceptional quality and consistency. Every bag exceeded my expectations. The brewing guides make it foolproof!"</p>
             </div>
 
             <div class="testimonial-card fade-in scale-in">
@@ -1245,7 +1678,7 @@
                     </div>
                 </div>
                 <div class="stars">★★★★★</div>
-                <p class="testimonial-text">"Finally found a coffee that tastes as premium as it looks. The brewing guide they provide makes it foolproof. I've never made a better cup at home. Absolutely worth the investment!"</p>
+                <p class="testimonial-text">"Finally found coffee that tastes premium. I've never made better cups at home. Absolutely worth it!"</p>
             </div>
 
             <div class="testimonial-card fade-in scale-in">
@@ -1257,7 +1690,7 @@
                     </div>
                 </div>
                 <div class="stars">★★★★★</div>
-                <p class="testimonial-text">"The attention to detail from sourcing to roasting is evident in every sip. Supporting ethical practices while enjoying exceptional coffee—this is the future of the industry."</p>
+                <p class="testimonial-text">"The ethics are impeccable. Supporting fair trade while enjoying exceptional coffee—this is the future!"</p>
             </div>
 
             <div class="testimonial-card fade-in scale-in">
@@ -1265,11 +1698,11 @@
                     <div class="testimonial-avatar">JL</div>
                     <div>
                         <div class="testimonial-author">James Liu</div>
-                        <div class="testimonial-role">Tech Entrepreneur</div>
+                        <div class="testimonial-role">Entrepreneur</div>
                     </div>
                 </div>
                 <div class="stars">★★★★★</div>
-                <p class="testimonial-text">"Subscription is perfect for my busy lifestyle. Every month I get excited for the delivery. The tasting notes help me understand and appreciate the nuances in each blend."</p>
+                <p class="testimonial-text">"Subscription is perfect for my lifestyle. Every delivery is exciting. The tasting notes enhance my appreciation!"</p>
             </div>
 
             <div class="testimonial-card fade-in scale-in">
@@ -1281,7 +1714,7 @@
                     </div>
                 </div>
                 <div class="stars">★★★★★</div>
-                <p class="testimonial-text">"As someone who works with premium ingredients daily, I can appreciate the quality here. These beans pair beautifully with pastries and desserts. Highly recommend!"</p>
+                <p class="testimonial-text">"Professional quality beans. Pairs beautifully with pastries. I recommend to all my colleagues and friends!"</p>
             </div>
 
             <div class="testimonial-card fade-in scale-in">
@@ -1293,7 +1726,7 @@
                     </div>
                 </div>
                 <div class="stars">★★★★★</div>
-                <p class="testimonial-text">"Professional opinion: these are exceptional. The roasting profiles show deep knowledge and respect for the beans. I've recommended murokahveci to all my colleagues."</p>
+                <p class="testimonial-text">"Exceptional roasting profiles. Deep knowledge and respect for the beans. Highly recommended to professionals!"</p>
             </div>
         </div>
     </section>
@@ -1303,7 +1736,7 @@
         <div class="footer-content">
             <div class="footer-section">
                 <h4>About</h4>
-                <p>Founded in 2020, murokahveci is dedicated to bringing the world's finest artisan coffees to your cup.</p>
+                <p>Founded in 2020, murokahveci brings world-class artisan coffee to your home.</p>
                 <a href="#">Our Story</a>
                 <a href="#">Sourcing</a>
                 <a href="#">Roastery</a>
@@ -1321,8 +1754,8 @@
                 <p>Sunday: 8am – 6pm</p>
             </div>
             <div class="footer-section">
-                <h4>Subscribe</h4>
-                <p style="margin-bottom: 1rem; font-size: 0.9rem;">Get new blends and brewing tips delivered to your inbox.</p>
+                <h4>Newsletter</h4>
+                <p>Get brewing tips and new blends monthly.</p>
                 <div class="footer-newsletter">
                     <input type="email" placeholder="Your email">
                     <button>Subscribe</button>
@@ -1334,9 +1767,96 @@
         </div>
     </footer>
 
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop">↑</button>
+
     <script>
         // ==========================================
-        // SCROLL ANIMATION & FAQ FUNCTIONALITY
+        // ADVANCED FEATURES
+        // ==========================================
+
+        // Dark Mode Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const html = document.documentElement;
+
+        themeToggle.addEventListener('click', () => {
+            html.classList.toggle('dark-mode');
+            localStorage.setItem('theme', html.classList.contains('dark-mode') ? 'dark' : 'light');
+            themeToggle.textContent = html.classList.contains('dark-mode') ? '☀️' : '🌙';
+        });
+
+        if (localStorage.getItem('theme') === 'dark') {
+            html.classList.add('dark-mode');
+            themeToggle.textContent = '☀️';
+        }
+
+        // Shopping Cart
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+        function addToCart(name, price) {
+            cart.push({ name, price });
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCart();
+
+            const btn = event.target;
+            btn.textContent = '✓ Added';
+            btn.classList.add('added');
+            setTimeout(() => {
+                btn.textContent = 'Add to Cart';
+                btn.classList.remove('added');
+            }, 2000);
+        }
+
+        function updateCart() {
+            const badge = document.getElementById('cartBadge');
+            badge.textContent = cart.length;
+
+            const cartItems = document.getElementById('cartItems');
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<div class="cart-empty">Your cart is empty. Start shopping!</div>';
+                document.getElementById('cartTotal').style.display = 'none';
+            } else {
+                cartItems.innerHTML = cart.map((item, i) => `
+                    <div class="cart-item">
+                        <div class="cart-item-details">
+                            <div class="cart-item-name">${item.name}</div>
+                            <div class="cart-item-price">$${item.price.toFixed(2)}</div>
+                        </div>
+                        <button onclick="removeFromCart(${i})" style="background: #FF6B6B; color: white; border: none; padding: 0.4rem 0.8rem; border-radius: 4px; cursor: pointer;">Remove</button>
+                    </div>
+                `).join('');
+
+                const total = cart.reduce((sum, item) => sum + item.price, 0);
+                document.getElementById('cartTotalPrice').textContent = `$${total.toFixed(2)}`;
+                document.getElementById('cartTotal').style.display = 'flex';
+            }
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCart();
+        }
+
+        document.getElementById('cartBtn').addEventListener('click', () => {
+            document.getElementById('cartModal').classList.add('active');
+            updateCart();
+        });
+
+        document.getElementById('cartClose').addEventListener('click', () => {
+            document.getElementById('cartModal').classList.remove('active');
+        });
+
+        document.getElementById('cartModal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('cartModal')) {
+                document.getElementById('cartModal').classList.remove('active');
+            }
+        });
+
+        updateCart();
+
+        // ==========================================
+        // SCROLL ANIMATIONS
         // ==========================================
 
         const observerOptions = {
@@ -1344,7 +1864,7 @@
             rootMargin: '0px 0px -100px 0px'
         };
 
-        const observer = new IntersectionObserver(function(entries) {
+        const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('visible');
@@ -1363,274 +1883,162 @@
             });
         });
 
+        // Back to Top Button
+        const backToTop = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        });
+
+        backToTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
         // ==========================================
-        // THREE.JS SETUP & PREMIUM 3D ROBOT MOUSE
+        // THREE.JS PREMIUM 3D ROBOT MOUSE
         // ==========================================
 
         const canvas = document.getElementById('canvas');
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+        if (!canvas.getAttribute('data-initialized')) {
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
 
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setClearColor(0xFDFBF7, 1);
-        renderer.setPixelRatio(window.devicePixelRatio);
-        camera.position.z = 8;
+            renderer.setSize(window.innerWidth, window.innerHeight - 70);
+            renderer.setClearColor(0xFDFBF7, 1);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            camera.position.z = 8;
 
-        // Enhanced Lighting System
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.65);
-        scene.add(ambientLight);
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+            scene.add(ambientLight);
 
-        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
-        directionalLight.position.set(8, 6, 8);
-        directionalLight.castShadow = true;
-        scene.add(directionalLight);
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            directionalLight.position.set(8, 6, 8);
+            scene.add(directionalLight);
 
-        const rimLight = new THREE.DirectionalLight(0xC7765C, 0.35);
-        rimLight.position.set(-8, 2, -8);
-        scene.add(rimLight);
+            const rimLight = new THREE.DirectionalLight(0xC7765C, 0.35);
+            rimLight.position.set(-8, 2, -8);
+            scene.add(rimLight);
 
-        // ==========================================
-        // CREATE ULTRA-PREMIUM 3D ROBOT MOUSE
-        // ==========================================
+            const robotGroup = new THREE.Group();
+            scene.add(robotGroup);
 
-        const robotGroup = new THREE.Group();
-        scene.add(robotGroup);
+            const ceramicMaterial = new THREE.MeshStandardMaterial({
+                color: 0xD9B8A8,
+                roughness: 0.35,
+                metalness: 0.05
+            });
 
-        // Premium Ceramic Material
-        const ceramicMaterial = new THREE.MeshStandardMaterial({
-            color: 0xD9B8A8,
-            roughness: 0.35,
-            metalness: 0.05,
-            normalScale: new THREE.Vector2(0.5, 0.5)
-        });
+            const metalMaterial = new THREE.MeshStandardMaterial({
+                color: 0x8D6E63,
+                roughness: 0.25,
+                metalness: 0.7
+            });
 
-        // Premium Metal Material
-        const metalMaterial = new THREE.MeshStandardMaterial({
-            color: 0x8D6E63,
-            roughness: 0.25,
-            metalness: 0.7
-        });
+            const accentMaterial = new THREE.MeshStandardMaterial({
+                color: 0xC7765C,
+                roughness: 0.3,
+                metalness: 0.4
+            });
 
-        // Accent Material
-        const accentMaterial = new THREE.MeshStandardMaterial({
-            color: 0xC7765C,
-            roughness: 0.3,
-            metalness: 0.4
-        });
+            const body = new THREE.Mesh(new THREE.RoundedBoxGeometry(1.6, 2.2, 1.3, 8, 0.1), ceramicMaterial);
+            robotGroup.add(body);
 
-        // Body (enhanced)
-        const bodyGeometry = new THREE.RoundedBoxGeometry(1.6, 2.2, 1.3, 8, 0.1);
-        const body = new THREE.Mesh(bodyGeometry, ceramicMaterial);
-        body.castShadow = true;
-        body.receiveShadow = true;
-        robotGroup.add(body);
+            const head = new THREE.Mesh(new THREE.RoundedBoxGeometry(1.3, 1.3, 1.1, 8, 0.1), ceramicMaterial);
+            head.position.y = 1.5;
+            robotGroup.add(head);
 
-        // Head
-        const headGeometry = new THREE.RoundedBoxGeometry(1.3, 1.3, 1.1, 8, 0.1);
-        const head = new THREE.Mesh(headGeometry, ceramicMaterial);
-        head.position.y = 1.5;
-        head.castShadow = true;
-        head.receiveShadow = true;
-        robotGroup.add(head);
+            const leftEar = new THREE.Mesh(new THREE.CylinderGeometry(0.25, 0.3, 0.8, 16), accentMaterial);
+            leftEar.position.set(-0.6, 2.1, 0);
+            robotGroup.add(leftEar);
 
-        // Premium Ears
-        const earGeometry = new THREE.CylinderGeometry(0.25, 0.3, 0.8, 16);
-        const leftEar = new THREE.Mesh(earGeometry, accentMaterial);
-        leftEar.position.set(-0.6, 2.1, 0);
-        leftEar.castShadow = true;
-        robotGroup.add(leftEar);
+            const rightEar = new THREE.Mesh(new THREE.CylinderGeometry(0.25, 0.3, 0.8, 16), accentMaterial);
+            rightEar.position.set(0.6, 2.1, 0);
+            robotGroup.add(rightEar);
 
-        const rightEar = new THREE.Mesh(earGeometry, accentMaterial);
-        rightEar.position.set(0.6, 2.1, 0);
-        rightEar.castShadow = true;
-        robotGroup.add(rightEar);
+            const leftEyeWhite = new THREE.Mesh(new THREE.SphereGeometry(0.28, 32, 32), new THREE.MeshStandardMaterial({ color: 0xFFFFFF, roughness: 0.2 }));
+            leftEyeWhite.position.set(-0.4, 1.6, 0.65);
+            robotGroup.add(leftEyeWhite);
 
-        // Eyes - White
-        const eyeWhiteGeometry = new THREE.SphereGeometry(0.28, 32, 32);
-        const leftEyeWhite = new THREE.Mesh(eyeWhiteGeometry, new THREE.MeshStandardMaterial({
-            color: 0xFFFFFF,
-            roughness: 0.2,
-            metalness: 0.1
-        }));
-        leftEyeWhite.position.set(-0.4, 1.6, 0.65);
-        leftEyeWhite.castShadow = true;
-        robotGroup.add(leftEyeWhite);
+            const rightEyeWhite = new THREE.Mesh(new THREE.SphereGeometry(0.28, 32, 32), new THREE.MeshStandardMaterial({ color: 0xFFFFFF, roughness: 0.2 }));
+            rightEyeWhite.position.set(0.4, 1.6, 0.65);
+            robotGroup.add(rightEyeWhite);
 
-        const rightEyeWhite = new THREE.Mesh(eyeWhiteGeometry, new THREE.MeshStandardMaterial({
-            color: 0xFFFFFF,
-            roughness: 0.2,
-            metalness: 0.1
-        }));
-        rightEyeWhite.position.set(0.4, 1.6, 0.65);
-        rightEyeWhite.castShadow = true;
-        robotGroup.add(rightEyeWhite);
+            const leftIris = new THREE.Mesh(new THREE.SphereGeometry(0.13, 32, 32), accentMaterial);
+            leftIris.position.set(-0.4, 1.6, 0.8);
+            robotGroup.add(leftIris);
 
-        // Iris - Tracking
-        const irisGeometry = new THREE.SphereGeometry(0.13, 32, 32);
-        const leftIris = new THREE.Mesh(irisGeometry, accentMaterial);
-        leftIris.position.set(-0.4, 1.6, 0.8);
-        leftIris.userData.homePosition = new THREE.Vector3(-0.4, 1.6, 0.8);
-        robotGroup.add(leftIris);
+            const rightIris = new THREE.Mesh(new THREE.SphereGeometry(0.13, 32, 32), accentMaterial);
+            rightIris.position.set(0.4, 1.6, 0.8);
+            robotGroup.add(rightIris);
 
-        const rightIris = new THREE.Mesh(irisGeometry, accentMaterial);
-        rightIris.position.set(0.4, 1.6, 0.8);
-        rightIris.userData.homePosition = new THREE.Vector3(0.4, 1.6, 0.8);
-        robotGroup.add(rightIris);
+            const nose = new THREE.Mesh(new THREE.SphereGeometry(0.12, 16, 16), accentMaterial);
+            nose.position.set(0, 1.4, 0.8);
+            robotGroup.add(nose);
 
-        // Eyebrows
-        const eyebrowGeometry = new THREE.BoxGeometry(0.45, 0.08, 0.05);
-        const leftEyebrow = new THREE.Mesh(eyebrowGeometry, metalMaterial);
-        leftEyebrow.position.set(-0.4, 1.95, 0.7);
-        leftEyebrow.rotation.z = -0.2;
-        robotGroup.add(leftEyebrow);
+            const tail = new THREE.Mesh(new THREE.BoxGeometry(0.35, 1, 0.25), metalMaterial);
+            tail.position.set(0, -1, -0.9);
+            tail.rotation.z = 0.4;
+            robotGroup.add(tail);
 
-        const rightEyebrow = new THREE.Mesh(eyebrowGeometry, metalMaterial);
-        rightEyebrow.position.set(0.4, 1.95, 0.7);
-        rightEyebrow.rotation.z = 0.2;
-        robotGroup.add(rightEyebrow);
+            let mouseX = 0, mouseY = 0, targetMouseX = 0, targetMouseY = 0;
+            document.addEventListener('mousemove', (e) => {
+                targetMouseX = (e.clientX / window.innerWidth) * 2 - 1;
+                targetMouseY = -(e.clientY / window.innerHeight) * 2 + 1;
+            });
 
-        // Nose
-        const noseGeometry = new THREE.SphereGeometry(0.12, 16, 16);
-        const nose = new THREE.Mesh(noseGeometry, accentMaterial);
-        nose.position.set(0, 1.4, 0.8);
-        robotGroup.add(nose);
+            let animationTime = 0;
+            function animate() {
+                requestAnimationFrame(animate);
+                animationTime += 0.01;
 
-        // Elegant Tail
-        const tailGeometry = new THREE.BoxGeometry(0.35, 1, 0.25);
-        const tail = new THREE.Mesh(tailGeometry, metalMaterial);
-        tail.position.set(0, -1, -0.9);
-        tail.rotation.z = 0.4;
-        tail.castShadow = true;
-        robotGroup.add(tail);
+                mouseX += (targetMouseX - mouseX) * 0.06;
+                mouseY += (targetMouseY - mouseY) * 0.06;
 
-        // Premium Whiskers
-        const whiskerMaterial = new THREE.LineBasicMaterial({
-            color: 0xA85C47,
-            linewidth: 2
-        });
+                robotGroup.position.y = Math.sin(animationTime * 0.8) * 0.2;
+                robotGroup.rotation.x = Math.sin(animationTime * 0.4) * 0.08;
+                robotGroup.rotation.z = Math.cos(animationTime * 0.3) * 0.04;
 
-        const whiskerPoints1 = [
-            new THREE.Vector3(-0.8, 1.4, 0.55),
-            new THREE.Vector3(-1.4, 1.3, 0.3)
-        ];
-        const whiskerGeom1 = new THREE.BufferGeometry().setFromPoints(whiskerPoints1);
-        const whisker1 = new THREE.Line(whiskerGeom1, whiskerMaterial);
-        robotGroup.add(whisker1);
+                const raycaster = new THREE.Raycaster();
+                raycaster.setFromCamera(new THREE.Vector2(mouseX, mouseY), camera);
+                const plane = new THREE.Plane(new THREE.Vector3(0, 0, 1), -2);
+                const targetPoint = new THREE.Vector3();
+                raycaster.ray.intersectPlane(plane, targetPoint);
 
-        const whiskerPoints2 = [
-            new THREE.Vector3(0.8, 1.4, 0.55),
-            new THREE.Vector3(1.4, 1.3, 0.3)
-        ];
-        const whiskerGeom2 = new THREE.BufferGeometry().setFromPoints(whiskerPoints2);
-        const whisker2 = new THREE.Line(whiskerGeom2, whiskerMaterial);
-        robotGroup.add(whisker2);
+                const trackEye = (iris, eyePos) => {
+                    const dir = targetPoint.clone().sub(eyePos).normalize();
+                    const lookPos = eyePos.clone().add(dir.multiplyScalar(0.35));
+                    let targetPos = lookPos.clone().sub(eyePos);
+                    if (targetPos.length() > 0.55) targetPos.normalize().multiplyScalar(0.55);
+                    targetPos.add(eyePos);
+                    iris.position.lerp(targetPos, 0.12);
+                };
 
-        // ==========================================
-        // ADVANCED MOUSE TRACKING
-        // ==========================================
+                trackEye(leftIris, new THREE.Vector3(-0.4, 1.6, 0.65));
+                trackEye(rightIris, new THREE.Vector3(0.4, 1.6, 0.65));
 
-        let mouseX = 0;
-        let mouseY = 0;
-        let targetMouseX = 0;
-        let targetMouseY = 0;
-
-        document.addEventListener('mousemove', (event) => {
-            targetMouseX = (event.clientX / window.innerWidth) * 2 - 1;
-            targetMouseY = -(event.clientY / window.innerHeight) * 2 + 1;
-        });
-
-        function updateEyeTracking() {
-            mouseX += (targetMouseX - mouseX) * 0.06;
-            mouseY += (targetMouseY - mouseY) * 0.06;
-
-            const raycaster = new THREE.Raycaster();
-            const mouse = new THREE.Vector2(mouseX, mouseY);
-            raycaster.setFromCamera(mouse, camera);
-
-            const plane = new THREE.Plane(new THREE.Vector3(0, 0, 1), -2);
-            const targetPoint = new THREE.Vector3();
-            raycaster.ray.intersectPlane(plane, targetPoint);
-
-            const trackingDistance = 0.35;
-            const maxDistance = 0.55;
-
-            // Left iris
-            const leftEyePos = new THREE.Vector3(-0.4, 1.6, 0.65);
-            const leftDirection = targetPoint.clone().sub(leftEyePos).normalize();
-            const leftLookPos = leftEyePos.clone().add(leftDirection.multiplyScalar(trackingDistance));
-
-            const leftTargetPos = leftLookPos.clone().sub(leftEyePos);
-            if (leftTargetPos.length() > maxDistance) {
-                leftTargetPos.normalize().multiplyScalar(maxDistance);
+                renderer.render(scene, camera);
             }
-            leftTargetPos.add(leftEyePos);
 
-            leftIris.position.lerp(leftTargetPos, 0.12);
+            animate();
 
-            // Right iris
-            const rightEyePos = new THREE.Vector3(0.4, 1.6, 0.65);
-            const rightDirection = targetPoint.clone().sub(rightEyePos).normalize();
-            const rightLookPos = rightEyePos.clone().add(rightDirection.multiplyScalar(trackingDistance));
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / (window.innerHeight - 70);
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight - 70);
+            });
 
-            const rightTargetPos = rightLookPos.clone().sub(rightEyePos);
-            if (rightTargetPos.length() > maxDistance) {
-                rightTargetPos.normalize().multiplyScalar(maxDistance);
-            }
-            rightTargetPos.add(rightEyePos);
-
-            rightIris.position.lerp(rightTargetPos, 0.12);
+            canvas.setAttribute('data-initialized', 'true');
         }
-
-        // ==========================================
-        // PREMIUM ANIMATION LOOP
-        // ==========================================
-
-        let animationTime = 0;
-
-        function animate() {
-            requestAnimationFrame(animate);
-
-            animationTime += 0.01;
-
-            // Smooth bobbing
-            robotGroup.position.y = Math.sin(animationTime * 0.8) * 0.2;
-
-            // Subtle rotation
-            robotGroup.rotation.x = Math.sin(animationTime * 0.4) * 0.08;
-            robotGroup.rotation.z = Math.cos(animationTime * 0.3) * 0.04;
-
-            // Eye tracking
-            updateEyeTracking();
-
-            renderer.render(scene, camera);
-        }
-
-        animate();
-
-        // ==========================================
-        // RESPONSIVE & SCROLL HANDLING
-        // ==========================================
-
-        window.addEventListener('resize', () => {
-            const width = window.innerWidth;
-            const height = window.innerHeight;
-            camera.aspect = width / height;
-            camera.updateProjectionMatrix();
-            renderer.setSize(width, height);
-        });
 
         window.addEventListener('scroll', () => {
             const scrollPos = window.scrollY;
             const heroHeight = window.innerHeight;
             const opacity = Math.max(0, 1 - (scrollPos / (heroHeight * 0.5)));
-
             renderer.setClearColor(0xFDFBF7, opacity);
-        });
-
-        // Smooth scroll to section on scroll indicator click
-        document.querySelector('.scroll-indicator').addEventListener('click', () => {
-            document.querySelector('#coffee-section').scrollIntoView({ behavior: 'smooth' });
         });
     </script>
 </body>
