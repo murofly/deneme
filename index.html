@@ -1901,11 +1901,21 @@
         // THREE.JS PREMIUM 3D ROBOT MOUSE
         // ==========================================
 
-        const canvas = document.getElementById('canvas');
-        if (!canvas.getAttribute('data-initialized')) {
+        let robotRenderer = null;
+
+        function initRobot() {
+            if (typeof THREE === 'undefined') {
+                setTimeout(initRobot, 100);
+                return;
+            }
+
+            const canvas = document.getElementById('canvas');
+            if (!canvas || canvas.getAttribute('data-initialized')) return;
+
             const scene = new THREE.Scene();
             const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
             const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+            robotRenderer = renderer;
 
             renderer.setSize(window.innerWidth, window.innerHeight - 70);
             renderer.setClearColor(0xFDFBF7, 1);
@@ -2031,15 +2041,22 @@
                 renderer.setSize(window.innerWidth, window.innerHeight - 70);
             });
 
+            window.addEventListener('scroll', () => {
+                const scrollPos = window.scrollY;
+                const heroHeight = window.innerHeight;
+                const opacity = Math.max(0, 1 - (scrollPos / (heroHeight * 0.5)));
+                renderer.setClearColor(0xFDFBF7, opacity);
+            });
+
             canvas.setAttribute('data-initialized', 'true');
         }
 
-        window.addEventListener('scroll', () => {
-            const scrollPos = window.scrollY;
-            const heroHeight = window.innerHeight;
-            const opacity = Math.max(0, 1 - (scrollPos / (heroHeight * 0.5)));
-            renderer.setClearColor(0xFDFBF7, opacity);
-        });
+        // Initialize robot after DOM is ready
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', initRobot);
+        } else {
+            initRobot();
+        }
     </script>
 </body>
 </html>
