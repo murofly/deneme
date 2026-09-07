@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>muroYazılım - Yazılım Çözümleri</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">muroYazılım</div>
+            <ul class="nav-links">
+                <li><a href="#home">Ana Sayfa</a></li>
+                <li><a href="#services">Hizmetler</a></li>
+                <li><a href="#about">Hakkında</a></li>
+                <li><a href="#contact">İletişim</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section with 3D Robot -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Yazılım Çözümlerinde Yenilik</h1>
+            <p>Gelişmiş teknoloji ve yaratıcı çözümlerle dijital dönüşümünüzü hızlandırıyoruz.</p>
+            <button class="cta-button">Bize Ulaşın</button>
+        </div>
+        <div id="robot-container" class="robot-container"></div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <h2>Hizmetlerimiz</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">💻</div>
+                <h3>Web Geliştirme</h3>
+                <p>Modern ve responsive web uygulamaları geliştiriyor, en yeni teknolojileri kullanıyoruz.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">📱</div>
+                <h3>Mobil Uygulamalar</h3>
+                <p>iOS ve Android platformlarında yüksek performanslı mobil çözümleri sunuyoruz.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🔧</div>
+                <h3>Yazılım Mimarisi</h3>
+                <p>Ölçeklenebilir ve sürdürülebilir yazılım mimarisi tasarım ve danışmanlığı.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🤖</div>
+                <h3>AI & Machine Learning</h3>
+                <p>Yapay zeka ve makine öğrenmesi çözümleri ile işletmenizi optimize edin.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">☁️</div>
+                <h3>Cloud Solutions</h3>
+                <p>AWS, Google Cloud ve Azure gibi platformlarda bulut altyapısı yönetimi.</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🔒</div>
+                <h3>Siber Güvenlik</h3>
+                <p>Uygulamalarınızı güvenli tutmak için kapsamlı güvenlik çözümleri sunuyoruz.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+        <h2>Biz Kimiz?</h2>
+        <div class="about-content">
+            <div class="about-text">
+                <p>muroYazılım, yazılım geliştirme ve teknoloji danışmanlığında 10+ yıllık tecrübesiyle hizmet veren bir firmadır. Türkiye'nin en dinamik yazılım ekiplerinden biri olarak, başarı hikayelerimiz konuşuyor.</p>
+                <p>Her projede müşteri memnuniyetini ve kaliteyi ön planda tutarak, dijital dönüşüm yolculuğunda işletmelerin yanında yer almıyoruz.</p>
+                <ul class="about-list">
+                    <li>✓ 500+ Tamamlanmış Proje</li>
+                    <li>✓ 200+ Mutlu Müşteri</li>
+                    <li>✓ 50+ Uzman Yazılım Geliştirici</li>
+                    <li>✓ 24/7 Teknik Destek</li>
+                </ul>
+            </div>
+            <div class="about-stats">
+                <div class="stat">
+                    <h3>500+</h3>
+                    <p>Proje</p>
+                </div>
+                <div class="stat">
+                    <h3>200+</h3>
+                    <p>Müşteri</p>
+                </div>
+                <div class="stat">
+                    <h3>50+</h3>
+                    <p>Ekip</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <h2>İletişime Geçin</h2>
+        <div class="contact-content">
+            <form class="contact-form">
+                <input type="text" placeholder="Adınız" required>
+                <input type="email" placeholder="Email Adresiniz" required>
+                <textarea placeholder="Mesajınız" rows="5" required></textarea>
+                <button type="submit" class="submit-button">Gönder</button>
+            </form>
+            <div class="contact-info">
+                <div class="info-item">
+                    <span class="info-label">📧 Email</span>
+                    <p>info@muroyazilim.com</p>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">📞 Telefon</span>
+                    <p>+90 (555) 123-4567</p>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">📍 Adres</span>
+                    <p>İstanbul, Türkiye</p>
+                </div>
+                <div class="info-item">
+                    <span class="info-label">🕐 Çalışma Saatleri</span>
+                    <p>Pazartesi - Cuma: 09:00 - 18:00</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2024 muroYazılım. Tüm hakları saklıdır.</p>
+    </footer>
+
+    <!-- Three.js for 3D Robot -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
