@@ -1,71 +1,218 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Portfolio</title>
+    <title>Araba Satış Sitesi - Arabam</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <!-- Header -->
     <header>
-        <nav>
-            <h1>My Portfolio</h1>
-            <button id="menuBtn" aria-label="Toggle Menu">☰</button>
-            <ul id="navLinks">
-                <li><a href="#about">About</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
+        <div class="container">
+            <div class="logo">🚗 Arabam.com</div>
+            <nav class="nav">
+                <button id="menuBtn" class="menu-btn">☰</button>
+                <ul id="navLinks" class="nav-links">
+                    <li><a href="#anasayfa">Anasayfa</a></li>
+                    <li><a href="#ilanlar">İlanlar</a></li>
+                    <li><a href="#hakkinda">Hakkında</a></li>
+                    <li><a href="#iletisim">İletişim</a></li>
+                    <li><a href="#admin" class="admin-link">Yönetici Paneli</a></li>
+                </ul>
+            </nav>
+        </div>
     </header>
 
-    <!-- About Section -->
-    <section id="about">
-        <h2>About Me</h2>
-        <p>Hello! I'm a web developer passionate about building interactive and responsive websites.</p>
-        <img src="profile.jpg" alt="Profile Picture">
+    <!-- Hero Section -->
+    <section id="anasayfa" class="hero">
+        <div class="hero-content">
+            <h1>Rüyalarınızın Arabasını Bulun</h1>
+            <p>Türkiye'nin en güvenilir araba satış platformu</p>
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Marka, model veya fiyat ara...">
+                <button onclick="searchCars()">Ara</button>
+            </div>
+        </div>
     </section>
 
-    <!-- Projects Section -->
-    <section id="projects">
-        <h2>My Projects</h2>
-        <div class="project-card">
-            <h3>Project 1</h3>
-            <p>A simple web app built with HTML, CSS, and JavaScript.</p>
-            <button class="projectBtn" data-project="Project 1">More Info</button>
+    <!-- Filter Section -->
+    <section id="ilanlar" class="filters-section">
+        <div class="container">
+            <h2>İlanları Filtrele</h2>
+            <div class="filters">
+                <div class="filter-group">
+                    <label for="brandFilter">Marka:</label>
+                    <select id="brandFilter" onchange="applyFilters()">
+                        <option value="">Tümü</option>
+                        <option value="Toyota">Toyota</option>
+                        <option value="Honda">Honda</option>
+                        <option value="Volkswagen">Volkswagen</option>
+                        <option value="BMW">BMW</option>
+                        <option value="Mercedes">Mercedes</option>
+                        <option value="Audi">Audi</option>
+                        <option value="Hyundai">Hyundai</option>
+                        <option value="Renault">Renault</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label for="yearFilter">Yıl:</label>
+                    <select id="yearFilter" onchange="applyFilters()">
+                        <option value="">Tümü</option>
+                        <option value="2024">2024</option>
+                        <option value="2023">2023</option>
+                        <option value="2022">2022</option>
+                        <option value="2021">2021</option>
+                        <option value="2020">2020</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label for="priceFilter">Fiyat Aralığı:</label>
+                    <select id="priceFilter" onchange="applyFilters()">
+                        <option value="">Tümü</option>
+                        <option value="0-100000">0 - 100.000 TL</option>
+                        <option value="100000-250000">100.000 - 250.000 TL</option>
+                        <option value="250000-500000">250.000 - 500.000 TL</option>
+                        <option value="500000-1000000">500.000 - 1.000.000 TL</option>
+                        <option value="1000000-999999999">1.000.000+ TL</option>
+                    </select>
+                </div>
+
+                <div class="filter-group">
+                    <label for="fuelFilter">Yakıt Türü:</label>
+                    <select id="fuelFilter" onchange="applyFilters()">
+                        <option value="">Tümü</option>
+                        <option value="Benzin">Benzin</option>
+                        <option value="Dizel">Dizel</option>
+                        <option value="Hibrit">Hibrit</option>
+                        <option value="Elektrik">Elektrik</option>
+                    </select>
+                </div>
+            </div>
         </div>
-        <div class="project-card">
-            <h3>Project 2</h3>
-            <p>A responsive portfolio website.</p>
-            <button class="projectBtn" data-project="Project 2">More Info</button>
+    </section>
+
+    <!-- Cars Grid -->
+    <section class="cars-section">
+        <div class="container">
+            <div id="carsList" class="cars-grid">
+                <!-- Cars will be loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="hakkinda" class="about">
+        <div class="container">
+            <h2>Hakkında</h2>
+            <p>Arabam.com, Türkiye'nin en güvenilir araba satış platformudur. 2015 yılından beri milyonlarca müşteriye hizmet vermekteyiz. Güvenli ödeme sistemleri, doğrulanmış satıcılar ve 7/24 müşteri desteği ile hizmetinizdeyiz.</p>
+            <div class="stats">
+                <div class="stat-card">
+                    <h3>10,000+</h3>
+                    <p>Aktif İlan</p>
+                </div>
+                <div class="stat-card">
+                    <h3>50,000+</h3>
+                    <p>Mutlu Müşteri</p>
+                </div>
+                <div class="stat-card">
+                    <h3>100%</h3>
+                    <p>Güvenli İşlem</p>
+                </div>
+            </div>
         </div>
     </section>
 
     <!-- Contact Section -->
-    <section id="contact">
-        <h2>Contact Me</h2>
-        <form id="contactForm">
-            <label for="name">Name:</label>
-            <input type="text" id="name" required>
-            
-            <label for="email">Email:</label>
-            <input type="email" id="email" required>
-            
-            <label for="message">Message:</label>
-            <textarea id="message" required></textarea>
-            
-            <button type="submit">Send</button>
-        </form>
+    <section id="iletisim" class="contact">
+        <div class="container">
+            <h2>İletişim</h2>
+            <form id="contactForm" class="contact-form">
+                <input type="text" placeholder="Adınız" required>
+                <input type="email" placeholder="E-mail" required>
+                <input type="tel" placeholder="Telefon" required>
+                <textarea placeholder="Mesajınız" rows="5" required></textarea>
+                <button type="submit">Gönder</button>
+            </form>
+        </div>
     </section>
 
-    <!-- Modal -->
-    <div id="modal" class="modal">
+    <!-- Admin Panel Modal -->
+    <div id="adminModal" class="modal">
         <div class="modal-content">
-            <span id="closeModal">&times;</span>
-            <p id="modalText"></p>
+            <span class="close" onclick="closeAdminPanel()">&times;</span>
+            <h2>Yönetici Paneli</h2>
+
+            <div class="admin-tabs">
+                <button class="tab-btn active" onclick="switchTab('add-car')">İlan Ekle</button>
+                <button class="tab-btn" onclick="switchTab('manage-cars')">İlanları Yönet</button>
+            </div>
+
+            <!-- Add Car Tab -->
+            <div id="add-car" class="tab-content active">
+                <h3>Yeni Araba İlanı Ekle</h3>
+                <form id="addCarForm">
+                    <div class="form-row">
+                        <input type="text" placeholder="Marka" id="brand" required>
+                        <input type="text" placeholder="Model" id="model" required>
+                    </div>
+                    <div class="form-row">
+                        <input type="number" placeholder="Yıl" id="year" min="1990" max="2025" required>
+                        <input type="number" placeholder="Kilometre" id="km" required>
+                    </div>
+                    <div class="form-row">
+                        <input type="number" placeholder="Fiyat (TL)" id="price" required>
+                        <select id="fuel" required>
+                            <option value="">Yakıt Türü Seç</option>
+                            <option value="Benzin">Benzin</option>
+                            <option value="Dizel">Dizel</option>
+                            <option value="Hibrit">Hibrit</option>
+                            <option value="Elektrik">Elektrik</option>
+                        </select>
+                    </div>
+                    <div class="form-row">
+                        <input type="text" placeholder="Vites Tipi (Otomatik/Manual)" id="transmission" required>
+                        <input type="text" placeholder="Renk" id="color" required>
+                    </div>
+                    <textarea placeholder="Açıklama" id="description" rows="4" required></textarea>
+                    <input type="text" placeholder="Resim URL'si" id="image" required>
+                    <div class="form-row">
+                        <input type="text" placeholder="Satıcı Adı" id="seller" required>
+                        <input type="tel" placeholder="Satıcı Telefonu" id="sellerPhone" required>
+                    </div>
+                    <button type="submit" class="btn-primary">İlan Ekle</button>
+                </form>
+            </div>
+
+            <!-- Manage Cars Tab -->
+            <div id="manage-cars" class="tab-content">
+                <h3>İlanları Yönet</h3>
+                <div id="manageCarsContainer">
+                    <!-- Cars will be listed here -->
+                </div>
+            </div>
         </div>
     </div>
+
+    <!-- Car Details Modal -->
+    <div id="carDetailModal" class="modal">
+        <div class="modal-content car-detail-content">
+            <span class="close" onclick="closeCarDetail()">&times;</span>
+            <div id="carDetailBody">
+                <!-- Car details will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Arabam.com - Tüm Hakları Saklıdır</p>
+            <p>İletişim: info@arabam.com | Telefon: +90 (212) 123 45 67</p>
+        </div>
+    </footer>
 
     <script src="script.js"></script>
 </body>
