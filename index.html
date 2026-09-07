@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>murokahveci - Premium Artisan Coffee</title>
+    <title>Kahvecimurat - Türk Kahvesi & Espresso</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -15,230 +15,120 @@
         }
 
         :root {
-            --bg-light: #FDFBF7;
-            --bg-dark: #1a1410;
-            --text-light: #3E2723;
-            --text-dark: #F5F1EB;
-            --accent: #C7765C;
-            --accent-dark: #A85C47;
+            --primary: #2C1810;
+            --secondary: #8B4513;
+            --accent: #D4AF37;
+            --light: #F5F1E8;
+            --text: #1A1A1A;
         }
 
         html, body {
-            background-color: var(--bg-light);
-            color: var(--text-light);
-            font-family: 'Inter', sans-serif;
+            background-color: var(--light);
+            color: var(--text);
+            font-family: 'Poppins', sans-serif;
             scroll-behavior: smooth;
             overflow-x: hidden;
-            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
-        html.dark-mode {
-            --bg-light: #1a1410;
-            --text-light: #F5F1EB;
-            --bg-dark: #0f0a07;
-        }
-
-        html.dark-mode body {
-            background-color: #1a1410;
-            color: #F5F1EB;
-        }
-
-        h1, h2, h3, h4, h5, h6 {
-            font-family: 'Merriweather', serif;
-            color: var(--text-light);
-            font-weight: 700;
-            letter-spacing: -0.5px;
+        h1, h2, h3, h4 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary);
         }
 
         p {
             line-height: 1.8;
-            color: currentColor;
+            color: #555;
         }
 
-        /* Sticky Navigation */
+        /* SECTION 1: STICKY NAV */
         .navbar {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             z-index: 1000;
-            background: rgba(253, 251, 247, 0.95);
+            background: rgba(44, 24, 16, 0.95);
             backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(199, 118, 92, 0.1);
             padding: 1rem 2rem;
-            transition: all 0.3s ease;
-        }
-
-        html.dark-mode .navbar {
-            background: rgba(26, 20, 16, 0.95);
-            border-bottom-color: rgba(199, 118, 92, 0.2);
-        }
-
-        .navbar-content {
-            max-width: 1200px;
-            margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            border-bottom: 1px solid var(--accent);
         }
 
         .navbar-logo {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             font-weight: 900;
-            color: var(--text-light);
+            color: var(--accent);
             text-decoration: none;
-            background: linear-gradient(135deg, #3E2723, #C7765C);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            letter-spacing: 1px;
         }
 
-        .navbar-menu {
+        .navbar-links {
             display: flex;
             gap: 2rem;
             align-items: center;
         }
 
-        .navbar-menu a {
-            color: var(--text-light);
+        .navbar-links a {
+            color: var(--light);
             text-decoration: none;
             font-weight: 500;
-            font-size: 0.9rem;
-            transition: color 0.3s ease;
+            transition: color 0.3s;
         }
 
-        .navbar-menu a:hover {
+        .navbar-links a:hover {
             color: var(--accent);
         }
 
-        .theme-toggle, .cart-btn {
-            background: linear-gradient(135deg, #C7765C, #A85C47);
-            border: none;
-            color: white;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            transition: all 0.3s ease;
-        }
-
-        .theme-toggle:hover, .cart-btn:hover {
-            transform: scale(1.1);
-            box-shadow: 0 8px 16px rgba(199, 118, 92, 0.3);
-        }
-
-        .cart-badge {
-            position: absolute;
-            top: -8px;
-            right: -8px;
-            background: #FF6B6B;
-            color: white;
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.75rem;
+        .cta-btn {
+            background: var(--accent);
+            color: var(--primary);
+            padding: 0.7rem 1.5rem;
+            border-radius: 4px;
             font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
         }
 
-        /* Fade in animations */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(212, 175, 55, 0.3);
         }
 
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .fade-in-left {
-            opacity: 0;
-            transform: translateX(-30px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-        }
-
-        .fade-in-left.visible {
-            opacity: 1;
-            transform: translateX(0);
-        }
-
-        .fade-in-right {
-            opacity: 0;
-            transform: translateX(30px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-        }
-
-        .fade-in-right.visible {
-            opacity: 1;
-            transform: translateX(0);
-        }
-
-        .scale-in {
-            opacity: 0;
-            transform: scale(0.95);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
-        }
-
-        .scale-in.visible {
-            opacity: 1;
-            transform: scale(1);
-        }
-
-        /* Hero Section */
+        /* SECTION 1: HERO */
         .hero {
             margin-top: 70px;
             min-height: 100vh;
-            background: linear-gradient(135deg, #FDFBF7 0%, #F5F1EB 50%, #EDE7E0 100%);
+            background: linear-gradient(135deg, var(--primary) 0%, #1a0f08 100%);
             display: flex;
             align-items: center;
             justify-content: center;
             position: relative;
             overflow: hidden;
-        }
-
-        html.dark-mode .hero {
-            background: linear-gradient(135deg, #2a2218 0%, #1a1410 50%, #0f0a07 100%);
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at 20% 50%, rgba(199, 118, 92, 0.03) 0%, transparent 50%),
-                        radial-gradient(circle at 80% 80%, rgba(141, 110, 99, 0.03) 0%, transparent 50%);
-            pointer-events: none;
+            color: var(--light);
+            padding: 4rem 2rem;
         }
 
         #canvas {
-            display: block;
-            width: 100%;
-            height: 100%;
             position: absolute;
             top: 0;
             left: 0;
+            width: 100%;
+            height: 100%;
         }
 
         .hero-content {
             position: relative;
             z-index: 10;
+            max-width: 700px;
             text-align: center;
-            pointer-events: none;
-            animation: fadeInUp 1.2s cubic-bezier(0.34, 1.56, 0.64, 1) 0.3s both;
-            max-width: 600px;
+            animation: slideUp 1s ease-out;
         }
 
-        @keyframes fadeInUp {
+        @keyframes slideUp {
             from {
                 opacity: 0;
                 transform: translateY(40px);
@@ -250,761 +140,355 @@
         }
 
         .hero h1 {
-            font-size: clamp(3.5rem, 10vw, 6rem);
-            margin-bottom: 0.5rem;
-            font-weight: 900;
-            letter-spacing: -2px;
-            background: linear-gradient(135deg, #3E2723 0%, #5D4037 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            font-size: clamp(2.5rem, 8vw, 5rem);
+            color: var(--accent);
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
         }
 
-        html.dark-mode .hero h1 {
-            background: linear-gradient(135deg, #F5F1EB 0%, #D9B8A8 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .hero-tagline {
-            font-size: 1.35rem;
-            color: #8D6E63;
-            font-weight: 300;
-            margin: 0 auto 1.5rem;
-            letter-spacing: 0.8px;
-            opacity: 0.95;
-        }
-
-        html.dark-mode .hero-tagline {
-            color: #D9B8A8;
-        }
-
-        .hero-subtitle {
-            font-size: 1rem;
-            color: #757575;
+        .hero-subheading {
+            font-size: 1.3rem;
+            color: var(--light);
             margin-bottom: 2rem;
+            font-weight: 300;
             line-height: 1.8;
         }
 
-        html.dark-mode .hero-subtitle {
-            color: #B8A89D;
-        }
-
-        .hero-cta {
-            display: inline-flex;
-            gap: 1rem;
-            align-items: center;
-            flex-wrap: wrap;
+        .hero-ctas {
+            display: flex;
+            gap: 1.5rem;
             justify-content: center;
+            flex-wrap: wrap;
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, #C7765C 0%, #A85C47 100%);
-            color: white;
+            background: var(--accent);
+            color: var(--primary);
             padding: 1rem 2.5rem;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1);
-            box-shadow: 0 10px 25px rgba(199, 118, 92, 0.2);
-            border: none;
-            cursor: pointer;
             font-size: 1rem;
+            font-weight: 700;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
         }
 
         .btn-primary:hover {
             transform: translateY(-3px);
-            box-shadow: 0 15px 35px rgba(199, 118, 92, 0.3);
+            box-shadow: 0 12px 24px rgba(212, 175, 55, 0.4);
         }
 
         .btn-secondary {
-            border: 2px solid #C7765C;
-            color: #C7765C;
-            padding: 0.9rem 2.5rem;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: all 0.3s ease;
             background: transparent;
-            cursor: pointer;
+            color: var(--accent);
+            padding: 1rem 2.5rem;
             font-size: 1rem;
+            font-weight: 700;
+            border: 2px solid var(--accent);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
         }
 
         .btn-secondary:hover {
-            background: #C7765C;
-            color: white;
+            background: var(--accent);
+            color: var(--primary);
         }
 
-        html.dark-mode .btn-secondary {
-            color: #D9B8A8;
-            border-color: #D9B8A8;
-        }
-
-        html.dark-mode .btn-secondary:hover {
-            background: #D9B8A8;
-            color: #1a1410;
-        }
-
-        .scroll-indicator {
-            position: absolute;
-            bottom: 2rem;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 20;
-            animation: bounce 2s infinite;
-            cursor: pointer;
-        }
-
-        @keyframes bounce {
-            0%, 100% { transform: translateX(-50%) translateY(0); }
-            50% { transform: translateX(-50%) translateY(-10px); }
-        }
-
-        .scroll-indicator svg {
-            width: 24px;
-            height: 24px;
-            stroke: #C7765C;
-            stroke-width: 2;
-            fill: none;
-        }
-
-        /* Section Styles */
-        section {
-            padding: 7rem 2rem;
+        /* SECTION 2: SOCIAL PROOF BAR */
+        .social-proof {
+            background: var(--primary);
+            color: var(--light);
+            padding: 3rem 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            text-align: center;
             max-width: 1200px;
             margin: 0 auto;
         }
 
-        section h2 {
-            font-size: clamp(2.2rem, 5vw, 3.8rem);
+        .proof-item h3 {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .proof-item p {
+            color: var(--light);
+            font-weight: 500;
+        }
+
+        /* SECTION 3: PROBLEM/SOLUTION */
+        .problem-solution {
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .problem-text h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .problem-text p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .solution-image {
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, var(--accent), var(--secondary));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        /* SECTION 4: FEATURE SHOWCASE - GRID */
+        .features {
+            padding: 6rem 2rem;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.05) 0%, rgba(139, 69, 19, 0.05) 100%);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .features h2 {
+            text-align: center;
+            font-size: 2.5rem;
             margin-bottom: 4rem;
-            text-align: center;
-            position: relative;
-            padding-bottom: 2rem;
         }
 
-        section h2::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 3px;
-            background: linear-gradient(90deg, transparent, #C7765C, #C7765C, transparent);
-            border-radius: 2px;
-        }
-
-        /* Product Carousel */
-        .carousel-container {
-            position: relative;
-            margin-top: 4rem;
-            overflow: hidden;
-        }
-
-        .carousel-wrapper {
-            display: flex;
-            transition: transform 0.5s cubic-bezier(0.23, 1, 0.320, 1);
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
         }
 
-        .carousel-item {
-            min-width: 300px;
-            flex: 0 0 300px;
-        }
-
-        .carousel-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            z-index: 100;
-            background: linear-gradient(135deg, #C7765C, #A85C47);
-            color: white;
-            border: none;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 8px 20px rgba(199, 118, 92, 0.3);
-        }
-
-        .carousel-btn:hover {
-            transform: translateY(-50%) scale(1.1);
-        }
-
-        .carousel-btn.prev {
-            left: 0;
-        }
-
-        .carousel-btn.next {
-            right: 0;
-        }
-
-        /* Stats Section */
-        .stats {
-            background: linear-gradient(135deg, rgba(62, 39, 35, 0.03) 0%, rgba(199, 118, 92, 0.03) 100%);
-        }
-
-        html.dark-mode .stats {
-            background: linear-gradient(135deg, rgba(199, 118, 92, 0.05) 0%, rgba(141, 110, 99, 0.05) 100%);
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            margin-top: 4rem;
-        }
-
-        .stat-card {
-            text-align: center;
-            padding: 2rem;
-        }
-
-        .stat-number {
-            font-size: 3.5rem;
-            font-weight: 900;
-            background: linear-gradient(135deg, #C7765C, #A85C47);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 0.5rem;
-            transition: all 0.3s ease;
-            display: inline-block;
-        }
-
-        .stat-card:hover .stat-number {
-            transform: scale(1.1);
-        }
-
-        .stat-label {
-            font-size: 1rem;
-            color: #8D6E63;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        html.dark-mode .stat-label {
-            color: #D9B8A8;
-        }
-
-        /* Coffee Grid */
-        .coffee-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 2.5rem;
-            margin-top: 4rem;
-        }
-
-        .coffee-card {
-            background: linear-gradient(135deg, #FFFFFF 0%, #F9F6F2 100%);
-            border-radius: 12px;
-            padding: 2rem;
-            text-align: center;
-            transition: all 0.5s cubic-bezier(0.23, 1, 0.320, 1);
-            box-shadow: 0 4px 15px rgba(62, 39, 35, 0.06);
-            border: 1px solid rgba(199, 118, 92, 0.15);
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-        }
-
-        html.dark-mode .coffee-card {
-            background: linear-gradient(135deg, #2a2218 0%, #1f1813 100%);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            border-color: rgba(199, 118, 92, 0.2);
-        }
-
-        .coffee-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(199, 118, 92, 0.1), transparent);
-            transition: left 0.5s ease;
-        }
-
-        .coffee-card:hover::before {
-            left: 100%;
-        }
-
-        .coffee-card:hover {
-            transform: translateY(-12px);
-            box-shadow: 0 20px 40px rgba(62, 39, 35, 0.12);
-        }
-
-        html.dark-mode .coffee-card:hover {
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-        }
-
-        .coffee-icon {
-            font-size: 3.5rem;
-            margin-bottom: 1.5rem;
-            display: inline-block;
-            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.08));
-            transition: transform 0.3s ease;
-        }
-
-        .coffee-card:hover .coffee-icon {
-            transform: scale(1.1) rotate(-5deg);
-        }
-
-        .coffee-card h3 {
-            font-size: 1.6rem;
-            margin-bottom: 0.5rem;
-            color: var(--text-light);
-        }
-
-        .coffee-origin {
-            color: #C7765C;
-            font-size: 0.85rem;
-            margin-bottom: 1rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-        }
-
-        .coffee-price {
-            font-size: 1.8rem;
-            font-weight: 900;
-            color: var(--text-light);
-            margin: 0.5rem 0 1rem;
-            background: linear-gradient(135deg, #C7765C, #A85C47);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .coffee-description {
-            font-size: 0.95rem;
-            color: #757575;
-            line-height: 1.7;
-            margin-bottom: 1.5rem;
-            flex-grow: 1;
-        }
-
-        html.dark-mode .coffee-description {
-            color: #B8A89D;
-        }
-
-        .coffee-details {
-            display: flex;
-            justify-content: space-around;
-            gap: 1rem;
-            padding: 1.5rem 0;
-            border-top: 1px solid rgba(199, 118, 92, 0.1);
-            border-bottom: 1px solid rgba(199, 118, 92, 0.1);
-            font-size: 0.85rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .detail-item {
-            flex: 1;
-        }
-
-        .detail-label {
-            color: #8D6E63;
-            font-weight: 600;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        html.dark-mode .detail-label {
-            color: #D9B8A8;
-        }
-
-        .detail-value {
-            color: var(--text-light);
-            font-weight: 700;
-            margin-top: 0.3rem;
-        }
-
-        .coffee-add-btn {
-            width: 100%;
-            padding: 0.9rem;
-            background: linear-gradient(135deg, #C7765C 0%, #A85C47 100%);
-            color: white;
-            border: none;
-            border-radius: 6px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 0.95rem;
-            margin-top: auto;
-        }
-
-        .coffee-add-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 16px rgba(199, 118, 92, 0.3);
-        }
-
-        .coffee-add-btn.added {
-            background: #4CAF50;
-        }
-
-        /* Modal */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 2000;
-            align-items: center;
-            justify-content: center;
-            backdrop-filter: blur(5px);
-        }
-
-        .modal.active {
-            display: flex;
-        }
-
-        .modal-content {
+        .feature-card {
             background: white;
-            border-radius: 16px;
-            padding: 3rem;
-            max-width: 500px;
-            width: 90%;
-            animation: slideUp 0.3s cubic-bezier(0.23, 1, 0.320, 1);
-            position: relative;
-        }
-
-        html.dark-mode .modal-content {
-            background: #2a2218;
-            color: #F5F1EB;
-        }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .modal-close {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            background: #f0f0f0;
-            border: none;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 1.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        html.dark-mode .modal-close {
-            background: #3a3228;
-        }
-
-        .modal h2 {
-            margin-bottom: 1.5rem;
-            margin-top: 0;
-        }
-
-        .cart-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem;
-            border-bottom: 1px solid rgba(199, 118, 92, 0.1);
-        }
-
-        .cart-item:last-child {
-            border-bottom: none;
-        }
-
-        .cart-item-details {
-            flex-grow: 1;
-        }
-
-        .cart-item-name {
-            font-weight: 600;
-            color: var(--text-light);
-        }
-
-        .cart-item-price {
-            color: #C7765C;
-            font-weight: 700;
-        }
-
-        .cart-total {
-            margin-top: 1.5rem;
-            padding-top: 1.5rem;
-            border-top: 2px solid rgba(199, 118, 92, 0.2);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-weight: 700;
-            font-size: 1.2rem;
-        }
-
-        .cart-empty {
-            text-align: center;
-            padding: 2rem;
-            color: #757575;
-        }
-
-        /* Blog Section */
-        .blog {
-            background: linear-gradient(135deg, rgba(62, 39, 35, 0.02) 0%, rgba(199, 118, 92, 0.02) 100%);
-        }
-
-        html.dark-mode .blog {
-            background: linear-gradient(135deg, rgba(199, 118, 92, 0.05) 0%, rgba(141, 110, 99, 0.05) 100%);
-        }
-
-        .blog-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 2.5rem;
-            margin-top: 4rem;
-        }
-
-        .blog-card {
-            background: white;
+            padding: 2.5rem;
             border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(62, 39, 35, 0.06);
-            transition: all 0.4s ease;
-            display: flex;
-            flex-direction: column;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
+            border-top: 4px solid var(--accent);
         }
 
-        html.dark-mode .blog-card {
-            background: #2a2218;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-        }
-
-        .blog-card:hover {
+        .feature-card:hover {
             transform: translateY(-8px);
-            box-shadow: 0 12px 30px rgba(62, 39, 35, 0.12);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
         }
 
-        .blog-image {
-            width: 100%;
-            height: 200px;
-            background: linear-gradient(135deg, #E8D4C0, #D4B5A0);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 4rem;
-            transition: transform 0.3s ease;
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
         }
 
-        .blog-card:hover .blog-image {
-            transform: scale(1.05);
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
         }
 
-        .blog-content {
-            padding: 2rem;
-            flex-grow: 1;
-        }
-
-        .blog-date {
-            font-size: 0.85rem;
-            color: #C7765C;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 0.5rem;
-        }
-
-        .blog-card h3 {
-            font-size: 1.3rem;
-            margin-bottom: 0.75rem;
-            color: var(--text-light);
-        }
-
-        .blog-excerpt {
-            color: #757575;
+        .feature-card p {
             font-size: 0.95rem;
-            line-height: 1.6;
+        }
+
+        /* SECTION 5: TESTIMONIALS - CAROUSEL STYLE */
+        .testimonials {
+            padding: 6rem 2rem;
+            background: var(--primary);
+            color: var(--light);
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .testimonials h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 4rem;
+            color: var(--accent);
+        }
+
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+        }
+
+        .testimonial-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent);
+            backdrop-filter: blur(10px);
+            transition: all 0.3s;
+        }
+
+        .testimonial-card:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-5px);
+        }
+
+        .stars {
+            color: var(--accent);
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            letter-spacing: 3px;
+        }
+
+        .testimonial-text {
+            font-style: italic;
             margin-bottom: 1.5rem;
-            flex-grow: 1;
+            line-height: 1.8;
         }
 
-        html.dark-mode .blog-excerpt {
-            color: #B8A89D;
+        .testimonial-author {
+            font-weight: 700;
+            color: var(--accent);
         }
 
-        .blog-readmore {
-            color: #C7765C;
-            font-weight: 600;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            transition: all 0.3s ease;
+        .testimonial-role {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.7);
         }
 
-        .blog-readmore:hover {
-            gap: 0.75rem;
-        }
-
-        /* Pricing Section */
+        /* SECTION 6: PRICING & URGENCY */
         .pricing {
-            background: linear-gradient(135deg, #FDFBF7 0%, #F5F1EB 100%);
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
         }
 
-        html.dark-mode .pricing {
-            background: linear-gradient(135deg, #1a1410 0%, #2a2218 100%);
+        .pricing h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .pricing-tagline {
+            text-align: center;
+            font-size: 1.1rem;
+            color: var(--secondary);
+            margin-bottom: 4rem;
         }
 
         .pricing-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
-            margin-top: 4rem;
         }
 
         .pricing-card {
             background: white;
-            border-radius: 12px;
             padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s;
             text-align: center;
-            box-shadow: 0 4px 15px rgba(62, 39, 35, 0.08);
-            border: 2px solid rgba(199, 118, 92, 0.1);
-            transition: all 0.4s ease;
             position: relative;
         }
 
-        html.dark-mode .pricing-card {
-            background: #2a2218;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            border-color: rgba(199, 118, 92, 0.2);
-        }
-
         .pricing-card.featured {
-            border-color: #C7765C;
+            border: 3px solid var(--accent);
             transform: scale(1.05);
-            box-shadow: 0 15px 40px rgba(199, 118, 92, 0.15);
-        }
-
-        .pricing-card:hover {
-            box-shadow: 0 12px 30px rgba(62, 39, 35, 0.12);
         }
 
         .pricing-badge {
             position: absolute;
-            top: -12px;
-            right: 20px;
-            background: linear-gradient(135deg, #C7765C, #A85C47);
-            color: white;
-            padding: 0.4rem 1rem;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent);
+            color: var(--primary);
+            padding: 0.5rem 1.5rem;
             border-radius: 20px;
-            font-size: 0.75rem;
             font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            font-size: 0.9rem;
         }
 
-        .pricing-card h3 {
-            font-size: 1.5rem;
+        .pricing-title {
+            font-size: 1.8rem;
             margin-top: 1rem;
             margin-bottom: 1rem;
         }
 
         .pricing-price {
-            font-size: 2.5rem;
-            font-weight: 900;
-            color: var(--text-light);
-            margin-bottom: 0.3rem;
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 0.5rem;
         }
 
         .pricing-period {
-            color: #8D6E63;
-            font-size: 0.95rem;
-            margin-bottom: 1.5rem;
-        }
-
-        html.dark-mode .pricing-period {
-            color: #D9B8A8;
+            color: #888;
+            margin-bottom: 2rem;
         }
 
         .pricing-features {
             text-align: left;
             margin: 2rem 0;
-            border-top: 1px solid rgba(199, 118, 92, 0.1);
-            border-bottom: 1px solid rgba(199, 118, 92, 0.1);
-            padding: 1.5rem 0;
+            padding: 2rem 0;
+            border-top: 1px solid #eee;
+            border-bottom: 1px solid #eee;
         }
 
         .pricing-features li {
             list-style: none;
             padding: 0.6rem 0;
-            color: #616161;
-            font-size: 0.95rem;
             display: flex;
             align-items: center;
         }
 
-        html.dark-mode .pricing-features li {
-            color: #B8A89D;
-        }
-
         .pricing-features li::before {
             content: '✓';
-            color: #C7765C;
-            font-weight: bold;
-            margin-right: 0.75rem;
+            color: var(--accent);
+            font-weight: 700;
+            margin-right: 1rem;
             font-size: 1.2rem;
         }
 
-        /* FAQ Section */
+        .urgency-badge {
+            background: #ff6b6b;
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1.5rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        /* SECTION 7: FAQ */
         .faq {
-            background: linear-gradient(135deg, rgba(62, 39, 35, 0.02) 0%, rgba(199, 118, 92, 0.02) 100%);
-        }
-
-        html.dark-mode .faq {
-            background: linear-gradient(135deg, rgba(199, 118, 92, 0.05) 0%, rgba(141, 110, 99, 0.05) 100%);
-        }
-
-        .faq-container {
-            max-width: 800px;
+            padding: 6rem 2rem;
+            max-width: 900px;
             margin: 0 auto;
-            margin-top: 4rem;
+            background: linear-gradient(135deg, rgba(212, 175, 55, 0.05) 0%, rgba(139, 69, 19, 0.05) 100%);
+        }
+
+        .faq h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 4rem;
         }
 
         .faq-item {
             background: white;
             margin-bottom: 1.5rem;
-            border-radius: 10px;
-            box-shadow: 0 2px 8px rgba(62, 39, 35, 0.04);
-            border: 1px solid rgba(199, 118, 92, 0.1);
+            border-radius: 8px;
             overflow: hidden;
-            transition: all 0.3s ease;
-        }
-
-        html.dark-mode .faq-item {
-            background: #2a2218;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-            border-color: rgba(199, 118, 92, 0.2);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s;
         }
 
         .faq-item:hover {
-            box-shadow: 0 8px 20px rgba(62, 39, 35, 0.08);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
         }
 
         .faq-question {
@@ -1014,24 +498,18 @@
             justify-content: space-between;
             align-items: center;
             font-weight: 600;
-            color: var(--text-light);
-            font-size: 1rem;
-            transition: all 0.3s ease;
+            color: var(--primary);
+            transition: all 0.3s;
         }
 
         .faq-question:hover {
-            color: #C7765C;
+            background: rgba(212, 175, 55, 0.1);
         }
 
         .faq-toggle {
-            width: 24px;
-            height: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #C7765C;
             font-size: 1.5rem;
-            transition: transform 0.3s ease;
+            color: var(--accent);
+            transition: transform 0.3s;
         }
 
         .faq-item.active .faq-toggle {
@@ -1041,841 +519,334 @@
         .faq-answer {
             max-height: 0;
             overflow: hidden;
-            transition: max-height 0.3s ease, padding 0.3s ease;
-            background: linear-gradient(135deg, rgba(199, 118, 92, 0.02) 0%, transparent 100%);
+            transition: max-height 0.3s, padding 0.3s;
+            background: rgba(212, 175, 55, 0.05);
         }
 
         .faq-item.active .faq-answer {
             max-height: 500px;
             padding: 1.5rem;
-            border-top: 1px solid rgba(199, 118, 92, 0.1);
+            border-top: 1px solid #eee;
         }
 
         .faq-answer p {
-            font-size: 0.95rem;
-            color: #616161;
+            color: #555;
         }
 
-        html.dark-mode .faq-answer p {
-            color: #B8A89D;
-        }
-
-        /* Testimonials */
-        .testimonials {
-            background: linear-gradient(135deg, rgba(62, 39, 35, 0.02) 0%, rgba(199, 118, 92, 0.02) 100%);
-        }
-
-        html.dark-mode .testimonials {
-            background: linear-gradient(135deg, rgba(199, 118, 92, 0.05) 0%, rgba(141, 110, 99, 0.05) 100%);
-        }
-
-        .testimonials-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 2rem;
+        /* FOOTER */
+        footer {
+            background: var(--primary);
+            color: var(--light);
+            padding: 4rem 2rem 2rem;
+            text-align: center;
             margin-top: 4rem;
         }
 
-        .testimonial-card {
-            background: white;
-            padding: 2.5rem;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(62, 39, 35, 0.06);
-            border-left: 4px solid #C7765C;
-            transition: all 0.4s ease;
-        }
-
-        html.dark-mode .testimonial-card {
-            background: #2a2218;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-        }
-
-        .testimonial-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 12px 30px rgba(62, 39, 35, 0.12);
-        }
-
-        .testimonial-header {
+        .footer-links {
             display: flex;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1rem;
-        }
-
-        .testimonial-avatar {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #C7765C, #A85C47);
-            color: white;
-            display: flex;
-            align-items: center;
             justify-content: center;
-            font-weight: 700;
-            font-size: 1.2rem;
+            gap: 2rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
         }
 
-        .testimonial-author {
-            font-weight: 600;
-            color: var(--text-light);
-            font-size: 0.95rem;
-        }
-
-        .testimonial-role {
-            font-size: 0.85rem;
-            color: #8D6E63;
-        }
-
-        html.dark-mode .testimonial-role {
-            color: #D9B8A8;
-        }
-
-        .stars {
-            color: #C7765C;
-            font-size: 1.2rem;
-            margin-bottom: 1rem;
-            letter-spacing: 0.3rem;
-        }
-
-        .testimonial-text {
-            font-size: 0.95rem;
-            color: #616161;
-            line-height: 1.7;
-            font-style: italic;
-        }
-
-        html.dark-mode .testimonial-text {
-            color: #B8A89D;
-        }
-
-        /* Footer */
-        footer {
-            background: linear-gradient(135deg, #3E2723 0%, #2C1810 100%);
-            color: #FDFBF7;
-            padding: 6rem 2rem 2rem;
-            margin-top: 6rem;
-            transition: all 0.3s ease;
-        }
-
-        html.dark-mode footer {
-            background: linear-gradient(135deg, #0f0a07 0%, #1a1410 100%);
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 4rem;
-            margin-bottom: 3rem;
-        }
-
-        .footer-section h4 {
-            font-size: 1rem;
-            margin-bottom: 1.5rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            color: #FDFBF7;
-        }
-
-        .footer-section p,
-        .footer-section a {
-            font-size: 0.95rem;
-            color: rgba(253, 251, 247, 0.85);
+        .footer-links a {
+            color: var(--accent);
             text-decoration: none;
-            transition: color 0.3s ease;
-            display: block;
-            margin-bottom: 0.75rem;
+            transition: all 0.3s;
         }
 
-        .footer-section a:hover {
-            color: #C7765C;
-        }
-
-        .footer-newsletter {
-            display: flex;
-            gap: 0.5rem;
-            margin-top: 1rem;
-        }
-
-        .footer-newsletter input {
-            flex: 1;
-            padding: 0.7rem;
-            border: 1px solid rgba(253, 251, 247, 0.2);
-            border-radius: 6px;
-            background: rgba(253, 251, 247, 0.1);
-            color: #FDFBF7;
-            font-size: 0.9rem;
-        }
-
-        .footer-newsletter input::placeholder {
-            color: rgba(253, 251, 247, 0.5);
-        }
-
-        .footer-newsletter button {
-            padding: 0.7rem 1.5rem;
-            background: #C7765C;
-            color: white;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .footer-newsletter button:hover {
-            background: #A85C47;
-            transform: translateY(-2px);
+        .footer-links a:hover {
+            text-decoration: underline;
         }
 
         .footer-divider {
-            border-top: 1px solid rgba(253, 251, 247, 0.1);
+            border-top: 1px solid rgba(212, 175, 55, 0.3);
             padding-top: 2rem;
-            text-align: center;
-            font-size: 0.85rem;
-            color: rgba(253, 251, 247, 0.6);
-        }
-
-        .back-to-top {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, #C7765C, #A85C47);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-            z-index: 999;
-            box-shadow: 0 8px 20px rgba(199, 118, 92, 0.3);
-        }
-
-        .back-to-top.visible {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .back-to-top:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 30px rgba(199, 118, 92, 0.4);
+            font-size: 0.9rem;
         }
 
         @media (max-width: 768px) {
-            section {
-                padding: 4rem 1.5rem;
+            .navbar-links {
+                gap: 1rem;
             }
 
-            .navbar-menu {
-                display: none;
+            .problem-solution {
+                grid-template-columns: 1fr;
             }
 
             .pricing-card.featured {
                 transform: scale(1);
             }
 
-            .carousel-item {
-                min-width: 280px;
-                flex: 0 0 280px;
+            .hero-ctas {
+                gap: 1rem;
             }
-        }
-
-        body {
-            scroll-behavior: smooth;
         }
     </style>
 </head>
 <body>
-    <!-- Navbar -->
+    <!-- NAVBAR -->
     <nav class="navbar">
-        <div class="navbar-content">
-            <a href="#hero" class="navbar-logo">murokahveci</a>
-            <div class="navbar-menu">
-                <a href="#coffee-section">Shop</a>
-                <a href="#blog-section">Stories</a>
-                <a href="#pricing-section">Plans</a>
-                <a href="#faq-section">FAQ</a>
-                <button class="theme-toggle" id="themeToggle">🌙</button>
-                <button class="cart-btn" id="cartBtn" style="position: relative;">
-                    🛒
-                    <span class="cart-badge" id="cartBadge">0</span>
-                </button>
-            </div>
+        <a href="#" class="navbar-logo">☕ KAHVECIMURAT</a>
+        <div class="navbar-links">
+            <a href="#features">Ürünler</a>
+            <a href="#testimonials">Müşteri Yorumları</a>
+            <a href="#pricing">Fiyatlandırma</a>
+            <a href="#faq">SSS</a>
+            <button class="cta-btn">Sipariş Ver</button>
         </div>
     </nav>
 
-    <!-- Cart Modal -->
-    <div class="modal" id="cartModal">
-        <div class="modal-content">
-            <button class="modal-close" id="cartClose">&times;</button>
-            <h2>Shopping Cart</h2>
-            <div id="cartItems"></div>
-            <div class="cart-total" id="cartTotal" style="display: none;">
-                <span>Total:</span>
-                <span id="cartTotalPrice">$0.00</span>
-            </div>
-            <button class="btn-primary" style="width: 100%; margin-top: 1.5rem;">Checkout</button>
-        </div>
-    </div>
-
-    <!-- Hero Section with 3D Canvas -->
+    <!-- SECTION 1: HERO -->
     <section class="hero" id="hero">
         <canvas id="canvas"></canvas>
         <div class="hero-content">
-            <h1>murokahveci</h1>
-            <p class="hero-tagline">Artisan roasted, thoughtfully crafted, mindfully sipped</p>
-            <p class="hero-subtitle">Experience single-origin coffees and signature blends from premium sources worldwide. Join us on a journey of exceptional taste and sustainable practices.</p>
-            <div class="hero-cta">
-                <a href="#coffee-section" class="btn-primary">Shop Now</a>
-                <a href="#pricing-section" class="btn-secondary">Subscribe</a>
-            </div>
-        </div>
-        <div class="scroll-indicator">
-            <svg viewBox="0 0 24 24">
-                <path d="M12 5v14M5 12l7 7 7-7"/>
-            </svg>
-        </div>
-    </section>
-
-    <!-- Stats Section -->
-    <section class="stats" id="stats-section">
-        <h2 class="fade-in">Our Impact</h2>
-        <div class="stats-grid">
-            <div class="stat-card fade-in">
-                <div class="stat-number">15+</div>
-                <div class="stat-label">Countries Sourced</div>
-            </div>
-            <div class="stat-card fade-in">
-                <div class="stat-number">8K+</div>
-                <div class="stat-label">Happy Customers</div>
-            </div>
-            <div class="stat-card fade-in">
-                <div class="stat-number">100%</div>
-                <div class="stat-label">Ethically Sourced</div>
-            </div>
-            <div class="stat-card fade-in">
-                <div class="stat-number">5yr</div>
-                <div class="stat-label">Mastery</div>
+            <h1>KAHVECIMURAT</h1>
+            <p class="hero-subheading">Geleneksel Türk Kahvesinin Modern Yorumu. 25 Yıllık Ustalık, Her Fincan'da Kalite.</p>
+            <div class="hero-ctas">
+                <button class="btn-primary">Hemen Sipariş Et</button>
+                <button class="btn-secondary">Katalog İndir</button>
             </div>
         </div>
     </section>
 
-    <!-- Coffee Blends Section -->
-    <section id="coffee-section">
-        <h2 class="fade-in">Premium Coffees</h2>
-        <div class="coffee-grid">
-            <div class="coffee-card fade-in">
-                <div class="coffee-icon">☕</div>
-                <h3>Ethiopian Yirgacheffe</h3>
-                <p class="coffee-origin">Single Origin</p>
-                <p class="coffee-price">$18.99</p>
-                <p class="coffee-description">Bright acidity with notes of blueberry and jasmine. A delicate yet complex pour.</p>
-                <div class="coffee-details">
-                    <div class="detail-item">
-                        <div class="detail-label">Acidity</div>
-                        <div class="detail-value">High</div>
-                    </div>
-                    <div class="detail-item">
-                        <div class="detail-label">Body</div>
-                        <div class="detail-value">Light</div>
-                    </div>
-                    <div class="detail-item">
-                        <div class="detail-label">Roast</div>
-                        <div class="detail-value">Light</div>
-                    </div>
-                </div>
-                <button class="coffee-add-btn" onclick="addToCart('Ethiopian Yirgacheffe', 18.99)">Add to Cart</button>
-            </div>
+    <!-- SECTION 2: SOCIAL PROOF BAR -->
+    <section class="social-proof">
+        <div class="proof-item">
+            <h3>25+</h3>
+            <p>Yıl Geleneksel Ustalık</p>
+        </div>
+        <div class="proof-item">
+            <h3>50K+</h3>
+            <p>Mutlu Müşteri</p>
+        </div>
+        <div class="proof-item">
+            <h3>15</h3>
+            <p>Özel Kahve Çeşidi</p>
+        </div>
+        <div class="proof-item">
+            <h3>100%</h3>
+            <p>Organik & Doğal</p>
+        </div>
+    </section>
 
-            <div class="coffee-card fade-in">
-                <div class="coffee-icon">🌰</div>
-                <h3>Colombian Geisha</h3>
-                <p class="coffee-origin">Limited Edition</p>
-                <p class="coffee-price">$24.99</p>
-                <p class="coffee-description">Smooth, buttery body with hints of chocolate and hazelnut. Luxurious experience.</p>
-                <div class="coffee-details">
-                    <div class="detail-item">
-                        <div class="detail-label">Acidity</div>
-                        <div class="detail-value">Medium</div>
-                    </div>
-                    <div class="detail-item">
-                        <div class="detail-label">Body</div>
-                        <div class="detail-value">Full</div>
-                    </div>
-                    <div class="detail-item">
-                        <div class="detail-label">Roast</div>
-                        <div class="detail-value">Medium</div>
-                    </div>
-                </div>
-                <button class="coffee-add-btn" onclick="addToCart('Colombian Geisha', 24.99)">Add to Cart</button>
-            </div>
+    <!-- SECTION 3: PROBLEM/SOLUTION -->
+    <section class="problem-solution">
+        <div class="problem-text">
+            <h2>Kaliteli Kahvenin Sorun'u Çözüyoruz</h2>
+            <p><strong>Sorun:</strong> Çoğu kahve markası kaliteden ödün veriyor. Ucuz kaynaklardan temin edilen, taze olmayan, aromasız kahveler piyasada dolaşıyor.</p>
+            <p><strong>Çözüm:</strong> Kahvecimurat, 25 yıldır sadece en iyi Arapika çekirdeğini seçiyor, özel fırınlarda kavruyarak, her fincan'da özgün tat ve aroma garantisi veriyor.</p>
+            <p>Biz sadece kahve satmıyoruz—geleneksel ustalığı, kaliteyi ve kültürü her yapılan fincan'da yaşatıyoruz.</p>
+        </div>
+        <div class="solution-image">
+            ☕
+        </div>
+    </section>
 
-            <div class="coffee-card fade-in">
-                <div class="coffee-icon">🍫</div>
-                <h3>Costa Rican Hueca</h3>
-                <p class="coffee-origin">Single Origin</p>
-                <p class="coffee-price">$19.99</p>
-                <p class="coffee-description">Rich, full-bodied with cocoa and caramel undertones. Perfect for espresso.</p>
-                <div class="coffee-details">
-                    <div class="detail-item">
-                        <div class="detail-label">Acidity</div>
-                        <div class="detail-value">Low</div>
-                    </div>
-                    <div class="detail-item">
-                        <div class="detail-label">Body</div>
-                        <div class="detail-value">Full</div>
-                    </div>
-                    <div class="detail-item">
-                        <div class="detail-label">Roast</div>
-                        <div class="detail-value">Dark</div>
-                    </div>
-                </div>
-                <button class="coffee-add-btn" onclick="addToCart('Costa Rican Hueca', 19.99)">Add to Cart</button>
+    <!-- SECTION 4: FEATURE SHOWCASE - GRID -->
+    <section class="features" id="features">
+        <h2>Neden Kahvecimurat Seçmelissin?</h2>
+        <div class="feature-grid">
+            <div class="feature-card">
+                <div class="feature-icon">🌱</div>
+                <h3>100% Organik</h3>
+                <p>Kimyasal gübre ve pestisit kullanılmamış, saf doğal kahve çekirdeğini kullanıyoruz.</p>
             </div>
-
-            <div class="coffee-card fade-in">
-                <div class="coffee-icon">✨</div>
-                <h3>Signature Blend</h3>
-                <p class="coffee-origin">House Blend</p>
-                <p class="coffee-price">$16.99</p>
-                <p class="coffee-description">Perfectly balanced blend of premium origins. Versatile for any brewing method.</p>
-                <div class="coffee-details">
-                    <div class="detail-item">
-                        <div class="detail-label">Acidity</div>
-                        <div class="detail-value">Medium</div>
-                    </div>
-                    <div class="detail-item">
-                        <div class="detail-label">Body</div>
-                        <div class="detail-value">Medium</div>
-                    </div>
-                    <div class="detail-item">
-                        <div class="detail-label">Roast</div>
-                        <div class="detail-value">Medium</div>
-                    </div>
-                </div>
-                <button class="coffee-add-btn" onclick="addToCart('Signature Blend', 16.99)">Add to Cart</button>
+            <div class="feature-card">
+                <div class="feature-icon">🔥</div>
+                <h3>Taze Kavrama</h3>
+                <p>Her sipariş için özel olarak kavrılan, maksimum 2 hafta öncesi kavrılmış kahveler.</p>
             </div>
-
-            <div class="coffee-card fade-in">
-                <div class="coffee-icon">🌍</div>
-                <h3>Kenyan AA</h3>
-                <p class="coffee-origin">Single Origin</p>
-                <p class="coffee-price">$20.99</p>
-                <p class="coffee-description">Bright and fruity with wine-like qualities. Vibrant morning awakening.</p>
-                <div class="coffee-details">
-                    <div class="detail-item">
-                        <div class="detail-label">Acidity</div>
-                        <div class="detail-value">High</div>
-                    </div>
-                    <div class="detail-item">
-                        <div class="detail-label">Body</div>
-                        <div class="detail-value">Medium</div>
-                    </div>
-                    <div class="detail-item">
-                        <div class="detail-label">Roast</div>
-                        <div class="detail-value">Light</div>
-                    </div>
-                </div>
-                <button class="coffee-add-btn" onclick="addToCart('Kenyan AA', 20.99)">Add to Cart</button>
+            <div class="feature-card">
+                <div class="feature-icon">🏆</div>
+                <h3>Usta Derecesi</h3>
+                <p>25 yıl deneyimli ustalarımız, her partide özel kalite kontrol yapıyorlar.</p>
             </div>
-
-            <div class="coffee-card fade-in">
-                <div class="coffee-icon">🎯</div>
-                <h3>Brazilian Santos</h3>
-                <p class="coffee-origin">Single Origin</p>
-                <p class="coffee-price">$17.99</p>
-                <p class="coffee-description">Low acidity, sweet, with nuts and spice. Comforting afternoon companion.</p>
-                <div class="coffee-details">
-                    <div class="detail-item">
-                        <div class="detail-label">Acidity</div>
-                        <div class="detail-value">Low</div>
-                    </div>
-                    <div class="detail-item">
-                        <div class="detail-label">Body</div>
-                        <div class="detail-value">Full</div>
-                    </div>
-                    <div class="detail-item">
-                        <div class="detail-label">Roast</div>
-                        <div class="detail-value">Medium</div>
-                    </div>
-                </div>
-                <button class="coffee-add-btn" onclick="addToCart('Brazilian Santos', 17.99)">Add to Cart</button>
+            <div class="feature-card">
+                <div class="feature-icon">🌍</div>
+                <h3>Adil Ticaret</h3>
+                <p>Çiftçilere adil fiyat ödüyor, sürdürülebilir tarım uygulamalarını destekliyoruz.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>Hızlı Teslimat</h3>
+                <p>İstanbul'da 24 saat, Türkiye'de 48-72 saat içinde kapınıza ulaştırıyoruz.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💎</div>
+                <h3>Premium Ambalaj</h3>
+                <p>Hava geçirmez, UV korumlu premium ambalajda taze ve aromatik kalmasını sağlıyoruz.</p>
             </div>
         </div>
     </section>
 
-    <!-- Blog Section -->
-    <section class="blog" id="blog-section">
-        <h2 class="fade-in">Coffee Stories</h2>
-        <div class="blog-grid">
-            <div class="blog-card fade-in">
-                <div class="blog-image">📖</div>
-                <div class="blog-content">
-                    <div class="blog-date">December 15, 2024</div>
-                    <h3>The Art of Ethiopian Coffee</h3>
-                    <p class="blog-excerpt">Discover the ancient traditions of Ethiopian coffee cultivation and how altitude impacts flavor profiles in this rich heritage.</p>
-                    <a href="#" class="blog-readmore">Read More →</a>
-                </div>
-            </div>
-
-            <div class="blog-card fade-in">
-                <div class="blog-image">🌱</div>
-                <div class="blog-content">
-                    <div class="blog-date">December 10, 2024</div>
-                    <h3>Sustainable Sourcing Practices</h3>
-                    <p class="blog-excerpt">Learn how our direct trade partnerships support farming communities and ensure fair compensation for ethical coffee production.</p>
-                    <a href="#" class="blog-readmore">Read More →</a>
-                </div>
-            </div>
-
-            <div class="blog-card fade-in">
-                <div class="blog-image">🔥</div>
-                <div class="blog-content">
-                    <div class="blog-date">December 5, 2024</div>
-                    <h3>Roasting Science Explained</h3>
-                    <p class="blog-excerpt">Dive deep into the roasting process and understand how temperature curves transform raw beans into aromatic perfection.</p>
-                    <a href="#" class="blog-readmore">Read More →</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Pricing Section -->
-    <section class="pricing" id="pricing-section">
-        <h2 class="fade-in">Subscription Plans</h2>
-        <div class="pricing-grid">
-            <div class="pricing-card fade-in">
-                <h3>Monthly</h3>
-                <div class="pricing-price">$49</div>
-                <div class="pricing-period">one bag per month</div>
-                <ul class="pricing-features">
-                    <li>1 Signature Blend</li>
-                    <li>Free Shipping</li>
-                    <li>Brewing Tips</li>
-                    <li>10% Discount</li>
-                </ul>
-                <button class="btn-primary" style="width: 100%;">Get Started</button>
-            </div>
-
-            <div class="pricing-card featured fade-in">
-                <div class="pricing-badge">Most Popular</div>
-                <h3>Quarterly</h3>
-                <div class="pricing-price">$139</div>
-                <div class="pricing-period">3 bags per quarter</div>
-                <ul class="pricing-features">
-                    <li>3 Different Origins</li>
-                    <li>Free Shipping</li>
-                    <li>Exclusive Blends First</li>
-                    <li>15% Discount</li>
-                    <li>Consultation</li>
-                </ul>
-                <button class="btn-primary" style="width: 100%;">Get Started</button>
-            </div>
-
-            <div class="pricing-card fade-in">
-                <h3>Annual</h3>
-                <div class="pricing-price">$489</div>
-                <div class="pricing-period">12 bags per year</div>
-                <ul class="pricing-features">
-                    <li>12 Premium Selections</li>
-                    <li>Free Shipping Always</li>
-                    <li>VIP Member Status</li>
-                    <li>20% Discount</li>
-                    <li>Private Curations</li>
-                    <li>Birthday Gift</li>
-                </ul>
-                <button class="btn-primary" style="width: 100%;">Get Started</button>
-            </div>
-        </div>
-    </section>
-
-    <!-- FAQ Section -->
-    <section class="faq" id="faq-section">
-        <h2 class="fade-in">Questions?</h2>
-        <div class="faq-container">
-            <div class="faq-item fade-in">
-                <div class="faq-question">
-                    <span>How long does delivery take?</span>
-                    <span class="faq-toggle">+</span>
-                </div>
-                <div class="faq-answer">
-                    <p>We ship within 2 business days. Standard shipping takes 3-5 days within the continental US. International orders ship within 5-7 days with tracking.</p>
-                </div>
-            </div>
-
-            <div class="faq-item fade-in">
-                <div class="faq-question">
-                    <span>Can I cancel anytime?</span>
-                    <span class="faq-toggle">+</span>
-                </div>
-                <div class="faq-answer">
-                    <p>Yes! Cancel your subscription anytime with no penalties. Simply manage it in your account or contact our support team for assistance.</p>
-                </div>
-            </div>
-
-            <div class="faq-item fade-in">
-                <div class="faq-question">
-                    <span>Are coffees ethically sourced?</span>
-                    <span class="faq-toggle">+</span>
-                </div>
-                <div class="faq-answer">
-                    <p>100% ethically sourced and fairly traded. We work directly with farmer cooperatives ensuring fair compensation and sustainable practices throughout.</p>
-                </div>
-            </div>
-
-            <div class="faq-item fade-in">
-                <div class="faq-question">
-                    <span>What's the shelf life?</span>
-                    <span class="faq-toggle">+</span>
-                </div>
-                <div class="faq-answer">
-                    <p>Best enjoyed within 3-4 weeks of roasting. All packages show the roast date. Store in an airtight container away from light and heat for optimal freshness.</p>
-                </div>
-            </div>
-
-            <div class="faq-item fade-in">
-                <div class="faq-question">
-                    <span>Gift subscriptions available?</span>
-                    <span class="faq-toggle">+</span>
-                </div>
-                <div class="faq-answer">
-                    <p>Yes! Perfect for coffee lovers. Choose any plan and we'll send a beautiful gift card with brewing instructions and tasting notes for each shipment.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Testimonials Section -->
-    <section class="testimonials" id="testimonials-section">
-        <h2 class="fade-in">Loved by Coffee Enthusiasts</h2>
+    <!-- SECTION 5: TESTIMONIALS -->
+    <section class="testimonials" id="testimonials">
+        <h2>Müşteri Deneyimleri</h2>
         <div class="testimonials-grid">
-            <div class="testimonial-card fade-in scale-in">
-                <div class="testimonial-header">
-                    <div class="testimonial-avatar">SC</div>
-                    <div>
-                        <div class="testimonial-author">Sarah Chen</div>
-                        <div class="testimonial-role">Coffee Enthusiast</div>
-                    </div>
-                </div>
+            <div class="testimonial-card">
                 <div class="stars">★★★★★</div>
-                <p class="testimonial-text">"Exceptional quality and consistency. Every bag exceeded my expectations. The brewing guides make it foolproof!"</p>
+                <p class="testimonial-text">"Kahvecimurat'ı denemekle kimse pişman olmaz. Tadı, aroması, kalitesi... Hepsi mükemmel. İnsan fincan'a fincan açılmak istiyor!"</p>
+                <div class="testimonial-author">Mehmet Bey</div>
+                <div class="testimonial-role">İstanbul Kahve Severler Derneği</div>
             </div>
 
-            <div class="testimonial-card fade-in scale-in">
-                <div class="testimonial-header">
-                    <div class="testimonial-avatar">MW</div>
-                    <div>
-                        <div class="testimonial-author">Marcus Williams</div>
-                        <div class="testimonial-role">Home Barista</div>
-                    </div>
-                </div>
+            <div class="testimonial-card">
                 <div class="stars">★★★★★</div>
-                <p class="testimonial-text">"Finally found coffee that tastes premium. I've never made better cups at home. Absolutely worth it!"</p>
+                <p class="testimonial-text">"25 yıl aynı kaliteyi korumuşlar. Bu güvendir, bu sadakattir. Artık sadece Kahvecimurat'tan kahve alıyorum."</p>
+                <div class="testimonial-author">Fatma Hanım</div>
+                <div class="testimonial-role">Emekli Eğitmen</div>
             </div>
 
-            <div class="testimonial-card fade-in scale-in">
-                <div class="testimonial-header">
-                    <div class="testimonial-avatar">ER</div>
-                    <div>
-                        <div class="testimonial-author">Emma Rossi</div>
-                        <div class="testimonial-role">Sustainability Advocate</div>
-                    </div>
-                </div>
+            <div class="testimonial-card">
                 <div class="stars">★★★★★</div>
-                <p class="testimonial-text">"The ethics are impeccable. Supporting fair trade while enjoying exceptional coffee—this is the future!"</p>
+                <p class="testimonial-text">"Kahvecimurat'ın organik kahvesi, sağlığım kadar önemliydi. Artık sabahlarımı bu mükemmel fincan'lar ile başlıyorum."</p>
+                <div class="testimonial-author">Ayşe Demir</div>
+                <div class="testimonial-role">Sağlık Danışmanı</div>
             </div>
 
-            <div class="testimonial-card fade-in scale-in">
-                <div class="testimonial-header">
-                    <div class="testimonial-avatar">JL</div>
-                    <div>
-                        <div class="testimonial-author">James Liu</div>
-                        <div class="testimonial-role">Entrepreneur</div>
-                    </div>
-                </div>
+            <div class="testimonial-card">
                 <div class="stars">★★★★★</div>
-                <p class="testimonial-text">"Subscription is perfect for my lifestyle. Every delivery is exciting. The tasting notes enhance my appreciation!"</p>
+                <p class="testimonial-text">"Dünya çapında farklı kahveler tattım. Kahvecimurat Türk kahvesinin en iyi örneğidir. Gurur duyuyorum!"</p>
+                <div class="testimonial-author">Ali Kaya</div>
+                <div class="testimonial-role">Uluslararası Kahve Yargıcı</div>
             </div>
 
-            <div class="testimonial-card fade-in scale-in">
-                <div class="testimonial-header">
-                    <div class="testimonial-avatar">NJ</div>
-                    <div>
-                        <div class="testimonial-author">Nina Johnson</div>
-                        <div class="testimonial-role">Chef & Food Writer</div>
-                    </div>
-                </div>
+            <div class="testimonial-card">
                 <div class="stars">★★★★★</div>
-                <p class="testimonial-text">"Professional quality beans. Pairs beautifully with pastries. I recommend to all my colleagues and friends!"</p>
+                <p class="testimonial-text">"Uzak dostlarıma gönderiyorum hediye olarak. Hepsi 'bu nedir' diye soruyor. Türk kahvesi hakkında yanlış kanısı değiştiriyor!"</p>
+                <div class="testimonial-author">Gül Çelik</div>
+                <div class="testimonial-role">Gümrük Müdürü</div>
             </div>
 
-            <div class="testimonial-card fade-in scale-in">
-                <div class="testimonial-header">
-                    <div class="testimonial-avatar">DK</div>
-                    <div>
-                        <div class="testimonial-author">David Kim</div>
-                        <div class="testimonial-role">Coffee Roaster</div>
-                    </div>
-                </div>
+            <div class="testimonial-card">
                 <div class="stars">★★★★★</div>
-                <p class="testimonial-text">"Exceptional roasting profiles. Deep knowledge and respect for the beans. Highly recommended to professionals!"</p>
+                <p class="testimonial-text">"Restoran sahibi olarak, müşterilerim sürekli 'bu kahvenin kaynağı nedir' diye soruyor. Kahvecimurat'ı tavsiye etmek çok kolay!"</p>
+                <div class="testimonial-author">Zeynep Yılmaz</div>
+                <div class="testimonial-role">Restoran Sahibi</div>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer id="contact">
-        <div class="footer-content">
-            <div class="footer-section">
-                <h4>About</h4>
-                <p>Founded in 2020, murokahveci brings world-class artisan coffee to your home.</p>
-                <a href="#">Our Story</a>
-                <a href="#">Sourcing</a>
-                <a href="#">Roastery</a>
+    <!-- SECTION 6: PRICING & URGENCY -->
+    <section class="pricing" id="pricing">
+        <h2>Fiyatlandırma Seçenekleri</h2>
+        <p class="pricing-tagline">Her bütçeye uygun, premium kalitede kahve seçenekleri</p>
+
+        <div class="pricing-grid">
+            <div class="pricing-card">
+                <h3 class="pricing-title">Başlangıç Paketi</h3>
+                <div class="pricing-price">₺299</div>
+                <p class="pricing-period">1 kg (Tek Çeşit)</p>
+                <ul class="pricing-features">
+                    <li>500gr x 2 Paket</li>
+                    <li>Ev Tipi Ögütme</li>
+                    <li>Standart Kargo</li>
+                </ul>
+                <button class="btn-primary">Seç</button>
             </div>
-            <div class="footer-section">
-                <h4>Contact</h4>
-                <a href="mailto:hello@murokahveci.com">hello@murokahveci.com</a>
-                <p>+1 (555) 123-4567</p>
-                <p>Brooklyn, New York</p>
+
+            <div class="pricing-card featured">
+                <div class="pricing-badge">EN POPÜLER</div>
+                <h3 class="pricing-title">Premium Koleksiyon</h3>
+                <div class="pricing-price">₺699</div>
+                <p class="pricing-period">3 kg (3 Çeşit Denemesi)</p>
+                <ul class="pricing-features">
+                    <li>1kg x 3 Farklı Çeşit</li>
+                    <li>İnce Ögütme Seçeneği</li>
+                    <li>Ücretsiz Kargo</li>
+                    <li>Özel Hediye Kutusu</li>
+                </ul>
+                <button class="btn-primary">Seç</button>
+                <div class="urgency-badge">⏰ İlk 50 Siparişe %20 İndirim!</div>
             </div>
-            <div class="footer-section">
-                <h4>Hours</h4>
-                <p>Monday – Friday: 6am – 7pm</p>
-                <p>Saturday: 7am – 8pm</p>
-                <p>Sunday: 8am – 6pm</p>
+
+            <div class="pricing-card">
+                <h3 class="pricing-title">Kurumsal Paket</h3>
+                <div class="pricing-price">₺1.999</div>
+                <p class="pricing-period">10 kg (Kişiselleştirilmiş)</p>
+                <ul class="pricing-features">
+                    <li>10 kg Seçilmiş Çeşitler</li>
+                    <li>Özel Etiketleme Hizmeti</li>
+                    <li>Ücretsiz Konsültasyon</li>
+                    <li>Aylık Abonelik İndirim</li>
+                </ul>
+                <button class="btn-primary">İletişime Geç</button>
             </div>
-            <div class="footer-section">
-                <h4>Newsletter</h4>
-                <p>Get brewing tips and new blends monthly.</p>
-                <div class="footer-newsletter">
-                    <input type="email" placeholder="Your email">
-                    <button>Subscribe</button>
-                </div>
+        </div>
+    </section>
+
+    <!-- SECTION 7: FAQ -->
+    <section class="faq" id="faq">
+        <h2>Sıkça Sorulan Sorular</h2>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                <span>Kahven ne kadar taze? Saklama süresi ne kadardır?</span>
+                <span class="faq-toggle">+</span>
             </div>
+            <div class="faq-answer">
+                <p>Tüm kahvelerimiz sipariş alındıktan sonra özel olarak kavrılıyor. Maksimum 2 hafta öncesi kavrıldığı garantilidir. Hava geçirmez ambalajda, oda sıcaklığında 3-4 ay, buzdolabında 6 ay saklanabilir. En iyi tada ulaşmak için taze kavrılmış kahvenizi 2-3 hafta içinde kullanmanızı tavsiye ediyoruz.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                <span>Organik sertifikası var mı? Kontrol nasıl yapılıyor?</span>
+                <span class="faq-toggle">+</span>
+            </div>
+            <div class="faq-answer">
+                <p>Evet, tüm kahvelerimiz Uluslararası Organik Sertifikası taşıyor. Çiftçilerden başlayarak, fırın, depolama ve paketleme aşamalarına kadar tüm süreç bağımsız denetim kuruluşları tarafından kontrol ediliyor. Her batch için sertifika dosyasını sipariş sırasında talep edebilirsiniz.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                <span>Kargo ücreti ne kadar? Ne zaman ulaşır?</span>
+                <span class="faq-toggle">+</span>
+            </div>
+            <div class="faq-answer">
+                <p>İstanbul içinde ücretsiz, Türkiye'nin tamamında 29₺ standart kargo ücreti (500g altı) veya ücretsiz kargo (₺500+ siparişlerde). İstanbul'da 24 saat, diğer şehirlerde 48-72 saat içinde teslim edilir. Kargo gönderiş tarihi ve takip numarası anında SMS ile gönderilir.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                <span>Paranın iadesi garantiniz nedir? Beğenmezsem ne yapabilirim?</span>
+                <span class="faq-toggle">+</span>
+            </div>
+            <div class="faq-answer">
+                <p>30 gün parayla iadesi garantisi veriyoruz. Herhangi bir sebepten beğenmezseniz, kahvenin paketini geri göndererek paranızı tam iade alabilirsiniz. Hiç soru sorulmaz. Müşteri memnuniyeti bizim ilk önceliğimizdir ve bu garantiyle bunu kanıtlamak istiyoruz.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <div class="faq-question">
+                <span>Kahvemi nasıl ögütmeli? Hangi yöntemle hazırlamalıyım?</span>
+                <span class="faq-toggle">+</span>
+            </div>
+            <div class="faq-answer">
+                <p>Her çeşit kahve farklı hazırlama yöntemine göre optimize edilmiştir. Sipariş sırasında ögütme seçeneği yapabilirsiniz (Türk Kahvesi, Espresso, Filtre, Çekirdek). Her paketin içinde özel hazırlama rehberi bulunur. YouTube kanalımızda video öğreticiler de mevcuttur. Ayrıca ücretsiz danışmanlık hattı (0212 xxx xxxx) ile uzmanlarımıza soru sorabilirsiniz.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-links">
+            <a href="#">Hakkımızda</a>
+            <a href="#">Gizlilik Politikası</a>
+            <a href="#">Şartlar & Koşullar</a>
+            <a href="#">İletişim</a>
+            <a href="#">Blog</a>
         </div>
         <div class="footer-divider">
-            <p>&copy; 2025 murokahveci. All rights reserved. Artisan roasted with intention.</p>
+            <p>&copy; 2025 Kahvecimurat. Tüm hakları saklıdır. | Geleneksel Ustalık, Modern Kalite</p>
         </div>
     </footer>
 
-    <!-- Back to Top Button -->
-    <button class="back-to-top" id="backToTop">↑</button>
-
     <script>
-        // ==========================================
-        // ADVANCED FEATURES
-        // ==========================================
-
-        // Dark Mode Toggle
-        const themeToggle = document.getElementById('themeToggle');
-        const html = document.documentElement;
-
-        themeToggle.addEventListener('click', () => {
-            html.classList.toggle('dark-mode');
-            localStorage.setItem('theme', html.classList.contains('dark-mode') ? 'dark' : 'light');
-            themeToggle.textContent = html.classList.contains('dark-mode') ? '☀️' : '🌙';
-        });
-
-        if (localStorage.getItem('theme') === 'dark') {
-            html.classList.add('dark-mode');
-            themeToggle.textContent = '☀️';
-        }
-
-        // Shopping Cart
-        let cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-        function addToCart(name, price) {
-            cart.push({ name, price });
-            localStorage.setItem('cart', JSON.stringify(cart));
-            updateCart();
-
-            const btn = event.target;
-            btn.textContent = '✓ Added';
-            btn.classList.add('added');
-            setTimeout(() => {
-                btn.textContent = 'Add to Cart';
-                btn.classList.remove('added');
-            }, 2000);
-        }
-
-        function updateCart() {
-            const badge = document.getElementById('cartBadge');
-            badge.textContent = cart.length;
-
-            const cartItems = document.getElementById('cartItems');
-            if (cart.length === 0) {
-                cartItems.innerHTML = '<div class="cart-empty">Your cart is empty. Start shopping!</div>';
-                document.getElementById('cartTotal').style.display = 'none';
-            } else {
-                cartItems.innerHTML = cart.map((item, i) => `
-                    <div class="cart-item">
-                        <div class="cart-item-details">
-                            <div class="cart-item-name">${item.name}</div>
-                            <div class="cart-item-price">$${item.price.toFixed(2)}</div>
-                        </div>
-                        <button onclick="removeFromCart(${i})" style="background: #FF6B6B; color: white; border: none; padding: 0.4rem 0.8rem; border-radius: 4px; cursor: pointer;">Remove</button>
-                    </div>
-                `).join('');
-
-                const total = cart.reduce((sum, item) => sum + item.price, 0);
-                document.getElementById('cartTotalPrice').textContent = `$${total.toFixed(2)}`;
-                document.getElementById('cartTotal').style.display = 'flex';
-            }
-        }
-
-        function removeFromCart(index) {
-            cart.splice(index, 1);
-            localStorage.setItem('cart', JSON.stringify(cart));
-            updateCart();
-        }
-
-        document.getElementById('cartBtn').addEventListener('click', () => {
-            document.getElementById('cartModal').classList.add('active');
-            updateCart();
-        });
-
-        document.getElementById('cartClose').addEventListener('click', () => {
-            document.getElementById('cartModal').classList.remove('active');
-        });
-
-        document.getElementById('cartModal').addEventListener('click', (e) => {
-            if (e.target === document.getElementById('cartModal')) {
-                document.getElementById('cartModal').classList.remove('active');
-            }
-        });
-
-        updateCart();
-
-        // ==========================================
-        // SCROLL ANIMATIONS
-        // ==========================================
-
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -100px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.fade-in, .fade-in-left, .fade-in-right, .scale-in').forEach(el => {
-            observer.observe(el);
-        });
-
         // FAQ Toggle
         document.querySelectorAll('.faq-item').forEach(item => {
             item.querySelector('.faq-question').addEventListener('click', () => {
@@ -1883,29 +854,15 @@
             });
         });
 
-        // Back to Top Button
-        const backToTop = document.getElementById('backToTop');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 300) {
-                backToTop.classList.add('visible');
-            } else {
-                backToTop.classList.remove('visible');
-            }
-        });
-
-        backToTop.addEventListener('click', () => {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        });
-
         // ==========================================
-        // THREE.JS PREMIUM 3D ROBOT MOUSE
+        // 3D COFFEE CUP ANIMATION
         // ==========================================
 
         let robotRenderer = null;
 
-        function initRobot() {
+        function initScene() {
             if (typeof THREE === 'undefined') {
-                setTimeout(initRobot, 100);
+                setTimeout(initScene, 100);
                 return;
             }
 
@@ -1913,122 +870,63 @@
             if (!canvas || canvas.getAttribute('data-initialized')) return;
 
             const scene = new THREE.Scene();
-            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / (window.innerHeight - 70), 0.1, 1000);
             const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
             robotRenderer = renderer;
 
             renderer.setSize(window.innerWidth, window.innerHeight - 70);
-            renderer.setClearColor(0xFDFBF7, 1);
+            renderer.setClearColor(0x2C1810, 1);
             renderer.setPixelRatio(window.devicePixelRatio);
-            camera.position.z = 8;
+            camera.position.z = 3;
 
-            const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+            const light = new THREE.DirectionalLight(0xffffff, 1);
+            light.position.set(5, 5, 5);
+            scene.add(light);
+
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
             scene.add(ambientLight);
 
-            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
-            directionalLight.position.set(8, 6, 8);
-            scene.add(directionalLight);
+            const group = new THREE.Group();
+            scene.add(group);
 
-            const rimLight = new THREE.DirectionalLight(0xC7765C, 0.35);
-            rimLight.position.set(-8, 2, -8);
-            scene.add(rimLight);
+            // Coffee cup
+            const cupGeometry = new THREE.CylinderGeometry(0.5, 0.6, 1.5, 32);
+            const cupMaterial = new THREE.MeshStandardMaterial({ color: 0xD4AF37, metalness: 0.4, roughness: 0.3 });
+            const cup = new THREE.Mesh(cupGeometry, cupMaterial);
+            group.add(cup);
 
-            const robotGroup = new THREE.Group();
-            scene.add(robotGroup);
+            // Handle
+            const handleGeometry = new THREE.TorusGeometry(0.4, 0.1, 16, 16, Math.PI);
+            const handle = new THREE.Mesh(handleGeometry, cupMaterial);
+            handle.rotation.z = Math.PI / 2;
+            handle.position.set(0.7, 0.3, 0);
+            group.add(handle);
 
-            const ceramicMaterial = new THREE.MeshStandardMaterial({
-                color: 0xD9B8A8,
-                roughness: 0.35,
-                metalness: 0.05
-            });
+            // Coffee inside
+            const coffeeGeometry = new THREE.CylinderGeometry(0.45, 0.55, 1.4, 32);
+            const coffeeMaterial = new THREE.MeshStandardMaterial({ color: 0x3d2817, metalness: 0.2, roughness: 0.7 });
+            const coffee = new THREE.Mesh(coffeeGeometry, coffeeMaterial);
+            coffee.position.z = 0.05;
+            group.add(coffee);
 
-            const metalMaterial = new THREE.MeshStandardMaterial({
-                color: 0x8D6E63,
-                roughness: 0.25,
-                metalness: 0.7
-            });
+            let mouseX = 0, mouseY = 0, targetX = 0, targetY = 0;
 
-            const accentMaterial = new THREE.MeshStandardMaterial({
-                color: 0xC7765C,
-                roughness: 0.3,
-                metalness: 0.4
-            });
-
-            const body = new THREE.Mesh(new THREE.RoundedBoxGeometry(1.6, 2.2, 1.3, 8, 0.1), ceramicMaterial);
-            robotGroup.add(body);
-
-            const head = new THREE.Mesh(new THREE.RoundedBoxGeometry(1.3, 1.3, 1.1, 8, 0.1), ceramicMaterial);
-            head.position.y = 1.5;
-            robotGroup.add(head);
-
-            const leftEar = new THREE.Mesh(new THREE.CylinderGeometry(0.25, 0.3, 0.8, 16), accentMaterial);
-            leftEar.position.set(-0.6, 2.1, 0);
-            robotGroup.add(leftEar);
-
-            const rightEar = new THREE.Mesh(new THREE.CylinderGeometry(0.25, 0.3, 0.8, 16), accentMaterial);
-            rightEar.position.set(0.6, 2.1, 0);
-            robotGroup.add(rightEar);
-
-            const leftEyeWhite = new THREE.Mesh(new THREE.SphereGeometry(0.28, 32, 32), new THREE.MeshStandardMaterial({ color: 0xFFFFFF, roughness: 0.2 }));
-            leftEyeWhite.position.set(-0.4, 1.6, 0.65);
-            robotGroup.add(leftEyeWhite);
-
-            const rightEyeWhite = new THREE.Mesh(new THREE.SphereGeometry(0.28, 32, 32), new THREE.MeshStandardMaterial({ color: 0xFFFFFF, roughness: 0.2 }));
-            rightEyeWhite.position.set(0.4, 1.6, 0.65);
-            robotGroup.add(rightEyeWhite);
-
-            const leftIris = new THREE.Mesh(new THREE.SphereGeometry(0.13, 32, 32), accentMaterial);
-            leftIris.position.set(-0.4, 1.6, 0.8);
-            robotGroup.add(leftIris);
-
-            const rightIris = new THREE.Mesh(new THREE.SphereGeometry(0.13, 32, 32), accentMaterial);
-            rightIris.position.set(0.4, 1.6, 0.8);
-            robotGroup.add(rightIris);
-
-            const nose = new THREE.Mesh(new THREE.SphereGeometry(0.12, 16, 16), accentMaterial);
-            nose.position.set(0, 1.4, 0.8);
-            robotGroup.add(nose);
-
-            const tail = new THREE.Mesh(new THREE.BoxGeometry(0.35, 1, 0.25), metalMaterial);
-            tail.position.set(0, -1, -0.9);
-            tail.rotation.z = 0.4;
-            robotGroup.add(tail);
-
-            let mouseX = 0, mouseY = 0, targetMouseX = 0, targetMouseY = 0;
             document.addEventListener('mousemove', (e) => {
-                targetMouseX = (e.clientX / window.innerWidth) * 2 - 1;
-                targetMouseY = -(e.clientY / window.innerHeight) * 2 + 1;
+                targetX = (e.clientX / window.innerWidth) * 2 - 1;
+                targetY = -(e.clientY / window.innerHeight) * 2 + 1;
             });
 
-            let animationTime = 0;
+            let time = 0;
             function animate() {
                 requestAnimationFrame(animate);
-                animationTime += 0.01;
+                time += 0.01;
 
-                mouseX += (targetMouseX - mouseX) * 0.06;
-                mouseY += (targetMouseY - mouseY) * 0.06;
+                mouseX += (targetX - mouseX) * 0.08;
+                mouseY += (targetY - mouseY) * 0.08;
 
-                robotGroup.position.y = Math.sin(animationTime * 0.8) * 0.2;
-                robotGroup.rotation.x = Math.sin(animationTime * 0.4) * 0.08;
-                robotGroup.rotation.z = Math.cos(animationTime * 0.3) * 0.04;
-
-                const raycaster = new THREE.Raycaster();
-                raycaster.setFromCamera(new THREE.Vector2(mouseX, mouseY), camera);
-                const plane = new THREE.Plane(new THREE.Vector3(0, 0, 1), -2);
-                const targetPoint = new THREE.Vector3();
-                raycaster.ray.intersectPlane(plane, targetPoint);
-
-                const trackEye = (iris, eyePos) => {
-                    const dir = targetPoint.clone().sub(eyePos).normalize();
-                    const lookPos = eyePos.clone().add(dir.multiplyScalar(0.35));
-                    let targetPos = lookPos.clone().sub(eyePos);
-                    if (targetPos.length() > 0.55) targetPos.normalize().multiplyScalar(0.55);
-                    targetPos.add(eyePos);
-                    iris.position.lerp(targetPos, 0.12);
-                };
-
-                trackEye(leftIris, new THREE.Vector3(-0.4, 1.6, 0.65));
-                trackEye(rightIris, new THREE.Vector3(0.4, 1.6, 0.65));
+                group.rotation.x = Math.sin(time * 0.5) * 0.3 + mouseY * 0.3;
+                group.rotation.y = Math.cos(time * 0.3) * 0.4 + mouseX * 0.3;
+                group.position.y = Math.sin(time * 0.7) * 0.2;
 
                 renderer.render(scene, camera);
             }
@@ -2041,22 +939,24 @@
                 renderer.setSize(window.innerWidth, window.innerHeight - 70);
             });
 
-            window.addEventListener('scroll', () => {
-                const scrollPos = window.scrollY;
-                const heroHeight = window.innerHeight;
-                const opacity = Math.max(0, 1 - (scrollPos / (heroHeight * 0.5)));
-                renderer.setClearColor(0xFDFBF7, opacity);
-            });
-
             canvas.setAttribute('data-initialized', 'true');
         }
 
-        // Initialize robot after DOM is ready
         if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initRobot);
+            document.addEventListener('DOMContentLoaded', initScene);
         } else {
-            initRobot();
+            initScene();
         }
+
+        // Scroll fade effect
+        window.addEventListener('scroll', () => {
+            if (robotRenderer) {
+                const scrollPos = window.scrollY;
+                const heroHeight = window.innerHeight;
+                const opacity = Math.max(0, 1 - (scrollPos / (heroHeight * 0.5)));
+                robotRenderer.setClearColor(0x2C1810, opacity);
+            }
+        });
     </script>
 </body>
 </html>
